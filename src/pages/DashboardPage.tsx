@@ -9,7 +9,7 @@ export function DashboardPage() {
   return (
     <div className="min-h-svh flex flex-col">
       <Header />
-      <div className="flex-1 flex">
+      <div className="flex-1 flex rtl:flex-row-reverse">
         <main className="flex-1 p-8">
           <h1>{t('dashboard.welcome')}</h1>
           <p className="mt-2 text-gray-500 dark:text-gray-400">{t('dashboard.description')}</p>
