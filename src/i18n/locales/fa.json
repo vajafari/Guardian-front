@@ -21,6 +21,7 @@
     "logout": "خروج"
   },
   "menu": {
+    "groupTitle": "منوی اصلی",
     "dashboard": "داشبورد",
     "users": "کاربران",
     "reports": "گزارش‌ها",

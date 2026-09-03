@@ -21,6 +21,7 @@
     "logout": "Log out"
   },
   "menu": {
+    "groupTitle": "Main Menu",
     "dashboard": "Dashboard",
     "users": "Users",
     "reports": "Reports",
