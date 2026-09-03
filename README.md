@@ -29,8 +29,9 @@ running and reachable at `VITE_API_BASE_URL` (see `.env.example`).
 ```
 src/
   api/
-    config.ts          # API_BASE_URL (from VITE_API_BASE_URL) + auth endpoint paths
-    authService.ts      # login()/refreshSession() — real calls to /api/core/Auth/*
+    config.ts          # API_BASE_URL (from VITE_API_BASE_URL) + endpoint paths
+    authService.ts      # login()/logout()/refreshSession() — /api/core/Auth/*
+    accountService.ts    # changePassword()/getCaptchaImage() — Account + Captcha
     httpClient.ts        # axios instance for *authenticated* calls: attaches the
                           # bearer token, refreshes + retries once on a 401
     tokenStorage.ts       # localStorage helpers shared by AuthContext and httpClient
@@ -48,7 +49,9 @@ src/
     Header.tsx
     Footer.tsx
     SideMenu.tsx    # right-hand navigation panel, pinned to the physical right in RTL too
-    UserMenu.tsx    # header dropdown (username) holding ThemeToggle, LanguageSwitcher, logout
+    UserMenu.tsx    # header dropdown (username) holding ThemeToggle, LanguageSwitcher,
+                    # Change password, logout
+    ChangePasswordDialog.tsx
     ThemeToggle.tsx  # light/dark switch, see "Dark mode" below
     LanguageSwitcher.tsx   # EN / FA / AR toggle
   pages/
@@ -91,7 +94,7 @@ up the same way, keyed by the error `code` from `AuthError`
 
 `src/components/ui/` is a small, self-contained set of presentational
 components (`Button`, `Card`, `Input`, `InputGroup`, `Form`/`FormItem`, `Alert`,
-`Spinner`, `Menu`/`MenuItem`, `Dropdown`, `ConfigProvider`, ...) ported as-is from a
+`Spinner`, `Menu`/`MenuItem`, `Dropdown`, `Dialog`, `ConfigProvider`, ...) ported as-is from a
 purchased admin template ("Ecme" by themenate — see the license that shipped
 with it for usage terms). Only the presentational layer was taken; all
 app logic (auth, i18n, routing) stays hand-written in Guardian.
@@ -158,11 +161,32 @@ session is cleared and `AuthContext` is notified via a
 header and an empty body, best-effort: the local session is cleared and the
 user is sent back to `/login` regardless of whether that call succeeds.
 
+**Change password** — "Change password" (in `UserMenu`) opens a `Dialog`
+(`src/components/ChangePasswordDialog.tsx`) with old/new/confirm-password
+fields plus a captcha: it fetches `GET /api/Captcha/CaptchaImage` (a PNG,
+requires the bearer token too) as a blob and shows it via an object URL,
+refetching on open, on the refresh button, and after every failed attempt
+(the captcha is single-use). Submitting calls
+`POST /api/core/Account/ChangePasswordByUser` with
+`{ oldPassword, newPassword, securityImage }` via `httpClient` — the first
+real use of its automatic bearer-token/401-refresh handling.
+`src/api/accountService.ts` maps failures to a `ChangePasswordError`
+(`src/types/account.ts`), the same pattern as `AuthError`.
+
+The captcha image request sets an `HttpOnly`/`SameSite=Strict` session
+cookie (`cidcn`) that ties the generated image to the `securityImage` value
+checked later, so both the image fetch and the change-password POST go out
+with `withCredentials: true` — see the CORS/credentials prerequisite below.
+
 **Local dev prerequisites** (both outside this repo, on the backend):
 - CORS must allow the Vite origin (`http://localhost:5173` by default) — the
   backend needs a policy that returns `Access-Control-Allow-Origin` for it,
   or the browser blocks the `Auth/Token` request at the preflight step even
   though the request itself is correct.
+- The captcha/change-password calls are credentialed (`withCredentials: true`,
+  to carry the `cidcn` cookie), which additionally requires
+  `Access-Control-Allow-Credentials: true` on those endpoints' CORS policy —
+  and the origin can't be a wildcard (`*`) once credentials are involved.
 - The backend's HTTPS dev certificate needs to be trusted
   (`dotnet dev-certs https --trust` for an ASP.NET Core backend), or requests
   fail with a certificate error before they even reach CORS.

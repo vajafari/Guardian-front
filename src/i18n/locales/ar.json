@@ -17,10 +17,27 @@
     "invalid-credentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "otp-required": "يتطلب هذا الحساب التحقق عبر OTP، وهو غير مدعوم بعد",
     "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+    "missing-fields": "جميع الحقول مطلوبة",
+    "passwords-do-not-match": "كلمة المرور الجديدة وتأكيدها غير متطابقين",
+    "invalid-old-password": "كلمة المرور الحالية غير صحيحة",
+    "invalid-captcha": "رمز التحقق غير صحيح — حاول مرة أخرى",
     "unknown": "حدث خطأ غير متوقع"
   },
   "header": {
     "logout": "تسجيل الخروج"
+  },
+  "account": {
+    "changePassword": "تغيير كلمة المرور",
+    "changePasswordTitle": "تغيير كلمة المرور",
+    "oldPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+    "captcha": "رمز التحقق",
+    "refreshCaptcha": "الحصول على رمز تحقق جديد",
+    "submit": "تغيير كلمة المرور",
+    "submitting": "جارٍ التغيير...",
+    "success": "تم تغيير كلمة المرور بنجاح",
+    "close": "إغلاق"
   },
   "menu": {
     "groupTitle": "القائمة الرئيسية",

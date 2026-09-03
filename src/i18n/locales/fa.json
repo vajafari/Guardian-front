@@ -17,10 +17,27 @@
     "invalid-credentials": "نام کاربری یا رمز عبور اشتباه است",
     "otp-required": "این حساب نیاز به تأیید OTP دارد که هنوز پشتیبانی نمی‌شود",
     "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+    "missing-fields": "همه‌ی فیلدها الزامی هستند",
+    "passwords-do-not-match": "رمز عبور جدید و تکرار آن یکسان نیستند",
+    "invalid-old-password": "رمز عبور فعلی اشتباه است",
+    "invalid-captcha": "کد امنیتی اشتباه است — دوباره تلاش کنید",
     "unknown": "خطای ناشناخته‌ای رخ داد"
   },
   "header": {
     "logout": "خروج"
+  },
+  "account": {
+    "changePassword": "تغییر رمز عبور",
+    "changePasswordTitle": "تغییر رمز عبور",
+    "oldPassword": "رمز عبور فعلی",
+    "newPassword": "رمز عبور جدید",
+    "confirmPassword": "تکرار رمز عبور جدید",
+    "captcha": "کد امنیتی",
+    "refreshCaptcha": "دریافت کد امنیتی جدید",
+    "submit": "تغییر رمز عبور",
+    "submitting": "در حال تغییر...",
+    "success": "رمز عبور با موفقیت تغییر کرد",
+    "close": "بستن"
   },
   "menu": {
     "groupTitle": "منوی اصلی",

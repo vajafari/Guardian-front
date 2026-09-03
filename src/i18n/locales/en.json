@@ -17,10 +17,27 @@
     "invalid-credentials": "Incorrect username or password",
     "otp-required": "This account requires OTP verification, which isn't supported yet",
     "network-error": "Couldn't reach the server. Check your connection and try again",
+    "missing-fields": "All fields are required",
+    "passwords-do-not-match": "New password and confirmation don't match",
+    "invalid-old-password": "Current password is incorrect",
+    "invalid-captcha": "Incorrect captcha — try again",
     "unknown": "Something went wrong"
   },
   "header": {
     "logout": "Log out"
+  },
+  "account": {
+    "changePassword": "Change password",
+    "changePasswordTitle": "Change password",
+    "oldPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "captcha": "Captcha",
+    "refreshCaptcha": "Get a new captcha",
+    "submit": "Change password",
+    "submitting": "Changing...",
+    "success": "Password changed successfully",
+    "close": "Close"
   },
   "menu": {
     "groupTitle": "Main Menu",
