@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans_FaNum_UltraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans_FaNum_Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans_FaNum.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans_FaNum_Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSans_FaNum_Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Persian only — English and Arabic keep the system sans stack. */
+@layer base {
+  html[lang='fa'] {
+    font-family: 'IRANSans', system-ui, 'Segoe UI', Tahoma, sans-serif;
+  }
+}

@@ -67,6 +67,12 @@ properties (`inset-inline-*`, `border-inline-*`, flex order) rather than
 `left`/`right`, so the whole UI — including the side menu — mirrors correctly
 in RTL instead of needing separate RTL stylesheets.
 
+Persian also gets its own typeface: `src/styles/fonts.css` declares `@font-face`
+for IRANSans (files served from `public/fonts/`, not bundled through Vite's
+asset pipeline, so plain absolute `url(/fonts/...)` references work without
+any import-chain rebasing issues) and scopes it with `html[lang='fa'] { font-family: ... }`.
+English and Arabic keep the plain system-font stack from `tailwind.config.cjs`.
+
 To add a new UI string: add the key to all three files in `src/i18n/locales/`,
 then read it with `useTranslation()`'s `t()`. Mock-auth error messages are
 looked up the same way, keyed by the error `code` from `AuthError`
