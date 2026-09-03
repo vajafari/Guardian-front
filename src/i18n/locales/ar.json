@@ -1,0 +1,36 @@
+{
+  "language": {
+    "en": "EN",
+    "ar": "AR",
+    "fa": "FA"
+  },
+  "login": {
+    "title": "Guardian",
+    "subtitle": "تسجيل الدخول إلى لوحة التحكم",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "submitting": "جارٍ تسجيل الدخول..."
+  },
+  "errors": {
+    "missing-credentials": "اسم المستخدم وكلمة المرور مطلوبان",
+    "invalid-credentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "unknown": "حدث خطأ غير متوقع"
+  },
+  "header": {
+    "logout": "تسجيل الخروج"
+  },
+  "menu": {
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمون",
+    "reports": "التقارير",
+    "settings": "الإعدادات"
+  },
+  "dashboard": {
+    "welcome": "مرحباً بك",
+    "description": "هذه هي صفحة لوحة التحكم الرئيسية."
+  },
+  "footer": {
+    "copyright": "© {{year}} Guardian — جميع الحقوق محفوظة."
+  }
+}

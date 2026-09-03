@@ -1,0 +1,36 @@
+{
+  "language": {
+    "en": "EN",
+    "ar": "AR",
+    "fa": "FA"
+  },
+  "login": {
+    "title": "Guardian",
+    "subtitle": "ورود به پنل مدیریت",
+    "username": "نام کاربری",
+    "password": "رمز عبور",
+    "submit": "ورود",
+    "submitting": "در حال ورود..."
+  },
+  "errors": {
+    "missing-credentials": "نام کاربری و رمز عبور الزامی است",
+    "invalid-credentials": "نام کاربری یا رمز عبور اشتباه است",
+    "unknown": "خطای ناشناخته‌ای رخ داد"
+  },
+  "header": {
+    "logout": "خروج"
+  },
+  "menu": {
+    "dashboard": "داشبورد",
+    "users": "کاربران",
+    "reports": "گزارش‌ها",
+    "settings": "تنظیمات"
+  },
+  "dashboard": {
+    "welcome": "خوش آمدید",
+    "description": "این صفحه داشبورد اصلی است."
+  },
+  "footer": {
+    "copyright": "© {{year}} Guardian — تمامی حقوق محفوظ است."
+  }
+}

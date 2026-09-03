@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next';
 import './Footer.css';
 
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="app-footer">
-      <span>© {new Date().getFullYear()} Guardian — تمامی حقوق محفوظ است.</span>
+      <span>{t('footer.copyright', { year: new Date().getFullYear() })}</span>
     </footer>
   );
 }

@@ -9,7 +9,7 @@
   --danger: #d92d20;
   --shadow: rgba(0, 0, 0, 0.08) 0 10px 15px -3px, rgba(0, 0, 0, 0.04) 0 4px 6px -2px;
 
-  font: 15px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  font: 15px/1.6 system-ui, 'Segoe UI', Tahoma, 'Noto Sans Arabic', Roboto, sans-serif;
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);

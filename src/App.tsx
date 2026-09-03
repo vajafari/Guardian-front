@@ -3,8 +3,11 @@ import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { useSyncDocumentDirection } from './hooks/useSyncDocumentDirection';
 
 function App() {
+  useSyncDocumentDirection();
+
   return (
     <AuthProvider>
       <Routes>

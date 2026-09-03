@@ -8,6 +8,7 @@ React + TypeScript + Vite admin shell with a login page and a protected dashboar
 - Vite
 - react-router-dom (client-side routing + route guarding)
 - Auth state via React Context, persisted to `localStorage`
+- react-i18next (English / Persian / Arabic, with RTL support)
 
 ## Getting started
 
@@ -28,10 +29,16 @@ src/
     AuthContext.tsx      # auth state, token/user persistence, login()/logout()
   routes/
     ProtectedRoute.tsx    # redirects to /login when unauthenticated
+  i18n/
+    index.ts              # i18next setup (en / fa / ar, browser language detection)
+    locales/{en,fa,ar}.json
+  hooks/
+    useSyncDocumentDirection.ts   # keeps <html dir/lang> in sync with the active language
   components/
     Header.tsx / Header.css
     Footer.tsx / Footer.css
-    SideMenu.tsx / SideMenu.css   # right-hand navigation panel
+    SideMenu.tsx / SideMenu.css   # right-hand navigation panel (mirrors to the left in RTL)
+    LanguageSwitcher.tsx / LanguageSwitcher.css   # EN / FA / AR toggle
   pages/
     LoginPage.tsx / LoginPage.css
     DashboardPage.tsx / DashboardPage.css   # Header + main + SideMenu + Footer
@@ -40,6 +47,24 @@ src/
   App.tsx        # route table
   main.tsx       # app entry, wraps App in BrowserRouter
 ```
+
+## Internationalization
+
+Three languages are wired up: English (`en`), Persian (`fa`) and Arabic (`ar`).
+The language switcher (login page and dashboard header) persists the choice to
+`localStorage` under `guardian.language`; on first visit it falls back to the
+browser's language, then to English.
+
+`fa` and `ar` are right-to-left. `useSyncDocumentDirection` sets `<html dir>` /
+`<html lang>` whenever the language changes, and the layout uses CSS logical
+properties (`inset-inline-*`, `border-inline-*`, flex order) rather than
+`left`/`right`, so the whole UI — including the side menu — mirrors correctly
+in RTL instead of needing separate RTL stylesheets.
+
+To add a new UI string: add the key to all three files in `src/i18n/locales/`,
+then read it with `useTranslation()`'s `t()`. Mock-auth error messages are
+looked up the same way, keyed by the error `code` from `AuthError`
+(`src/types/auth.ts`) rather than a hardcoded string, so they translate too.
 
 ## Mock auth service
 

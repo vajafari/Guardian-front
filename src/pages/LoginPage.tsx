@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import './LoginPage.css';
 
 export function LoginPage() {
@@ -9,6 +11,7 @@ export function LoginPage() {
   const { login, isLoading, error } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   const from = (location.state as { from?: string } | null)?.from ?? '/dashboard';
 
@@ -24,12 +27,16 @@ export function LoginPage() {
 
   return (
     <div className="login-page">
+      <div className="login-language">
+        <LanguageSwitcher />
+      </div>
+
       <form className="login-card" onSubmit={handleSubmit}>
-        <h1 className="login-title">Guardian</h1>
-        <p className="login-subtitle">ورود به پنل مدیریت</p>
+        <h1 className="login-title">{t('login.title')}</h1>
+        <p className="login-subtitle">{t('login.subtitle')}</p>
 
         <label className="login-label" htmlFor="username">
-          نام کاربری
+          {t('login.username')}
         </label>
         <input
           id="username"
@@ -42,7 +49,7 @@ export function LoginPage() {
         />
 
         <label className="login-label" htmlFor="password">
-          رمز عبور
+          {t('login.password')}
         </label>
         <input
           id="password"
@@ -54,10 +61,10 @@ export function LoginPage() {
           required
         />
 
-        {error && <p className="login-error">{error}</p>}
+        {error && <p className="login-error">{t(`errors.${error}`)}</p>}
 
         <button className="login-submit" type="submit" disabled={isLoading}>
-          {isLoading ? 'در حال ورود...' : 'ورود'}
+          {isLoading ? t('login.submitting') : t('login.submit')}
         </button>
       </form>
     </div>

@@ -1,9 +1,16 @@
 .login-page {
+  position: relative;
   min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg);
+}
+
+.login-language {
+  position: absolute;
+  top: 20px;
+  inset-inline-end: 20px;
 }
 
 .login-card {

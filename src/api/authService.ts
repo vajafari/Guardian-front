@@ -1,4 +1,4 @@
-import type { LoginCredentials, LoginResponse } from '../types/auth';
+import { AuthError, type LoginCredentials, type LoginResponse } from '../types/auth';
 
 const MOCK_LATENCY_MS = 600;
 
@@ -28,11 +28,11 @@ export function login({ username, password }: LoginCredentials): Promise<LoginRe
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (!username.trim() || !password.trim()) {
-        reject(new Error('نام کاربری و رمز عبور الزامی است'));
+        reject(new AuthError('missing-credentials'));
         return;
       }
       if (password.length < 4) {
-        reject(new Error('نام کاربری یا رمز عبور اشتباه است'));
+        reject(new AuthError('invalid-credentials'));
         return;
       }
       resolve({

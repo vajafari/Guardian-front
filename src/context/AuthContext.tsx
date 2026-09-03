@@ -1,13 +1,13 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { login as loginRequest } from '../api/authService';
-import type { AuthUser, LoginCredentials } from '../types/auth';
+import { AuthError, type AuthErrorCode, type AuthUser, type LoginCredentials } from '../types/auth';
 
 interface AuthContextValue {
   user: AuthUser | null;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  error: string | null;
+  error: AuthErrorCode | null;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => void;
 }
@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return stored ? (JSON.parse(stored) as AuthUser) : null;
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<AuthErrorCode | null>(null);
 
   const login = async (credentials: LoginCredentials) => {
     setIsLoading(true);
@@ -38,8 +38,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(TOKEN_STORAGE_KEY, response.token);
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(response.user));
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'خطای ناشناخته رخ داد';
-      setError(message);
+      const code = err instanceof AuthError ? err.code : 'unknown';
+      setError(code);
       throw err;
     } finally {
       setIsLoading(false);

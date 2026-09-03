@@ -1,0 +1,36 @@
+{
+  "language": {
+    "en": "EN",
+    "ar": "AR",
+    "fa": "FA"
+  },
+  "login": {
+    "title": "Guardian",
+    "subtitle": "Sign in to the admin panel",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in..."
+  },
+  "errors": {
+    "missing-credentials": "Username and password are required",
+    "invalid-credentials": "Incorrect username or password",
+    "unknown": "Something went wrong"
+  },
+  "header": {
+    "logout": "Log out"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "reports": "Reports",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "description": "This is the main dashboard page."
+  },
+  "footer": {
+    "copyright": "© {{year}} Guardian — All rights reserved."
+  }
+}

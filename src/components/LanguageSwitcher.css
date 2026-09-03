@@ -1,0 +1,29 @@
+.language-switcher {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.language-switcher__option {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+
+.language-switcher__option:hover {
+  color: var(--text);
+}
+
+.language-switcher__option--active {
+  background: var(--accent);
+  color: #fff;
+}
