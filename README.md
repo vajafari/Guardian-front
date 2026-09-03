@@ -17,11 +17,12 @@ React + TypeScript + Vite admin shell with a login page and a protected dashboar
 
 ```bash
 npm install
+cp .env.example .env
 npm run dev
 ```
 
 Sign-in needs the backend described in [Backend integration](#backend-integration)
-running and reachable at `VITE_API_BASE_URL` (see `.env`).
+running and reachable at `VITE_API_BASE_URL` (see `.env.example`).
 
 ## Project structure
 
@@ -127,9 +128,10 @@ page.
 ## Backend integration
 
 Guardian talks to a real backend now (no more mocked auth). The base URL comes
-from the `VITE_API_BASE_URL` env var (`.env`) — override it per machine in a
-git-ignored `.env.local` if needed. Vite only reads `.env*` files at startup,
-so restart `npm run dev` after changing it.
+from the `VITE_API_BASE_URL` env var. `.env` is git-ignored (each machine
+points at its own backend) — copy `.env.example` to `.env` and adjust it
+locally. Vite only reads `.env*` files at startup, so restart `npm run dev`
+after changing it.
 
 **Working around the backend's CORS gap for now** — `VITE_API_BASE_URL` is
 currently *empty* on purpose, so requests go out same-origin (e.g.
