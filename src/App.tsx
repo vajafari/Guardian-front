@@ -6,16 +6,18 @@ import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { useSyncDocumentDirection } from './hooks/useSyncDocumentDirection';
 import { ConfigProvider } from './components/ui';
+import { useTheme } from './context/ThemeContext';
 
 function App() {
   useSyncDocumentDirection();
   const { i18n } = useTranslation();
+  const { theme } = useTheme();
   const language = i18n.resolvedLanguage ?? 'en';
 
   return (
     <ConfigProvider
       value={{
-        mode: 'light',
+        mode: theme,
         locale: language,
         controlSize: 'md',
         direction: i18n.dir(language),

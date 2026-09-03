@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { ThemeToggle } from '../components/ThemeToggle';
 import { Alert, Button, Card, FormContainer, FormItem, Input } from '../components/ui';
 
 export function LoginPage() {
@@ -26,7 +27,11 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-svh flex items-center justify-center bg-gray-100 dark:bg-gray-950 p-4">
+    <div className="relative min-h-svh flex items-center justify-center bg-gray-100 dark:bg-gray-950 p-4">
+      <div className="absolute top-4 end-4">
+        <ThemeToggle />
+      </div>
+
       <Card className="w-full max-w-sm" bodyClass="p-8">
         <h1 className="text-3xl font-bold text-center text-primary mb-1">
           {t('login.title')}
