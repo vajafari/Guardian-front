@@ -1,0 +1,255 @@
+@layer components {
+  .button {
+    @apply font-bold outline-none whitespace-nowrap content-center;
+  }
+
+  .button-press-feedback {
+    @apply transition-transform active:scale-[0.98];
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-2xl;
+  }
+
+  .card-border {
+    @apply border border-gray-200 dark:border-gray-800;
+  }
+
+  .card-shadow {
+    @apply shadow-[0_0.125rem_0.25rem_rgba(0,0,0,0.15)] dark:shadow-[0_0.125rem_0.25rem_rgba(0,0,0,0.15),inset_0_0_0_0.0625rem_rgba(254,254,254,.1)] border-b border-gray-200 dark:border-gray-600 dark:border-none;
+  }
+
+  .card-header-border {
+    @apply border-b border-gray-200 dark:border-gray-700 rounded-t-2xl;
+  }
+
+  .card-header-extra {
+    @apply flex justify-between items-center;
+  }
+
+  .card-footer {
+    @apply rounded-bl-lg rounded-br-lg;
+  }
+
+  .card-footer-border {
+    @apply border-t border-gray-200 dark:border-gray-600;
+  }
+
+  .card-header,
+  .card-footer {
+    @apply py-3 px-5;
+  }
+
+  .card-body {
+    @apply p-5;
+  }
+
+  .card-gutterless {
+    @apply p-0;
+  }
+}
+
+@layer components {
+  .input {
+    @apply border
+      border-gray-100
+      dark:border-gray-700
+      bg-gray-100
+      dark:bg-gray-700
+      rounded-xl
+      w-full
+      py-2 px-3
+      focus:outline-none
+      focus:ring-1
+      focus-within:ring-1
+      focus:bg-transparent
+      focus:dark:bg-transparent
+      appearance-none
+      transition
+      duration-150
+      text-gray-800
+      dark:text-gray-100
+      font-semibold
+      read-only:focus:ring-0
+      read-only:focus:border-transparent!
+      read-only:focus:bg-gray-100
+      read-only:focus:dark:bg-gray-700
+      ease-in-out;
+
+    &::placeholder {
+      @apply text-gray-400;
+    }
+
+    &.input-invalid {
+      @apply focus:ring-1 focus:ring-error focus:border-error focus:bg-transparent bg-error-subtle focus-within:ring-1 focus-within:ring-error focus-within:border-error focus-within:bg-transparent;
+
+      &::placeholder {
+        @apply text-error;
+      }
+    }
+
+    &.input-lg {
+      @apply text-lg;
+    }
+  }
+
+  .input-addon {
+    @apply flex items-center px-4 rounded-xl border border-gray-200 bg-gray-200 dark:border-gray-700 dark:bg-gray-600;
+  }
+
+  .input-textarea {
+    min-height: 7rem;
+
+    &.input-sm {
+      min-height: 5rem;
+    }
+  }
+
+  .input-wrapper {
+    @apply relative w-full flex;
+  }
+
+  .input-disabled {
+    @apply opacity-50 !cursor-not-allowed;
+  }
+
+  .input-suffix-start {
+    @apply absolute top-2/4 transform -translate-y-2/4 ltr:left-2.5 rtl:right-2.5;
+  }
+
+  .input-suffix-end {
+    @apply absolute top-2/4 transform -translate-y-2/4 ltr:right-2.5 rtl:left-2.5 flex;
+  }
+}
+
+@layer components {
+  .input-group {
+    @apply flex items-center;
+
+    .input {
+      &:focus,
+      &:focus-within {
+        @apply z-20;
+      }
+    }
+
+    > .input,
+    > .input-addon,
+    > .button {
+      &:first-child {
+        @apply ltr:rounded-r-none! rtl:rounded-l-none!;
+      }
+
+      &:last-child {
+        @apply ltr:rounded-l-none! rtl:rounded-r-none!;
+      }
+
+      &:not(:first-child) {
+        @apply ltr:rounded-l-none! ltr:-ml-px rtl:rounded-r-none! rtl:-mr-px;
+      }
+
+      &:not(:last-child) {
+        @apply ltr:rounded-r-none! rtl:rounded-l-none!;
+      }
+    }
+
+    > .button {
+      @apply z-10 hover:z-20;
+    }
+  }
+}
+
+@layer components {
+  .form-item {
+    @apply mb-7 relative;
+
+    &.horizontal {
+      @apply flex flex-auto;
+    }
+
+    &.vertical {
+      @apply flex flex-col;
+    }
+
+    &.inline {
+      @apply md:inline-flex! mr-3 rtl:ml-3;
+    }
+  }
+
+  .form-label {
+    @apply flex items-center font-semibold;
+
+    &.invalid {
+      @apply text-error;
+    }
+  }
+
+  .form-explain {
+    @apply text-error absolute font-semibold;
+  }
+
+  .form-container {
+    &.inline {
+      @apply md:flex! items-center;
+    }
+  }
+}
+
+@layer components {
+  .alert {
+    @apply p-4 relative flex;
+  }
+}
+
+@layer components {
+  .close-button {
+    &[type='button'],
+    &[type='reset'] {
+      @apply outline-none text-lg rounded-full p-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 hover:text-gray-800 dark:hover:text-gray-100;
+    }
+  }
+}
+
+@layer components {
+  .menu {
+    @apply flex flex-col gap-1;
+  }
+
+  .menu-title {
+    @apply uppercase font-semibold px-3 mt-4 mb-2 text-gray-500;
+  }
+
+  .menu-item {
+    @apply cursor-pointer font-semibold px-3 rounded-lg flex items-center w-full whitespace-nowrap gap-x-2 transition-colors duration-150 text-gray-600 dark:text-gray-400;
+
+    &.menu-item-hoverable {
+      @apply hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-700;
+    }
+
+    &.menu-item-active {
+      @apply text-primary hover:text-primary;
+    }
+
+    a {
+      @apply outline-0;
+    }
+  }
+
+  .menu-collapse-item {
+    @apply cursor-pointer select-none font-semibold px-3 h-12 rounded-lg flex items-center justify-between transition-colors duration-200 text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-700;
+
+    &.menu-collapse-item-active {
+      @apply text-primary bg-primary-subtle hover:bg-primary-subtle;
+    }
+  }
+
+  .menu-item-divider {
+    @apply border-b border-gray-200 dark:border-gray-700 my-2;
+  }
+
+  .menu-item-disabled {
+    @apply cursor-not-allowed opacity-60;
+  }
+}

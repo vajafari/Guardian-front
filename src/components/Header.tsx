@@ -1,21 +1,23 @@
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import { Button } from './ui';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import './Header.css';
 
 export function Header() {
   const { user, logout } = useAuth();
   const { t } = useTranslation();
 
   return (
-    <header className="app-header">
-      <div className="app-header__brand">Guardian</div>
-      <div className="app-header__actions">
+    <header className="flex items-center justify-between px-6 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="text-xl font-bold text-primary">Guardian</div>
+      <div className="flex items-center gap-4">
         <LanguageSwitcher />
-        {user && <span className="app-header__user">{user.username}</span>}
-        <button type="button" className="app-header__logout" onClick={logout}>
+        {user && (
+          <span className="text-sm text-gray-600 dark:text-gray-300">{user.username}</span>
+        )}
+        <Button size="sm" onClick={logout}>
           {t('header.logout')}
-        </button>
+        </Button>
       </div>
     </header>
   );

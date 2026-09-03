@@ -9,6 +9,8 @@ React + TypeScript + Vite admin shell with a login page and a protected dashboar
 - react-router-dom (client-side routing + route guarding)
 - Auth state via React Context, persisted to `localStorage`
 - react-i18next (English / Persian / Arabic, with RTL support)
+- Tailwind CSS v4 + a small hand-picked UI kit (Button, Card, Input, Form, Alert,
+  Menu…) ported from the "Ecme" template — see [UI kit](#ui-kit) below
 
 ## Getting started
 
@@ -35,16 +37,20 @@ src/
   hooks/
     useSyncDocumentDirection.ts   # keeps <html dir/lang> in sync with the active language
   components/
-    Header.tsx / Header.css
-    Footer.tsx / Footer.css
-    SideMenu.tsx / SideMenu.css   # right-hand navigation panel (mirrors to the left in RTL)
-    LanguageSwitcher.tsx / LanguageSwitcher.css   # EN / FA / AR toggle
+    ui/            # hand-picked component kit, see "UI kit" below
+    Header.tsx
+    Footer.tsx
+    SideMenu.tsx   # right-hand navigation panel (mirrors to the left in RTL)
+    LanguageSwitcher.tsx   # EN / FA / AR toggle
   pages/
-    LoginPage.tsx / LoginPage.css
-    DashboardPage.tsx / DashboardPage.css   # Header + main + SideMenu + Footer
+    LoginPage.tsx
+    DashboardPage.tsx   # Header + main + SideMenu + Footer
+  styles/
+    theme.css        # Tailwind import + config + CSS custom-property theme (colors, base type)
+    components.css    # component-layer CSS (.button, .card, .input, .menu-item, ...)
   types/
     auth.ts
-  App.tsx        # route table
+  App.tsx        # route table, wraps everything in the ui kit's ConfigProvider
   main.tsx       # app entry, wraps App in BrowserRouter
 ```
 
@@ -65,6 +71,33 @@ To add a new UI string: add the key to all three files in `src/i18n/locales/`,
 then read it with `useTranslation()`'s `t()`. Mock-auth error messages are
 looked up the same way, keyed by the error `code` from `AuthError`
 (`src/types/auth.ts`) rather than a hardcoded string, so they translate too.
+
+## UI kit
+
+`src/components/ui/` is a small, self-contained set of presentational
+components (`Button`, `Card`, `Input`, `InputGroup`, `Form`/`FormItem`, `Alert`,
+`Spinner`, `Menu`/`MenuItem`, `ConfigProvider`, ...) ported as-is from a
+purchased admin template ("Ecme" by themenate — see the license that shipped
+with it for usage terms). Only the presentational layer was taken; all
+app logic (auth, i18n, routing) stays hand-written in Guardian.
+
+These components read a `direction` / `controlSize` / `locale` from
+`ConfigProvider`, which `App.tsx` wires up to the active i18n language, so
+they automatically follow the app's RTL state — no separate theming needed.
+
+Styling is Tailwind CSS v4 (`tailwind.config.cjs`, `postcss.config.cjs`) plus
+two files under `src/styles/`: `theme.css` (color tokens as CSS custom
+properties, so dark mode / re-theming is a matter of changing variables) and
+`components.css` (the `@apply`-based classes each component's `className`
+prop about, e.g. `.button`, `.card`, `.menu-item`).
+
+Only the subset needed by the current pages was copied over — the source
+template has a much larger set (DataPicker, Table, Tabs, Dialog, Select,
+Avatar, Dropdown, ...). To pull in another component, copy its folder from
+`Guardian Template/TypeScript/starter/src/components/ui/<Name>` into
+`src/components/ui/<Name>`, add its CSS block from
+`.../assets/styles/components/_<name>.css` into `src/styles/components.css`,
+and re-export it from `src/components/ui/index.ts`.
 
 ## Mock auth service
 

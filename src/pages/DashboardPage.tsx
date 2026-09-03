@@ -2,18 +2,17 @@ import { useTranslation } from 'react-i18next';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { SideMenu } from '../components/SideMenu';
-import './DashboardPage.css';
 
 export function DashboardPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="dashboard">
+    <div className="min-h-svh flex flex-col">
       <Header />
-      <div className="dashboard__body">
-        <main className="dashboard__main">
+      <div className="flex-1 flex">
+        <main className="flex-1 p-8">
           <h1>{t('dashboard.welcome')}</h1>
-          <p>{t('dashboard.description')}</p>
+          <p className="mt-2 text-gray-500 dark:text-gray-400">{t('dashboard.description')}</p>
         </main>
         <SideMenu />
       </div>

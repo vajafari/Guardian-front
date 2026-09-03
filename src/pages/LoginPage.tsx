@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
-import './LoginPage.css';
+import { Alert, Button, Card, FormContainer, FormItem, Input } from '../components/ui';
 
 export function LoginPage() {
   const [username, setUsername] = useState('');
@@ -26,47 +26,57 @@ export function LoginPage() {
   };
 
   return (
-    <div className="login-page">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <h1 className="login-title">{t('login.title')}</h1>
-        <p className="login-subtitle">{t('login.subtitle')}</p>
+    <div className="min-h-svh flex items-center justify-center bg-gray-100 dark:bg-gray-950 p-4">
+      <Card className="w-full max-w-sm" bodyClass="p-8">
+        <h1 className="text-3xl font-bold text-center text-primary mb-1">
+          {t('login.title')}
+        </h1>
+        <p className="text-center text-gray-500 dark:text-gray-400 mb-6">
+          {t('login.subtitle')}
+        </p>
 
-        <label className="login-label" htmlFor="username">
-          {t('login.username')}
-        </label>
-        <input
-          id="username"
-          className="login-input"
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          autoComplete="username"
-          required
-        />
+        {error && (
+          <Alert type="danger" className="mb-4">
+            {t(`errors.${error}`)}
+          </Alert>
+        )}
 
-        <label className="login-label" htmlFor="password">
-          {t('login.password')}
-        </label>
-        <input
-          id="password"
-          className="login-input"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          autoComplete="current-password"
-          required
-        />
+        <form onSubmit={handleSubmit}>
+          <FormContainer>
+            <FormItem label={t('login.username')} htmlFor="username">
+              <Input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                autoComplete="username"
+                required
+              />
+            </FormItem>
 
-        {error && <p className="login-error">{t(`errors.${error}`)}</p>}
+            <FormItem label={t('login.password')} htmlFor="password">
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                autoComplete="current-password"
+                required
+              />
+            </FormItem>
 
-        <button className="login-submit" type="submit" disabled={isLoading}>
-          {isLoading ? t('login.submitting') : t('login.submit')}
-        </button>
+            <Button variant="solid" block type="submit" loading={isLoading}>
+              {isLoading ? t('login.submitting') : t('login.submit')}
+            </Button>
 
-        <div className="login-language">
-          <LanguageSwitcher />
-        </div>
-      </form>
+            <div className="flex justify-center mt-5">
+              <LanguageSwitcher />
+            </div>
+          </FormContainer>
+        </form>
+      </Card>
     </div>
   );
 }

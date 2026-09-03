@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import './SideMenu.css';
+import { Menu, MenuItem } from './ui';
 
 const MENU_KEYS = ['dashboard', 'users', 'reports', 'settings'] as const;
 
@@ -7,16 +7,14 @@ export function SideMenu() {
   const { t } = useTranslation();
 
   return (
-    <nav className="side-menu" aria-label="Main">
-      <ul className="side-menu__list">
+    <aside className="w-56 shrink-0 border-s border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
+      <Menu defaultActiveKeys={['dashboard']}>
         {MENU_KEYS.map((key) => (
-          <li key={key}>
-            <a className="side-menu__link" href="#">
-              {t(`menu.${key}`)}
-            </a>
-          </li>
+          <MenuItem key={key} eventKey={key}>
+            {t(`menu.${key}`)}
+          </MenuItem>
         ))}
-      </ul>
-    </nav>
+      </Menu>
+    </aside>
   );
 }
