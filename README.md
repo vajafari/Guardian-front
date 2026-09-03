@@ -153,6 +153,11 @@ session is cleared and `AuthContext` is notified via a
 `guardian:session-expired` window event — `ProtectedRoute` then redirects to
 `/login` on the next render.
 
+**Sign-out** — clicking "Log out" (in `UserMenu`) calls
+`POST /api/core/Auth/Logout` with the current `Authorization: Bearer <token>`
+header and an empty body, best-effort: the local session is cleared and the
+user is sent back to `/login` regardless of whether that call succeeds.
+
 **Local dev prerequisites** (both outside this repo, on the backend):
 - CORS must allow the Vite origin (`http://localhost:5173` by default) — the
   backend needs a policy that returns `Access-Control-Allow-Origin` for it,

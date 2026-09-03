@@ -49,3 +49,9 @@ export async function refreshSession(refreshToken: string): Promise<AuthTokenRes
   });
   return data;
 }
+
+export async function logout(token: string): Promise<void> {
+  await axios.post(`${API_BASE_URL}${AUTH_ENDPOINTS.logout}`, null, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}

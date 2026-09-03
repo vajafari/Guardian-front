@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { login as loginRequest } from '../api/authService';
+import { login as loginRequest, logout as logoutRequest } from '../api/authService';
 import {
   AUTH_SESSION_EXPIRED_EVENT,
   clearSession,
@@ -28,6 +28,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<AuthErrorCode | null>(null);
 
   const logout = () => {
+    const currentToken = getToken();
+    if (currentToken) {
+      // Best-effort — the local session is cleared below regardless of the API result.
+      logoutRequest(currentToken).catch(() => {});
+    }
     setToken(null);
     setUser(null);
     clearSession();
