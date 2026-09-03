@@ -24,6 +24,13 @@ npm run dev
 Sign-in needs the backend described in [Backend integration](#backend-integration)
 running and reachable at `VITE_API_BASE_URL` (see `.env.example`).
 
+The dev server runs on **`https://localhost:5173`** (via
+`@vitejs/plugin-basic-ssl` in `vite.config.ts`) — see
+[HTTPS in dev](#https-in-dev) for why. Its self-signed cert isn't trusted by
+the OS, so the first visit needs you to click through the browser's "your
+connection isn't private" warning (Advanced → Proceed) once per browser
+profile.
+
 ## Project structure
 
 ```
@@ -128,6 +135,33 @@ class before React mounts to avoid a flash of the wrong theme. `ThemeToggle`
 is the sun/moon button; it lives in `UserMenu` (header) and on the login
 page.
 
+## HTTPS in dev
+
+`vite.config.ts` loads `@vitejs/plugin-basic-ssl` so `npm run dev` serves
+over `https://localhost:5173` instead of http. This isn't just cosmetic: the
+backend runs on `https://localhost:44318`, and the captcha flow's session
+cookie (`cidcn`) needs the two origins to be **same-site**, which browsers
+determine by registrable domain *and* scheme together ("schemeful
+same-site"). `http://localhost:5173` vs `https://localhost:44318` differ in
+scheme, so browsers treated them as cross-site even though both are
+"localhost" — which silently drops cookies unless the backend opts them all
+the way out to `SameSite=None`. Matching the scheme is the actual fix;
+`SameSite=None; Secure` on the backend's cookie (kept regardless — see
+below) is what makes it work even across the differing *ports*, which still
+count as different origins.
+
+The cert this plugin generates is self-signed and unknown to the OS/browser
+trust store, so on a fresh browser profile you'll see a certificate warning
+on first visit — click through it (Chrome: Advanced → Proceed to
+localhost). This is different from the backend's ASP.NET Core dev cert,
+which gets trusted once via `dotnet dev-certs https --trust`; there's no
+equivalent one-time trust step for `basic-ssl`'s cert short of importing it
+into the OS store by hand, so the click-through repeats per fresh profile.
+
+Switching the dev server's scheme changes its origin string, so the
+backend's CORS `WithOrigins(...)` needs `https://localhost:5173`, not
+`http://localhost:5173` — see the prerequisites below.
+
 ## Backend integration
 
 Guardian talks to a real backend now (no more mocked auth). The base URL comes
@@ -173,20 +207,25 @@ real use of its automatic bearer-token/401-refresh handling.
 `src/api/accountService.ts` maps failures to a `ChangePasswordError`
 (`src/types/account.ts`), the same pattern as `AuthError`.
 
-The captcha image request sets an `HttpOnly`/`SameSite=Strict` session
-cookie (`cidcn`) that ties the generated image to the `securityImage` value
-checked later, so both the image fetch and the change-password POST go out
-with `withCredentials: true` — see the CORS/credentials prerequisite below.
+The captcha image request sets an `HttpOnly` session cookie (`cidcn`,
+`SameSite=None; Secure`) that ties the generated image to the
+`securityImage` value checked later, so both the image fetch and the
+change-password POST go out with `withCredentials: true` — see
+[HTTPS in dev](#https-in-dev) and the CORS/credentials prerequisite below
+for why that cookie needs those exact settings.
 
-**Local dev prerequisites** (both outside this repo, on the backend):
-- CORS must allow the Vite origin (`http://localhost:5173` by default) — the
-  backend needs a policy that returns `Access-Control-Allow-Origin` for it,
-  or the browser blocks the `Auth/Token` request at the preflight step even
-  though the request itself is correct.
+**Local dev prerequisites** (all outside this repo, on the backend):
+- CORS must allow the Vite origin — **`https://localhost:5173`** now that
+  the dev server runs on https (was `http://localhost:5173`; update
+  `WithOrigins(...)` if it still has the old scheme) — or the browser blocks
+  requests at the preflight step even though they're otherwise correct.
 - The captcha/change-password calls are credentialed (`withCredentials: true`,
   to carry the `cidcn` cookie), which additionally requires
   `Access-Control-Allow-Credentials: true` on those endpoints' CORS policy —
   and the origin can't be a wildcard (`*`) once credentials are involved.
+- That cookie needs `SameSite=None` + `Secure` (not `Strict`/`Lax`) to
+  survive being set and read back across two different ports, even though
+  both are now `https://localhost`.
 - The backend's HTTPS dev certificate needs to be trusted
   (`dotnet dev-certs https --trust` for an ASP.NET Core backend), or requests
   fail with a certificate error before they even reach CORS.
