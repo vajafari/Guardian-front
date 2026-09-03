@@ -27,10 +27,6 @@ export function LoginPage() {
 
   return (
     <div className="login-page">
-      <div className="login-language">
-        <LanguageSwitcher />
-      </div>
-
       <form className="login-card" onSubmit={handleSubmit}>
         <h1 className="login-title">{t('login.title')}</h1>
         <p className="login-subtitle">{t('login.subtitle')}</p>
@@ -66,6 +62,10 @@ export function LoginPage() {
         <button className="login-submit" type="submit" disabled={isLoading}>
           {isLoading ? t('login.submitting') : t('login.submit')}
         </button>
+
+        <div className="login-language">
+          <LanguageSwitcher />
+        </div>
       </form>
     </div>
   );
