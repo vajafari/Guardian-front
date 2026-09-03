@@ -4,15 +4,30 @@ export interface LoginCredentials {
 }
 
 export interface AuthUser {
-  username: string;
+  userId: string;
+  entityTitle: string;
 }
 
-export interface LoginResponse {
+/** Raw shape returned by POST /api/core/Auth/Token and /api/core/Auth/RefreshToken. */
+export interface AuthTokenResponse {
   token: string;
+  refreshToken: string;
+  entityTitle: string;
+  isOtpRequired: boolean;
+}
+
+export interface LoginResult {
+  token: string;
+  refreshToken: string;
   user: AuthUser;
 }
 
-export type AuthErrorCode = 'missing-credentials' | 'invalid-credentials' | 'unknown';
+export type AuthErrorCode =
+  | 'missing-credentials'
+  | 'invalid-credentials'
+  | 'otp-required'
+  | 'network-error'
+  | 'unknown';
 
 export class AuthError extends Error {
   code: AuthErrorCode;

@@ -1,44 +1,51 @@
-import { AuthError, type LoginCredentials, type LoginResponse } from '../types/auth';
+import axios, { AxiosError } from 'axios';
+import { API_BASE_URL, AUTH_ENDPOINTS } from './config';
+import { AuthError, type AuthTokenResponse, type LoginCredentials, type LoginResult } from '../types/auth';
 
-const MOCK_LATENCY_MS = 600;
-
-function base64UrlEncode(value: object): string {
-  const json = JSON.stringify(value);
-  const base64 = btoa(unescape(encodeURIComponent(json)));
-  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+function mapAuthError(err: unknown): AuthError {
+  if (!(err instanceof AxiosError)) {
+    return new AuthError('unknown');
+  }
+  if (!err.response) {
+    return new AuthError('network-error');
+  }
+  if (err.response.status === 401 || err.response.status === 400) {
+    return new AuthError('invalid-credentials');
+  }
+  return new AuthError('unknown');
 }
 
-function createMockJwt(username: string): string {
-  const header = { alg: 'HS256', typ: 'JWT' };
-  const nowSeconds = Math.floor(Date.now() / 1000);
-  const payload = {
-    sub: username,
-    name: username,
-    iat: nowSeconds,
-    exp: nowSeconds + 60 * 60,
+export async function login({ username, password }: LoginCredentials): Promise<LoginResult> {
+  if (!username.trim() || !password.trim()) {
+    throw new AuthError('missing-credentials');
+  }
+
+  let data: AuthTokenResponse;
+  try {
+    const response = await axios.post<AuthTokenResponse>(`${API_BASE_URL}${AUTH_ENDPOINTS.token}`, {
+      userId: username,
+      secret: password,
+    });
+    data = response.data;
+  } catch (err) {
+    throw mapAuthError(err);
+  }
+
+  if (data.isOtpRequired) {
+    // No OTP verification step exists yet — surface this rather than pretending sign-in succeeded.
+    throw new AuthError('otp-required');
+  }
+
+  return {
+    token: data.token,
+    refreshToken: data.refreshToken,
+    user: { userId: username, entityTitle: data.entityTitle },
   };
-  return `${base64UrlEncode(header)}.${base64UrlEncode(payload)}.mock-signature`;
 }
 
-/**
- * Mock implementation — replace with a real HTTP call (e.g. `fetch('/api/auth/login', ...)`)
- * once a backend is available. Keeps the same signature so callers won't need to change.
- */
-export function login({ username, password }: LoginCredentials): Promise<LoginResponse> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (!username.trim() || !password.trim()) {
-        reject(new AuthError('missing-credentials'));
-        return;
-      }
-      if (password.length < 4) {
-        reject(new AuthError('invalid-credentials'));
-        return;
-      }
-      resolve({
-        token: createMockJwt(username),
-        user: { username },
-      });
-    }, MOCK_LATENCY_MS);
+export async function refreshSession(refreshToken: string): Promise<AuthTokenResponse> {
+  const { data } = await axios.post<AuthTokenResponse>(`${API_BASE_URL}${AUTH_ENDPOINTS.refreshToken}`, {
+    refreshToken,
   });
+  return data;
 }

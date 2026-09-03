@@ -255,6 +255,24 @@
 }
 
 @layer components {
+  .dropdown-menu {
+    @apply rounded-2xl bg-white dark:bg-gray-900 ring-0 shadow-[0px_48px_64px_-16px_rgba(0,0,0,0.25)] border border-gray-300 dark:border-gray-600 focus:outline-none p-3 z-30 outline-none;
+  }
+
+  .dropdown-toggle-default {
+    @apply cursor-pointer p-2 inline-block font-semibold;
+
+    &.dropdown-toggle-disabled {
+      @apply opacity-60;
+    }
+  }
+
+  .dropdown-toggle-disabled {
+    @apply cursor-not-allowed;
+  }
+}
+
+@layer components {
   .header {
     @apply bg-white flex z-[31] sticky top-0 w-full dark:bg-gray-800;
   }

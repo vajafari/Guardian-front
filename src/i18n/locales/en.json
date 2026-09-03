@@ -15,6 +15,8 @@
   "errors": {
     "missing-credentials": "Username and password are required",
     "invalid-credentials": "Incorrect username or password",
+    "otp-required": "This account requires OTP verification, which isn't supported yet",
+    "network-error": "Couldn't reach the server. Check your connection and try again",
     "unknown": "Something went wrong"
   },
   "header": {

@@ -7,6 +7,7 @@ React + TypeScript + Vite admin shell with a login page and a protected dashboar
 - React 19 + TypeScript
 - Vite
 - react-router-dom (client-side routing + route guarding)
+- Axios, talking to a real backend — see [Backend integration](#backend-integration)
 - Auth state via React Context, persisted to `localStorage`
 - react-i18next (English / Persian / Arabic, with RTL support)
 - Tailwind CSS v4 + a small hand-picked UI kit (Button, Card, Input, Form, Alert,
@@ -19,14 +20,19 @@ npm install
 npm run dev
 ```
 
-Log in with any username and a password of 4+ characters — the auth service is currently mocked (see below).
+Sign-in needs the backend described in [Backend integration](#backend-integration)
+running and reachable at `VITE_API_BASE_URL` (see `.env`).
 
 ## Project structure
 
 ```
 src/
   api/
-    authService.ts      # mocked login call — returns a fake JWT
+    config.ts          # API_BASE_URL (from VITE_API_BASE_URL) + auth endpoint paths
+    authService.ts      # login()/refreshSession() — real calls to /api/core/Auth/*
+    httpClient.ts        # axios instance for *authenticated* calls: attaches the
+                          # bearer token, refreshes + retries once on a 401
+    tokenStorage.ts       # localStorage helpers shared by AuthContext and httpClient
   context/
     AuthContext.tsx      # auth state, token/user persistence, login()/logout()
   routes/
@@ -40,7 +46,9 @@ src/
     ui/            # hand-picked component kit, see "UI kit" below
     Header.tsx
     Footer.tsx
-    SideMenu.tsx   # right-hand navigation panel (mirrors to the left in RTL)
+    SideMenu.tsx    # right-hand navigation panel, pinned to the physical right in RTL too
+    UserMenu.tsx    # header dropdown (username) holding ThemeToggle, LanguageSwitcher, logout
+    ThemeToggle.tsx  # light/dark switch, see "Dark mode" below
     LanguageSwitcher.tsx   # EN / FA / AR toggle
   pages/
     LoginPage.tsx
@@ -74,15 +82,15 @@ any import-chain rebasing issues) and scopes it with `html[lang='fa'] { font-fam
 English and Arabic keep the plain system-font stack from `tailwind.config.cjs`.
 
 To add a new UI string: add the key to all three files in `src/i18n/locales/`,
-then read it with `useTranslation()`'s `t()`. Mock-auth error messages are
-looked up the same way, keyed by the error `code` from `AuthError`
+then read it with `useTranslation()`'s `t()`. Auth error messages are looked
+up the same way, keyed by the error `code` from `AuthError`
 (`src/types/auth.ts`) rather than a hardcoded string, so they translate too.
 
 ## UI kit
 
 `src/components/ui/` is a small, self-contained set of presentational
 components (`Button`, `Card`, `Input`, `InputGroup`, `Form`/`FormItem`, `Alert`,
-`Spinner`, `Menu`/`MenuItem`, `ConfigProvider`, ...) ported as-is from a
+`Spinner`, `Menu`/`MenuItem`, `Dropdown`, `ConfigProvider`, ...) ported as-is from a
 purchased admin template ("Ecme" by themenate — see the license that shipped
 with it for usage terms). Only the presentational layer was taken; all
 app logic (auth, i18n, routing) stays hand-written in Guardian.
@@ -98,20 +106,77 @@ properties, so dark mode / re-theming is a matter of changing variables) and
 prop about, e.g. `.button`, `.card`, `.menu-item`).
 
 Only the subset needed by the current pages was copied over — the source
-template has a much larger set (DataPicker, Table, Tabs, Dialog, Select,
-Avatar, Dropdown, ...). To pull in another component, copy its folder from
+template has a much larger set (DatePicker, Table, Tabs, Dialog, Select,
+Avatar, ...). To pull in another component, copy its folder from
 `Guardian Template/TypeScript/starter/src/components/ui/<Name>` into
 `src/components/ui/<Name>`, add its CSS block from
 `.../assets/styles/components/_<name>.css` into `src/styles/components.css`,
 and re-export it from `src/components/ui/index.ts`.
 
-## Mock auth service
+## Dark mode
 
-`src/api/authService.ts` fakes a `POST /auth/login` call: it validates the inputs,
-waits ~600ms, and resolves a locally-generated (unsigned) JWT-shaped token plus a
-user object. It has the same shape a real API client would have, so swapping it
-for a real `fetch`/`axios` call later shouldn't require touching `AuthContext` or
-the pages that call `login()`.
+`ThemeContext`/`ThemeProvider` (`src/context/ThemeContext.tsx`) track
+light/dark, persist the choice to `localStorage` (`guardian.theme`), and
+toggle the `dark` class on `<html>` — the same `darkMode: 'class'` strategy
+Tailwind's already configured with, so every `dark:` utility in the ui kit
+and app code just works. A small inline script in `index.html` applies the
+class before React mounts to avoid a flash of the wrong theme. `ThemeToggle`
+is the sun/moon button; it lives in `UserMenu` (header) and on the login
+page.
+
+## Backend integration
+
+Guardian talks to a real backend now (no more mocked auth). The base URL comes
+from the `VITE_API_BASE_URL` env var (`.env`) — override it per machine in a
+git-ignored `.env.local` if needed. Vite only reads `.env*` files at startup,
+so restart `npm run dev` after changing it.
+
+**Working around the backend's CORS gap for now** — `VITE_API_BASE_URL` is
+currently *empty* on purpose, so requests go out same-origin (e.g.
+`/api/core/Auth/Token` against `http://localhost:5173`) and `vite.config.ts`'s
+`server.proxy` forwards anything under `/api` to `https://localhost:44318`
+server-side (Node isn't subject to CORS, so this fully sidesteps the browser
+block — `secure: false` on the proxy also shrugs off the backend's
+self-signed dev cert). This only works with `npm run dev`; it's not something
+a production build gets for free. Once the backend fixes CORS (see the CORS
+prompt handed to them), switch `VITE_API_BASE_URL` back to the real absolute
+URL (`https://localhost:44318`) and the proxy in `vite.config.ts` becomes
+unnecessary (harmless to leave in place, or delete the `server.proxy` block).
+
+**Sign-in** — `POST {VITE_API_BASE_URL}/api/core/Auth/Token` with
+`{ userId, secret }` (mapped from the username/password form fields),
+returning `{ token, refreshToken, entityTitle, isOtpRequired }`. If
+`isOtpRequired` comes back `true`, login is rejected with an `otp-required`
+error — there's no OTP-entry step built yet.
+
+**Token refresh** — the access token is an *encrypted* JWT (`alg: dir`), so
+its expiry can't be read client-side; refreshing is reactive rather than
+timer-based. `httpClient.ts` (an axios instance meant for future authenticated
+endpoints — nothing calls it yet, since the dashboard has no real data calls
+of its own) attaches `Authorization: Bearer <token>` to every request via a
+request interceptor, and its response interceptor calls
+`POST /api/core/Auth/RefreshToken` with `{ refreshToken }` on a 401, queueing
+any other requests that 401 while a refresh is already in flight so only one
+refresh call goes out, then retries the original request(s) with the new
+token. If the refresh call itself fails (or there's no refresh token), the
+session is cleared and `AuthContext` is notified via a
+`guardian:session-expired` window event — `ProtectedRoute` then redirects to
+`/login` on the next render.
+
+**Local dev prerequisites** (both outside this repo, on the backend):
+- CORS must allow the Vite origin (`http://localhost:5173` by default) —
+  confirmed while building this: without it, the browser blocks the
+  `Auth/Token` request at the preflight (`PreflightMissingAllowOriginHeader`)
+  even though the request itself is correct.
+- The backend's HTTPS dev certificate needs to be trusted
+  (`dotnet dev-certs https --trust` for an ASP.NET Core backend), or requests
+  fail with a certificate error before they even reach CORS.
+
+The refresh endpoint path/payload (`/api/core/Auth/RefreshToken` with
+`{ refreshToken }`) is inferred from the `/Auth/Token` naming convention, not
+confirmed against a real response — if the actual backend differs, only
+`AUTH_ENDPOINTS.refreshToken` in `src/api/config.ts` and the request body in
+`refreshSession()` (`src/api/authService.ts`) need to change.
 
 ## Available scripts
 
@@ -122,5 +187,9 @@ the pages that call `login()`.
 
 ## Next steps
 
-See the setup notes shared alongside this repo for suggested next steps
-(real backend integration, refresh tokens, CI, etc.).
+- Confirm the real `/api/core/Auth/RefreshToken` contract against the backend
+  (see [Backend integration](#backend-integration)) and adjust
+  `src/api/config.ts`/`authService.ts` if it differs from the guess made here.
+- Build an OTP-entry step, or drop the `isOtpRequired` check if this backend
+  never needs it for admin accounts.
+- CI (lint + build on push).

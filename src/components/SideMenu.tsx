@@ -14,7 +14,7 @@ const MENU_ITEMS = [
   { key: 'settings', icon: HiOutlineCog },
 ] as const;
 
-const SIDE_NAV_WIDTH = 290;
+const SIDE_NAV_WIDTH = 200;
 
 export function SideMenu() {
   const { t } = useTranslation();

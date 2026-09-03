@@ -1,5 +1,12 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { login as loginRequest } from '../api/authService';
+import {
+  AUTH_SESSION_EXPIRED_EVENT,
+  clearSession,
+  getStoredUser,
+  getToken,
+  setSession,
+} from '../api/tokenStorage';
 import { AuthError, type AuthErrorCode, type AuthUser, type LoginCredentials } from '../types/auth';
 
 interface AuthContextValue {
@@ -12,31 +19,33 @@ interface AuthContextValue {
   logout: () => void;
 }
 
-const TOKEN_STORAGE_KEY = 'guardian.token';
-const USER_STORAGE_KEY = 'guardian.user';
-
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(() =>
-    localStorage.getItem(TOKEN_STORAGE_KEY),
-  );
-  const [user, setUser] = useState<AuthUser | null>(() => {
-    const stored = localStorage.getItem(USER_STORAGE_KEY);
-    return stored ? (JSON.parse(stored) as AuthUser) : null;
-  });
+  const [token, setToken] = useState<string | null>(getToken);
+  const [user, setUser] = useState<AuthUser | null>(getStoredUser);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AuthErrorCode | null>(null);
+
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    clearSession();
+  };
+
+  useEffect(() => {
+    window.addEventListener(AUTH_SESSION_EXPIRED_EVENT, logout);
+    return () => window.removeEventListener(AUTH_SESSION_EXPIRED_EVENT, logout);
+  }, []);
 
   const login = async (credentials: LoginCredentials) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await loginRequest(credentials);
-      setToken(response.token);
-      setUser(response.user);
-      localStorage.setItem(TOKEN_STORAGE_KEY, response.token);
-      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(response.user));
+      const result = await loginRequest(credentials);
+      setToken(result.token);
+      setUser(result.user);
+      setSession(result);
     } catch (err) {
       const code = err instanceof AuthError ? err.code : 'unknown';
       setError(code);
@@ -44,13 +53,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const logout = () => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem(TOKEN_STORAGE_KEY);
-    localStorage.removeItem(USER_STORAGE_KEY);
   };
 
   return (
