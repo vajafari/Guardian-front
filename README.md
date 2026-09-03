@@ -133,18 +133,6 @@ points at its own backend) — copy `.env.example` to `.env` and adjust it
 locally. Vite only reads `.env*` files at startup, so restart `npm run dev`
 after changing it.
 
-**Working around the backend's CORS gap for now** — `VITE_API_BASE_URL` is
-currently *empty* on purpose, so requests go out same-origin (e.g.
-`/api/core/Auth/Token` against `http://localhost:5173`) and `vite.config.ts`'s
-`server.proxy` forwards anything under `/api` to `https://localhost:44318`
-server-side (Node isn't subject to CORS, so this fully sidesteps the browser
-block — `secure: false` on the proxy also shrugs off the backend's
-self-signed dev cert). This only works with `npm run dev`; it's not something
-a production build gets for free. Once the backend fixes CORS (see the CORS
-prompt handed to them), switch `VITE_API_BASE_URL` back to the real absolute
-URL (`https://localhost:44318`) and the proxy in `vite.config.ts` becomes
-unnecessary (harmless to leave in place, or delete the `server.proxy` block).
-
 **Sign-in** — `POST {VITE_API_BASE_URL}/api/core/Auth/Token` with
 `{ userId, secret }` (mapped from the username/password form fields),
 returning `{ token, refreshToken, entityTitle, isOtpRequired }`. If
@@ -166,10 +154,10 @@ session is cleared and `AuthContext` is notified via a
 `/login` on the next render.
 
 **Local dev prerequisites** (both outside this repo, on the backend):
-- CORS must allow the Vite origin (`http://localhost:5173` by default) —
-  confirmed while building this: without it, the browser blocks the
-  `Auth/Token` request at the preflight (`PreflightMissingAllowOriginHeader`)
-  even though the request itself is correct.
+- CORS must allow the Vite origin (`http://localhost:5173` by default) — the
+  backend needs a policy that returns `Access-Control-Allow-Origin` for it,
+  or the browser blocks the `Auth/Token` request at the preflight step even
+  though the request itself is correct.
 - The backend's HTTPS dev certificate needs to be trusted
   (`dotnet dev-certs https --trust` for an ASP.NET Core backend), or requests
   fail with a certificate error before they even reach CORS.
