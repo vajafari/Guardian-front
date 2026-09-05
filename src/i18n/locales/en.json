@@ -10,12 +10,17 @@
     "username": "Username",
     "password": "Password",
     "submit": "Sign in",
-    "submitting": "Signing in..."
+    "submitting": "Signing in...",
+    "passwordExpiredTitle": "Password expired",
+    "passwordExpiredNotice": "Your password has expired. Please set a new one to continue.",
+    "passwordChangedSignInAgain": "Password changed successfully. Please sign in with your new password.",
+    "backToSignIn": "Back to sign in"
   },
   "errors": {
     "missing-credentials": "Username and password are required",
     "invalid-credentials": "Incorrect username or password",
     "otp-required": "This account requires OTP verification, which isn't supported yet",
+    "password-expired": "Your password has expired",
     "network-error": "Couldn't reach the server. Check your connection and try again",
     "missing-fields": "All fields are required",
     "passwords-do-not-match": "New password and confirmation don't match",

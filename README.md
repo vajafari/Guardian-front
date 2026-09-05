@@ -176,6 +176,37 @@ returning `{ token, refreshToken, entityTitle, isOtpRequired }`. If
 `isOtpRequired` comes back `true`, login is rejected with an `otp-required`
 error — there's no OTP-entry step built yet.
 
+This backend reports business-rule failures (wrong password, expired
+password, ...) as **HTTP 500** with a `{ errorCodes: number[] }` body rather
+than 400/401 — confirmed by testing a wrong password, which came back as
+`errorCodes: [1039]`. `src/api/errorCodes.ts`'s `extractErrorCodes()` reads
+that array regardless of status code; `authService.ts`/`accountService.ts`
+both fall back to status-code checks only when no `errorCodes` array is
+present, for resilience against endpoints that do use normal HTTP codes.
+
+**Expired password** — when sign-in fails with `errorCodes` containing
+`1009` (`PASSWORD_EXPIRED_ERROR_CODE` in `src/api/authService.ts` — confirmed
+against the real backend by logging in with a correct-but-expired password;
+`1039` is the plain invalid-credentials code, from a different line in
+`CentralAuthComponent.DoUsernameAndPasswordVerify`), the login form swaps to
+a "set a new password" form (still on `LoginPage.tsx`, via a
+`mode: 'login' | 'force-change'` state) that posts
+`{ username, oldPassword, newPassword, securityImage }` to
+`POST /api/core/Account/ChangePasswordOnForceChangeByUser` (no bearer token
+involved — none exists yet at this point) and then sends the user back to
+sign in with the new password.
+
+The captcha field here mirrors `ChangePasswordDialog`'s (same
+`getCaptchaImage()`/blob/object-URL handling, refetched on entering this
+mode, on manual refresh, and after a failed attempt) but **isn't required**
+and is sent empty if it never loads: `GET /api/Captcha/CaptchaImage` needs a
+bearer token, which doesn't exist pre-login, so the fetch currently always
+401s in this specific flow (confirmed) and the UI degrades to an empty box
+rather than blocking submission. This needs a backend decision — either
+allow anonymous access to that endpoint (or add an anonymous equivalent), or
+decide captcha isn't warranted for this flow at all, since reaching it
+already requires knowing the correct (if expired) password.
+
 **Token refresh** — the access token is an *encrypted* JWT (`alg: dir`), so
 its expiry can't be read client-side; refreshing is reactive rather than
 timer-based. `httpClient.ts` (an axios instance meant for future authenticated

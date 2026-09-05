@@ -26,6 +26,7 @@ export type AuthErrorCode =
   | 'missing-credentials'
   | 'invalid-credentials'
   | 'otp-required'
+  | 'password-expired'
   | 'network-error'
   | 'unknown';
 

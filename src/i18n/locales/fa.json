@@ -10,12 +10,17 @@
     "username": "نام کاربری",
     "password": "رمز عبور",
     "submit": "ورود",
-    "submitting": "در حال ورود..."
+    "submitting": "در حال ورود...",
+    "passwordExpiredTitle": "رمز عبور منقضی شده",
+    "passwordExpiredNotice": "رمز عبور شما منقضی شده است. لطفاً یک رمز عبور جدید تعیین کنید.",
+    "passwordChangedSignInAgain": "رمز عبور با موفقیت تغییر کرد. لطفاً با رمز جدید وارد شوید.",
+    "backToSignIn": "بازگشت به صفحه‌ی ورود"
   },
   "errors": {
     "missing-credentials": "نام کاربری و رمز عبور الزامی است",
     "invalid-credentials": "نام کاربری یا رمز عبور اشتباه است",
     "otp-required": "این حساب نیاز به تأیید OTP دارد که هنوز پشتیبانی نمی‌شود",
+    "password-expired": "رمز عبور شما منقضی شده است",
     "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
     "missing-fields": "همه‌ی فیلدها الزامی هستند",
     "passwords-do-not-match": "رمز عبور جدید و تکرار آن یکسان نیستند",

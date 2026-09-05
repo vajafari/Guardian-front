@@ -8,6 +8,7 @@ export const AUTH_ENDPOINTS = {
 
 export const ACCOUNT_ENDPOINTS = {
   changePassword: '/api/core/Account/ChangePasswordByUser',
+  changePasswordOnForceChange: '/api/core/Account/ChangePasswordOnForceChangeByUser',
 } as const;
 
 export const CAPTCHA_ENDPOINTS = {
