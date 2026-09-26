@@ -65,6 +65,7 @@
     "retry": "إعادة المحاولة",
     "addButton": "إضافة موظف",
     "addTitle": "إضافة موظف",
+    "editTitle": "تعديل الموظف",
     "save": "حفظ",
     "saving": "جارٍ الحفظ...",
     "personTypeOption": "النوع {{value}}",
@@ -108,6 +109,16 @@
       "emergencyContacts": "جهة اتصال الطوارئ",
       "description": "الوصف",
       "additionalDescription": "وصف إضافي"
+    },
+    "activate": {
+      "title": "تفعيل",
+      "sync": "مزامنة مع الأجهزة",
+      "submit": "تفعيل"
+    },
+    "inactivate": {
+      "title": "إنهاء الخدمة",
+      "reason": "السبب",
+      "submit": "إنهاء الخدمة"
     }
   },
   "footer": {

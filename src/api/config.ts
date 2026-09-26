@@ -19,6 +19,9 @@ export const PERSON_ENDPOINTS = {
   searchSummaryByFullName: (itemsPerPage: number, isActive: 0 | 1) =>
     `/api/core/Person/SearchSummaryByFullName/${itemsPerPage}/${isActive}`,
   add: '/api/core/Person/Add',
+  update: '/api/core/Person/Update',
   getFirstUnusedPersonNumberOnDevice: '/api/core/Person/GetFirstUnusedPersonNumberOnDevice',
   getById: '/api/core/Person/GetById',
+  activate: '/api/core/Person/PersonActivate',
+  inactivate: '/api/core/Person/PersonInactive',
 } as const;

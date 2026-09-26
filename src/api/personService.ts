@@ -1,7 +1,14 @@
 import { AxiosError } from 'axios';
 import { httpClient } from './httpClient';
 import { PERSON_ENDPOINTS } from './config';
-import { PersonError, type PersonFullInfo, type PersonPayload, type PersonSummary } from '../types/person';
+import {
+  PersonError,
+  type PersonActivateRequest,
+  type PersonFullInfo,
+  type PersonInactivateRequest,
+  type PersonPayload,
+  type PersonSummary,
+} from '../types/person';
 
 export interface SearchPersonsOptions {
   itemsPerPage?: number;
@@ -62,6 +69,38 @@ export async function addPerson(payload: PersonPayload): Promise<void> {
 
   try {
     await httpClient.post(PERSON_ENDPOINTS.add, payload);
+  } catch (err) {
+    throw mapPersonError(err);
+  }
+}
+
+export async function updatePerson(payload: PersonPayload): Promise<void> {
+  if (!payload.firstName.trim() || !payload.lastName.trim()) {
+    throw new PersonError('missing-fields');
+  }
+
+  try {
+    await httpClient.post(PERSON_ENDPOINTS.update, payload);
+  } catch (err) {
+    throw mapPersonError(err);
+  }
+}
+
+export async function activatePerson(payload: PersonActivateRequest): Promise<void> {
+  try {
+    await httpClient.post(PERSON_ENDPOINTS.activate, payload);
+  } catch (err) {
+    throw mapPersonError(err);
+  }
+}
+
+export async function inactivatePerson(payload: PersonInactivateRequest): Promise<void> {
+  if (!payload.reasonOfInactive.trim()) {
+    throw new PersonError('missing-fields');
+  }
+
+  try {
+    await httpClient.post(PERSON_ENDPOINTS.inactivate, payload);
   } catch (err) {
     throw mapPersonError(err);
   }

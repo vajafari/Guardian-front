@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { HiOutlineArrowLeft } from 'react-icons/hi';
+import { HiOutlineArrowLeft, HiOutlinePencil } from 'react-icons/hi';
 import { getPersonById } from '../api/personService';
 import type { PersonFullInfo } from '../types/person';
 import { Alert, Button, Card, Spinner } from '../components/ui';
+import { EditPersonDialog } from '../components/EditPersonDialog';
+import { PersonActivateDialog } from '../components/PersonActivateDialog';
+import { PersonInactivateDialog } from '../components/PersonInactivateDialog';
 
 export function PersonDetailPage() {
   const { t } = useTranslation();
@@ -13,6 +16,9 @@ export function PersonDetailPage() {
   const [person, setPerson] = useState<PersonFullInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isActivateOpen, setIsActivateOpen] = useState(false);
+  const [isInactivateOpen, setIsInactivateOpen] = useState(false);
 
   const load = async () => {
     if (!id) return;
@@ -62,11 +68,29 @@ export function PersonDetailPage() {
 
   return (
     <Card>
-      <div className="flex items-center gap-3 mb-4">
-        <Button variant="plain" size="sm" icon={<HiOutlineArrowLeft />} onClick={() => navigate('/persons')}>
-          {t('persons.detail.back')}
-        </Button>
-        <h1>{fullName || t('persons.detail.title')}</h1>
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <div className="flex items-center gap-3">
+          <Button variant="plain" size="sm" icon={<HiOutlineArrowLeft />} onClick={() => navigate('/persons')}>
+            {t('persons.detail.back')}
+          </Button>
+          <h1>{fullName || t('persons.detail.title')}</h1>
+        </div>
+        {person && (
+          <div className="flex items-center gap-2">
+            <Button size="sm" icon={<HiOutlinePencil />} onClick={() => setIsEditOpen(true)}>
+              {t('persons.editTitle')}
+            </Button>
+            {person.isActive ? (
+              <Button size="sm" onClick={() => setIsInactivateOpen(true)}>
+                {t('persons.inactivate.title')}
+              </Button>
+            ) : (
+              <Button size="sm" variant="solid" onClick={() => setIsActivateOpen(true)}>
+                {t('persons.activate.title')}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
 
       {isLoading ? (
@@ -93,6 +117,29 @@ export function PersonDetailPage() {
             </div>
           ))}
         </div>
+      )}
+
+      {person && (
+        <>
+          <EditPersonDialog
+            isOpen={isEditOpen}
+            person={person}
+            onClose={() => setIsEditOpen(false)}
+            onUpdated={load}
+          />
+          <PersonActivateDialog
+            isOpen={isActivateOpen}
+            personId={person.id}
+            onClose={() => setIsActivateOpen(false)}
+            onActivated={load}
+          />
+          <PersonInactivateDialog
+            isOpen={isInactivateOpen}
+            personId={person.id}
+            onClose={() => setIsInactivateOpen(false)}
+            onInactivated={load}
+          />
+        </>
       )}
     </Card>
   );

@@ -77,6 +77,22 @@ export interface PersonFullInfo {
   positionTitle: string | null;
 }
 
+/** POST /api/core/Person/PersonActivate body ("دعوت به کار"). */
+export interface PersonActivateRequest {
+  id: string;
+  startDate: string;
+  endDate: string | null;
+  sync?: boolean;
+}
+
+/** POST /api/core/Person/PersonInactive body ("قطع کار"). */
+export interface PersonInactivateRequest {
+  personId: string;
+  endDate: string;
+  reasonOfInactive: string;
+  sync?: boolean;
+}
+
 export type PersonErrorCode = 'missing-fields' | 'network-error' | 'unknown';
 
 export class PersonError extends Error {
