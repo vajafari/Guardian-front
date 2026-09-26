@@ -47,13 +47,68 @@
   "menu": {
     "groupTitle": "القائمة الرئيسية",
     "dashboard": "لوحة التحكم",
-    "users": "المستخدمون",
+    "persons": "الموظفون",
     "reports": "التقارير",
     "settings": "الإعدادات"
   },
   "dashboard": {
     "welcome": "مرحباً بك",
     "description": "هذه هي صفحة لوحة التحكم الرئيسية."
+  },
+  "persons": {
+    "title": "الموظفون",
+    "searchPlaceholder": "البحث بالاسم...",
+    "activeOnly": "النشطون فقط",
+    "loading": "جارٍ التحميل...",
+    "empty": "لم يتم العثور على أي موظف",
+    "loadError": "تعذر تحميل بيانات الموظفين. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "addButton": "إضافة موظف",
+    "addTitle": "إضافة موظف",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "personTypeOption": "النوع {{value}}",
+    "columns": {
+      "personNumber": "الرقم الوظيفي",
+      "fullName": "الاسم الكامل",
+      "nationalId": "الرقم الوطني",
+      "otherId": "معرّف آخر"
+    },
+    "fields": {
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "personType": "نوع الموظف",
+      "personNumberOnDevice": "الرقم الوظيفي",
+      "startDate": "تاريخ البدء",
+      "nationalId": "الرقم الوطني",
+      "cellPhoneNumber": "رقم الجوال",
+      "email": "البريد الإلكتروني",
+      "isActive": "نشط"
+    },
+    "errors": {
+      "missing-fields": "الاسم الأول واسم العائلة مطلوبان",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
+    },
+    "detail": {
+      "title": "تفاصيل الموظف",
+      "back": "رجوع",
+      "loadError": "تعذر تحميل بيانات هذا الموظف. حاول مرة أخرى.",
+      "notFound": "لم يتم العثور على الموظف",
+      "endDate": "تاريخ الانتهاء",
+      "otherId": "معرّف آخر",
+      "fixedTel": "الهاتف الثابت",
+      "address": "العنوان",
+      "fatherName": "اسم الأب",
+      "birthday": "تاريخ الميلاد",
+      "fieldOfStudy": "التخصص",
+      "position": "المنصب",
+      "yes": "نعم",
+      "no": "لا",
+      "emergencyContacts": "جهة اتصال الطوارئ",
+      "description": "الوصف",
+      "additionalDescription": "وصف إضافي"
+    }
   },
   "footer": {
     "copyright": "© {{year}} Guardian — جميع الحقوق محفوظة."

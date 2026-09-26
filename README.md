@@ -39,6 +39,7 @@ src/
     config.ts          # API_BASE_URL (from VITE_API_BASE_URL) + endpoint paths
     authService.ts      # login()/logout()/refreshSession() — /api/core/Auth/*
     accountService.ts    # changePassword()/getCaptchaImage() — Account + Captcha
+    personService.ts      # searchPersonsByFullName() — /api/core/Person/*
     httpClient.ts        # axios instance for *authenticated* calls: attaches the
                           # bearer token, refreshes + retries once on a 401
     tokenStorage.ts       # localStorage helpers shared by AuthContext and httpClient
@@ -53,9 +54,12 @@ src/
     useSyncDocumentDirection.ts   # keeps <html dir/lang> in sync with the active language
   components/
     ui/            # hand-picked component kit, see "UI kit" below
+    DashboardLayout.tsx   # Header + main (<Outlet/>) + SideMenu + Footer shell,
+                          # shared by every route under ProtectedRoute
     Header.tsx
     Footer.tsx
-    SideMenu.tsx    # right-hand navigation panel, pinned to the physical right in RTL too
+    SideMenu.tsx    # right-hand navigation panel, pinned to the physical right in RTL too;
+                    # navigates via react-router, highlights the active route
     UserMenu.tsx    # header dropdown (username) holding ThemeToggle, LanguageSwitcher,
                     # Change password, logout
     ChangePasswordDialog.tsx
@@ -63,12 +67,14 @@ src/
     LanguageSwitcher.tsx   # EN / FA / AR toggle
   pages/
     LoginPage.tsx
-    DashboardPage.tsx   # Header + main + SideMenu + Footer
+    DashboardPage.tsx   # content only — shell comes from DashboardLayout
+    PersonsPage.tsx      # personnel search/list, see "Person module" below
   styles/
     theme.css        # Tailwind import + config + CSS custom-property theme (colors, base type)
     components.css    # component-layer CSS (.button, .card, .input, .menu-item, ...)
   types/
     auth.ts
+    person.ts
   App.tsx        # route table, wraps everything in the ui kit's ConfigProvider
   main.tsx       # app entry, wraps App in BrowserRouter
 ```
@@ -266,6 +272,51 @@ The refresh endpoint path/payload (`/api/core/Auth/RefreshToken` with
 confirmed against a real response — if the actual backend differs, only
 `AUTH_ENDPOINTS.refreshToken` in `src/api/config.ts` and the request body in
 `refreshSession()` (`src/api/authService.ts`) need to change.
+
+## Person module
+
+The backend's `Person` controller (personnel records — this is a physical
+access-control system, so "Person" means an enrolled individual, not an
+`Account`/login user) is large — 24 endpoints on `Person` alone, plus
+related controllers for groups, device enrollment, cabinets, elevators,
+contracts. Guardian wires up **search/list**, **add**, and **view details**
+so far (`src/pages/PersonsPage.tsx` at `/persons`, and
+`src/pages/PersonDetailPage.tsx` at `/persons/:id`, linked from the
+"Personnel" side-menu item — renamed from the placeholder "Users" label
+since that's what it actually is now):
+
+`searchPersonsByFullName()` (`src/api/personService.ts`) calls
+`GET /api/core/Person/SearchSummaryByFullName/{itemsPerPage}/{isActive}?q=...`
+via `httpClient` — chosen over `GridViewPersonSummary` (the endpoint a full
+data-grid would use) because that one takes a generic, undocumented
+`S/C/P/I/Pa/Cols/ParamsDictionary` query-builder contract with no OpenAPI
+schema to go on, while `SearchSummaryByFullName` is a plain, fully-typed
+`{itemsPerPage, isActive} + ?q=` search returning
+`{id, personNumberOnDevice, firstName, lastName, nationalId,
+otherUniqueIdentificationCode}[]`. **`q` must be base64-encoded** (the
+backend decodes it via `DecodeUrlReadyBase64String`) — `encodeSearchQuery()`
+in `personService.ts` handles this; an empty `q` is valid and returns every
+person matching the `isActive` filter (not an empty list). The page
+debounces the search box (300ms), has an active/inactive checkbox, and
+renders results in a plain HTML table (Tailwind-styled to match the rest of
+the app) rather than pulling in the ui kit's `Table`/`DataTable` — not
+needed yet for a single sortable-by-nothing list. Clicking a row navigates
+to `/persons/:id`.
+
+`AddPersonDialog.tsx` posts to `Person/Add` and auto-fills the device
+number from `Person/GetFirstUnusedPersonNumberOnDevice`. `PersonDetailPage`
+calls `getPersonById()` → `GET /api/core/Person/GetById?Ids=...` — this
+must be a query param, not a JSON body: `[ApiController]` infers a complex
+GET parameter as `[FromBody]` by default, but real browsers don't send a
+body on GET (only `curl` does), so the backend action needs `[FromQuery]`
+explicitly. The `Ids` array must be serialized as repeated
+`Ids=<guid>&Ids=<guid>` (built manually via `URLSearchParams`, not axios's
+default `params: {}` array handling, which produces `Ids[]=` and silently
+binds to an empty list).
+
+Not built yet: edit (`Person/Update`), activate/inactivate, the full
+`GridView*` data-grid endpoints, `PersonGroup`, device enrollment, or the
+cabinet/elevator/contract-person modules.
 
 ## Available scripts
 

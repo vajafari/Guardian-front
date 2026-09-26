@@ -4,6 +4,9 @@ import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { PersonsPage } from './pages/PersonsPage';
+import { PersonDetailPage } from './pages/PersonDetailPage';
+import { DashboardLayout } from './components/DashboardLayout';
 import { useSyncDocumentDirection } from './hooks/useSyncDocumentDirection';
 import { ConfigProvider } from './components/ui';
 import { useTheme } from './context/ThemeContext';
@@ -27,7 +30,11 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route element={<DashboardLayout />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/persons" element={<PersonsPage />} />
+              <Route path="/persons/:id" element={<PersonDetailPage />} />
+            </Route>
           </Route>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

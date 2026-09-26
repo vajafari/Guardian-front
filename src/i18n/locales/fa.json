@@ -47,13 +47,68 @@
   "menu": {
     "groupTitle": "منوی اصلی",
     "dashboard": "داشبورد",
-    "users": "کاربران",
+    "persons": "پرسنل",
     "reports": "گزارش‌ها",
     "settings": "تنظیمات"
   },
   "dashboard": {
     "welcome": "خوش آمدید",
     "description": "این صفحه داشبورد اصلی است."
+  },
+  "persons": {
+    "title": "پرسنل",
+    "searchPlaceholder": "جستجو بر اساس نام...",
+    "activeOnly": "فقط فعال‌ها",
+    "loading": "در حال بارگذاری...",
+    "empty": "پرسنلی پیدا نشد",
+    "loadError": "بارگذاری پرسنل ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "addButton": "افزودن پرسنل",
+    "addTitle": "افزودن پرسنل",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "personTypeOption": "نوع {{value}}",
+    "columns": {
+      "personNumber": "شماره پرسنلی",
+      "fullName": "نام کامل",
+      "nationalId": "کد ملی",
+      "otherId": "شناسه دیگر"
+    },
+    "fields": {
+      "firstName": "نام",
+      "lastName": "نام خانوادگی",
+      "personType": "نوع پرسنل",
+      "personNumberOnDevice": "شماره پرسنلی",
+      "startDate": "تاریخ شروع",
+      "nationalId": "کد ملی",
+      "cellPhoneNumber": "تلفن همراه",
+      "email": "ایمیل",
+      "isActive": "فعال"
+    },
+    "errors": {
+      "missing-fields": "نام و نام خانوادگی الزامی است",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطای ناشناخته‌ای رخ داد"
+    },
+    "detail": {
+      "title": "جزئیات پرسنل",
+      "back": "بازگشت",
+      "loadError": "بارگذاری اطلاعات این پرسنل ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "پرسنل پیدا نشد",
+      "endDate": "تاریخ پایان",
+      "otherId": "شناسه دیگر",
+      "fixedTel": "تلفن ثابت",
+      "address": "آدرس",
+      "fatherName": "نام پدر",
+      "birthday": "تاریخ تولد",
+      "fieldOfStudy": "رشته تحصیلی",
+      "position": "سمت",
+      "yes": "بله",
+      "no": "خیر",
+      "emergencyContacts": "تماس اضطراری",
+      "description": "شرح",
+      "additionalDescription": "توضیحات تکمیلی"
+    }
   },
   "footer": {
     "copyright": "© {{year}} Guardian — تمامی حقوق محفوظ است."

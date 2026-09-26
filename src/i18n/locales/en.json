@@ -47,13 +47,68 @@
   "menu": {
     "groupTitle": "Main Menu",
     "dashboard": "Dashboard",
-    "users": "Users",
+    "persons": "Personnel",
     "reports": "Reports",
     "settings": "Settings"
   },
   "dashboard": {
     "welcome": "Welcome",
     "description": "This is the main dashboard page."
+  },
+  "persons": {
+    "title": "Personnel",
+    "searchPlaceholder": "Search by name...",
+    "activeOnly": "Active only",
+    "loading": "Loading...",
+    "empty": "No personnel found",
+    "loadError": "Couldn't load personnel. Try again.",
+    "retry": "Retry",
+    "addButton": "Add person",
+    "addTitle": "Add person",
+    "save": "Save",
+    "saving": "Saving...",
+    "personTypeOption": "Type {{value}}",
+    "columns": {
+      "personNumber": "Personnel #",
+      "fullName": "Full name",
+      "nationalId": "National ID",
+      "otherId": "Other ID"
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "personType": "Person type",
+      "personNumberOnDevice": "Personnel #",
+      "startDate": "Start date",
+      "nationalId": "National ID",
+      "cellPhoneNumber": "Cell phone",
+      "email": "Email",
+      "isActive": "Active"
+    },
+    "errors": {
+      "missing-fields": "First and last name are required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "title": "Person details",
+      "back": "Back",
+      "loadError": "Couldn't load this person. Try again.",
+      "notFound": "Person not found",
+      "endDate": "End date",
+      "otherId": "Other ID",
+      "fixedTel": "Fixed phone",
+      "address": "Address",
+      "fatherName": "Father's name",
+      "birthday": "Birthday",
+      "fieldOfStudy": "Field of study",
+      "position": "Position",
+      "yes": "Yes",
+      "no": "No",
+      "emergencyContacts": "Emergency contacts",
+      "description": "Description",
+      "additionalDescription": "Additional description"
+    }
   },
   "footer": {
     "copyright": "© {{year}} Guardian — All rights reserved."

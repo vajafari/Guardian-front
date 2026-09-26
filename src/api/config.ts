@@ -14,3 +14,11 @@ export const ACCOUNT_ENDPOINTS = {
 export const CAPTCHA_ENDPOINTS = {
   image: '/api/Captcha/CaptchaImage',
 } as const;
+
+export const PERSON_ENDPOINTS = {
+  searchSummaryByFullName: (itemsPerPage: number, isActive: 0 | 1) =>
+    `/api/core/Person/SearchSummaryByFullName/${itemsPerPage}/${isActive}`,
+  add: '/api/core/Person/Add',
+  getFirstUnusedPersonNumberOnDevice: '/api/core/Person/GetFirstUnusedPersonNumberOnDevice',
+  getById: '/api/core/Person/GetById',
+} as const;
