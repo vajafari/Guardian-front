@@ -65,7 +65,7 @@ export function BuildingDetailPage() {
         <Button variant="plain" size="sm" icon={<HiOutlineArrowLeft />} onClick={() => navigate('/buildings')}>
           {t('buildings.detail.back')}
         </Button>
-        <h1>{building ? `ساختمان ${building.title}` : t('buildings.title')}</h1>
+        <h1>{building ? t('buildings.detail.pageTitle', { title: building.title }) : t('buildings.title')}</h1>
       </div>
 
       {isLoading ? (
@@ -115,15 +115,32 @@ export function BuildingDetailPage() {
                   {building.floorsFullInfo.map((floor) => (
                     <tr
                       key={floor.id}
-                      className="border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700/40"
+                      onClick={() => navigate(`/floors/${floor.id}`)}
+                      className="border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700/40 cursor-pointer"
                     >
                       <td className="py-2 px-3">{floor.title}</td>
                       <td className="py-2 px-3">{floor.floorActualNumber}</td>
                       <td className="py-2 px-3">{floor.floorHardwareNumber}</td>
                       <td className="py-2 px-3 text-end">
                         <div className="flex items-center justify-end gap-1">
-                          <Button variant="plain" size="xs" icon={<HiOutlinePencil />} onClick={() => openEdit(floor)} />
-                          <Button variant="plain" size="xs" icon={<HiOutlineTrash />} onClick={() => handleDelete(floor)} />
+                          <Button
+                            variant="plain"
+                            size="xs"
+                            icon={<HiOutlinePencil />}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              openEdit(floor);
+                            }}
+                          />
+                          <Button
+                            variant="plain"
+                            size="xs"
+                            icon={<HiOutlineTrash />}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleDelete(floor);
+                            }}
+                          />
                         </div>
                       </td>
                     </tr>

@@ -43,7 +43,14 @@ export const BUILDING_ENDPOINTS = {
 } as const;
 
 export const BUILDING_FLOOR_ENDPOINTS = {
+  getById: (id: string) => `/api/core/BuildingFloor/GetById/${id}`,
   add: '/api/core/BuildingFloor/Add',
   update: '/api/core/BuildingFloor/Update',
   delete: (id: string) => `/api/core/BuildingFloor/Delete/${id}`,
+} as const;
+
+export const BUILDING_UNIT_ENDPOINTS = {
+  add: '/api/core/BuildingUnit/Add',
+  update: '/api/core/BuildingUnit/Update',
+  delete: (id: string) => `/api/core/BuildingUnit/Delete/${id}`,
 } as const;

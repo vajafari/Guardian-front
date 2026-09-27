@@ -7,6 +7,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { PersonsPage } from './pages/PersonsPage';
 import { BuildingsPage } from './pages/BuildingsPage';
 import { BuildingDetailPage } from './pages/BuildingDetailPage';
+import { FloorDetailPage } from './pages/FloorDetailPage';
 import { PersonDetailPage } from './pages/PersonDetailPage';
 import { EditPersonPage } from './pages/EditPersonPage';
 import { DashboardLayout } from './components/DashboardLayout';
@@ -38,6 +39,7 @@ function App() {
               <Route path="/persons" element={<PersonsPage />} />
               <Route path="/buildings" element={<BuildingsPage />} />
               <Route path="/buildings/:id" element={<BuildingDetailPage />} />
+              <Route path="/floors/:id" element={<FloorDetailPage />} />
               <Route path="/persons/:id" element={<PersonDetailPage />} />
               <Route path="/persons/:id/edit" element={<EditPersonPage />} />
             </Route>

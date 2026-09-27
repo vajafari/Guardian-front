@@ -143,6 +143,7 @@
       "unknown": "Something went wrong"
     },
     "detail": {
+      "pageTitle": "Building {{title}}",
       "back": "Back",
       "loadError": "Couldn't load this building. Try again.",
       "notFound": "Building not found"
@@ -164,6 +165,44 @@
     },
     "errors": {
       "missing-fields": "Title is required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "pageTitle": "Floor {{title}}",
+      "loadError": "Couldn't load this floor. Try again.",
+      "notFound": "Floor not found"
+    }
+  },
+  "buildingUnits": {
+    "title": "Units",
+    "addButton": "Add unit",
+    "addTitle": "Add unit",
+    "editTitle": "Edit unit",
+    "viewTitle": "Unit details",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No units found",
+    "deleteConfirm": "Delete unit \"{{title}}\"?",
+    "fields": {
+      "title": "Unit #",
+      "unitType": "Unit type",
+      "telephoneNumbers": "Telephone numbers",
+      "postalCode": "Postal code",
+      "description": "Description",
+      "isEmpty": "Vacant",
+      "buildingArea": "Area (m²)",
+      "residancePersons": "Residents"
+    },
+    "unitTypes": {
+      "1": "Residential",
+      "2": "Commercial",
+      "3": "Janitor",
+      "4": "Sports",
+      "5": "Common area"
+    },
+    "errors": {
+      "missing-fields": "Unit # and area are required",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }

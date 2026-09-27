@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { httpClient } from './httpClient';
 import { BUILDING_FLOOR_ENDPOINTS } from './config';
-import { BuildingFloorError, type BuildingFloorPayload } from '../types/buildingFloor';
+import { BuildingFloorError, type BuildingFloorFullInfo, type BuildingFloorPayload } from '../types/buildingFloor';
 
 function mapBuildingFloorError(err: unknown): BuildingFloorError {
   if (!(err instanceof AxiosError)) {
@@ -43,4 +43,9 @@ export async function deleteBuildingFloor(id: string): Promise<void> {
   } catch (err) {
     throw mapBuildingFloorError(err);
   }
+}
+
+export async function getBuildingFloorById(id: string): Promise<BuildingFloorFullInfo | null> {
+  const { data } = await httpClient.get<BuildingFloorFullInfo | null>(BUILDING_FLOOR_ENDPOINTS.getById(id));
+  return data ?? null;
 }

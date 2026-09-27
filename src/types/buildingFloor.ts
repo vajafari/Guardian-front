@@ -1,4 +1,5 @@
 import type { Building } from './building';
+import type { BuildingUnit } from './buildingUnit';
 
 /** Nested inside GET /api/core/Building/GetById/{id}'s floorsFullInfo. */
 export interface BuildingFloor {
@@ -12,6 +13,13 @@ export interface BuildingFloor {
 /** GET /api/core/Building/GetById/{id} response. */
 export interface BuildingFullInfo extends Building {
   floorsFullInfo: BuildingFloor[];
+}
+
+/** GET /api/core/BuildingFloor/GetById/{id} response. */
+export interface BuildingFloorFullInfo extends BuildingFloor {
+  buildingNumber: number;
+  buildingTitle: string;
+  unitsFullInfo: BuildingUnit[];
 }
 
 /** POST /api/core/BuildingFloor/Add and /Update body. */
