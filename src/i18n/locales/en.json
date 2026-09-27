@@ -49,6 +49,7 @@
     "dashboard": "Dashboard",
     "persons": "Personnel",
     "buildings": "Buildings",
+    "contractors": "Contractors",
     "reports": "Reports",
     "settings": "Settings"
   },
@@ -243,6 +244,62 @@
     },
     "errors": {
       "missing-fields": "Title and storage # are required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "contractors": {
+    "title": "Contractors",
+    "addButton": "Add contractor",
+    "addTitle": "Add contractor",
+    "editTitle": "Edit contractor",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No contractors found",
+    "loadError": "Couldn't load contractors. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete contractor \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "phoneNumber": "Phone number",
+      "address": "Address",
+      "subjectOfActivity": "Subject of activity",
+      "economicCode": "Economic code",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "description": "Description",
+      "isActive": "Active"
+    },
+    "errors": {
+      "missing-fields": "Title is required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this contractor. Try again.",
+      "notFound": "Contractor not found"
+    }
+  },
+  "contractorContracts": {
+    "title": "Contracts",
+    "addButton": "Add contract",
+    "addTitle": "Add contract",
+    "editTitle": "Edit contract",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No contracts found",
+    "deleteConfirm": "Delete contract \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "contractNumber": "Contract #",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "description": "Description",
+      "isActive": "Active"
+    },
+    "errors": {
+      "missing-fields": "Title and contract # are required",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }

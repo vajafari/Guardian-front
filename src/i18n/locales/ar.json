@@ -49,6 +49,7 @@
     "dashboard": "لوحة التحكم",
     "persons": "الموظفون",
     "buildings": "المباني",
+    "contractors": "المقاولون",
     "reports": "التقارير",
     "settings": "الإعدادات"
   },
@@ -243,6 +244,62 @@
     },
     "errors": {
       "missing-fields": "العنوان ورقم غرفة التخزين مطلوبان",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
+    }
+  },
+  "contractors": {
+    "title": "المقاولون",
+    "addButton": "إضافة مقاول",
+    "addTitle": "إضافة مقاول",
+    "editTitle": "تعديل المقاول",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على أي مقاول",
+    "loadError": "تعذر تحميل المقاولين. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "deleteConfirm": "حذف المقاول \"{{title}}\"؟",
+    "fields": {
+      "title": "العنوان",
+      "phoneNumber": "رقم الهاتف",
+      "address": "العنوان",
+      "subjectOfActivity": "موضوع النشاط",
+      "economicCode": "الرمز الاقتصادي",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "description": "الوصف",
+      "isActive": "نشط"
+    },
+    "errors": {
+      "missing-fields": "العنوان مطلوب",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل بيانات هذا المقاول. حاول مرة أخرى.",
+      "notFound": "لم يتم العثور على المقاول"
+    }
+  },
+  "contractorContracts": {
+    "title": "العقود",
+    "addButton": "إضافة عقد",
+    "addTitle": "إضافة عقد",
+    "editTitle": "تعديل العقد",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على أي عقد",
+    "deleteConfirm": "حذف العقد \"{{title}}\"؟",
+    "fields": {
+      "title": "العنوان",
+      "contractNumber": "رقم العقد",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "description": "الوصف",
+      "isActive": "نشط"
+    },
+    "errors": {
+      "missing-fields": "العنوان ورقم العقد مطلوبان",
       "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
       "unknown": "حدث خطأ غير متوقع"
     }

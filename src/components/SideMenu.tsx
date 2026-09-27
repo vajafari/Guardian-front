@@ -4,6 +4,7 @@ import {
   HiOutlineViewGrid,
   HiOutlineUsers,
   HiOutlineOfficeBuilding,
+  HiOutlineBriefcase,
   HiOutlineDocumentReport,
   HiOutlineCog,
 } from 'react-icons/hi';
@@ -13,6 +14,7 @@ const MENU_ITEMS = [
   { key: 'dashboard', icon: HiOutlineViewGrid, path: '/dashboard' },
   { key: 'persons', icon: HiOutlineUsers, path: '/persons' },
   { key: 'buildings', icon: HiOutlineOfficeBuilding, path: '/buildings' },
+  { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'reports', icon: HiOutlineDocumentReport, path: null },
   { key: 'settings', icon: HiOutlineCog, path: null },
 ] as const;

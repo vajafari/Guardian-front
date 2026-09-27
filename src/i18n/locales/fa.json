@@ -49,6 +49,7 @@
     "dashboard": "داشبورد",
     "persons": "پرسنل",
     "buildings": "ساختمان‌ها",
+    "contractors": "پیمانکاران",
     "reports": "گزارش‌ها",
     "settings": "تنظیمات"
   },
@@ -243,6 +244,62 @@
     },
     "errors": {
       "missing-fields": "عنوان و شماره انباری الزامی است",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطای ناشناخته‌ای رخ داد"
+    }
+  },
+  "contractors": {
+    "title": "پیمانکاران",
+    "addButton": "افزودن پیمانکار",
+    "addTitle": "افزودن پیمانکار",
+    "editTitle": "ویرایش پیمانکار",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "پیمانکاری پیدا نشد",
+    "loadError": "بارگذاری پیمانکاران ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "deleteConfirm": "پیمانکار «{{title}}» حذف شود؟",
+    "fields": {
+      "title": "عنوان",
+      "phoneNumber": "شماره تلفن",
+      "address": "آدرس",
+      "subjectOfActivity": "موضوع فعالیت",
+      "economicCode": "کد اقتصادی",
+      "startDate": "تاریخ شروع",
+      "endDate": "تاریخ پایان",
+      "description": "شرح",
+      "isActive": "فعال"
+    },
+    "errors": {
+      "missing-fields": "عنوان الزامی است",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطای ناشناخته‌ای رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این پیمانکار ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "پیمانکار پیدا نشد"
+    }
+  },
+  "contractorContracts": {
+    "title": "قراردادها",
+    "addButton": "افزودن قرارداد",
+    "addTitle": "افزودن قرارداد",
+    "editTitle": "ویرایش قرارداد",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "قراردادی پیدا نشد",
+    "deleteConfirm": "قرارداد «{{title}}» حذف شود؟",
+    "fields": {
+      "title": "عنوان",
+      "contractNumber": "شماره قرارداد",
+      "startDate": "تاریخ شروع",
+      "endDate": "تاریخ پایان",
+      "description": "شرح",
+      "isActive": "فعال"
+    },
+    "errors": {
+      "missing-fields": "عنوان و شماره قرارداد الزامی است",
       "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
       "unknown": "خطای ناشناخته‌ای رخ داد"
     }

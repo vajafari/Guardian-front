@@ -66,3 +66,17 @@ export const BUILDING_STORAGE_ROOM_ENDPOINTS = {
   update: '/api/core/BuildingStorageRoom/Update',
   delete: (id: string) => `/api/core/BuildingStorageRoom/Delete/${id}`,
 } as const;
+
+export const CONTRACTOR_ENDPOINTS = {
+  gridView: '/api/core/Contractor/GridViewData',
+  getById: (id: string) => `/api/core/Contractor/GetById/${id}`,
+  add: '/api/core/Contractor/Add',
+  update: '/api/core/Contractor/Update',
+  delete: (id: string) => `/api/core/Contractor/Delete/${id}`,
+} as const;
+
+export const CONTRACTOR_CONTRACT_ENDPOINTS = {
+  add: '/api/core/ContractorContract/Add',
+  update: '/api/core/ContractorContract/Update',
+  delete: (id: string) => `/api/core/ContractorContract/Delete/${id}`,
+} as const;
