@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   HiOutlineViewGrid,
   HiOutlineUsers,
+  HiOutlineOfficeBuilding,
   HiOutlineDocumentReport,
   HiOutlineCog,
 } from 'react-icons/hi';
@@ -11,6 +12,7 @@ import { Menu, MenuItem } from './ui';
 const MENU_ITEMS = [
   { key: 'dashboard', icon: HiOutlineViewGrid, path: '/dashboard' },
   { key: 'persons', icon: HiOutlineUsers, path: '/persons' },
+  { key: 'buildings', icon: HiOutlineOfficeBuilding, path: '/buildings' },
   { key: 'reports', icon: HiOutlineDocumentReport, path: null },
   { key: 'settings', icon: HiOutlineCog, path: null },
 ] as const;

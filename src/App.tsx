@@ -5,6 +5,8 @@ import { ProtectedRoute } from './routes/ProtectedRoute';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { PersonsPage } from './pages/PersonsPage';
+import { BuildingsPage } from './pages/BuildingsPage';
+import { BuildingDetailPage } from './pages/BuildingDetailPage';
 import { PersonDetailPage } from './pages/PersonDetailPage';
 import { EditPersonPage } from './pages/EditPersonPage';
 import { DashboardLayout } from './components/DashboardLayout';
@@ -34,6 +36,8 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/persons" element={<PersonsPage />} />
+              <Route path="/buildings" element={<BuildingsPage />} />
+              <Route path="/buildings/:id" element={<BuildingDetailPage />} />
               <Route path="/persons/:id" element={<PersonDetailPage />} />
               <Route path="/persons/:id/edit" element={<EditPersonPage />} />
             </Route>

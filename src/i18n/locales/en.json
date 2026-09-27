@@ -48,6 +48,7 @@
     "groupTitle": "Main Menu",
     "dashboard": "Dashboard",
     "persons": "Personnel",
+    "buildings": "Buildings",
     "reports": "Reports",
     "settings": "Settings"
   },
@@ -119,6 +120,52 @@
       "title": "Deactivate",
       "reason": "Reason",
       "submit": "Deactivate"
+    }
+  },
+  "buildings": {
+    "title": "Buildings",
+    "addButton": "Add building",
+    "addTitle": "Add building",
+    "editTitle": "Edit building",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No buildings found",
+    "loadError": "Couldn't load buildings. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete building \"{{title}}\"?",
+    "fields": {
+      "buildingNumber": "Building #",
+      "title": "Title"
+    },
+    "errors": {
+      "missing-fields": "Building number and title are required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this building. Try again.",
+      "notFound": "Building not found"
+    }
+  },
+  "buildingFloors": {
+    "title": "Floors",
+    "addButton": "Add floor",
+    "addTitle": "Add floor",
+    "editTitle": "Edit floor",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No floors found",
+    "deleteConfirm": "Delete floor \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "floorActualNumber": "Actual floor number",
+      "floorHardwareNumber": "Hardware floor number"
+    },
+    "errors": {
+      "missing-fields": "Title is required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
     }
   },
   "footer": {

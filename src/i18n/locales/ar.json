@@ -48,6 +48,7 @@
     "groupTitle": "القائمة الرئيسية",
     "dashboard": "لوحة التحكم",
     "persons": "الموظفون",
+    "buildings": "المباني",
     "reports": "التقارير",
     "settings": "الإعدادات"
   },
@@ -119,6 +120,52 @@
       "title": "إنهاء الخدمة",
       "reason": "السبب",
       "submit": "إنهاء الخدمة"
+    }
+  },
+  "buildings": {
+    "title": "المباني",
+    "addButton": "إضافة مبنى",
+    "addTitle": "إضافة مبنى",
+    "editTitle": "تعديل المبنى",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على أي مبنى",
+    "loadError": "تعذر تحميل المباني. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "deleteConfirm": "حذف المبنى \"{{title}}\"؟",
+    "fields": {
+      "buildingNumber": "رقم المبنى",
+      "title": "العنوان"
+    },
+    "errors": {
+      "missing-fields": "رقم المبنى والعنوان مطلوبان",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل بيانات هذا المبنى. حاول مرة أخرى.",
+      "notFound": "لم يتم العثور على المبنى"
+    }
+  },
+  "buildingFloors": {
+    "title": "الطوابق",
+    "addButton": "إضافة طابق",
+    "addTitle": "إضافة طابق",
+    "editTitle": "تعديل الطابق",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على أي طابق",
+    "deleteConfirm": "حذف الطابق \"{{title}}\"؟",
+    "fields": {
+      "title": "العنوان",
+      "floorActualNumber": "الرقم الفعلي للطابق",
+      "floorHardwareNumber": "الرقم البرمجي للطابق"
+    },
+    "errors": {
+      "missing-fields": "العنوان مطلوب",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
     }
   },
   "footer": {

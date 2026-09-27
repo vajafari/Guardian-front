@@ -33,3 +33,17 @@ export const FIELD_OF_STUDY_ENDPOINTS = {
 export const POSITION_ENDPOINTS = {
   getAll: '/api/core/Position/GetAll',
 } as const;
+
+export const BUILDING_ENDPOINTS = {
+  search: '/api/core/Building/Search',
+  getById: (id: string) => `/api/core/Building/GetById/${id}`,
+  add: '/api/core/Building/Add',
+  update: '/api/core/Building/Update',
+  delete: (id: string) => `/api/core/Building/Delete/${id}`,
+} as const;
+
+export const BUILDING_FLOOR_ENDPOINTS = {
+  add: '/api/core/BuildingFloor/Add',
+  update: '/api/core/BuildingFloor/Update',
+  delete: (id: string) => `/api/core/BuildingFloor/Delete/${id}`,
+} as const;
