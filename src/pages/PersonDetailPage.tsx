@@ -5,7 +5,6 @@ import { HiOutlineArrowLeft, HiOutlinePencil } from 'react-icons/hi';
 import { getPersonById } from '../api/personService';
 import type { PersonFullInfo } from '../types/person';
 import { Alert, Button, Card, Spinner } from '../components/ui';
-import { EditPersonDialog } from '../components/EditPersonDialog';
 import { PersonActivateDialog } from '../components/PersonActivateDialog';
 import { PersonInactivateDialog } from '../components/PersonInactivateDialog';
 
@@ -16,7 +15,6 @@ export function PersonDetailPage() {
   const [person, setPerson] = useState<PersonFullInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isActivateOpen, setIsActivateOpen] = useState(false);
   const [isInactivateOpen, setIsInactivateOpen] = useState(false);
 
@@ -77,7 +75,7 @@ export function PersonDetailPage() {
         </div>
         {person && (
           <div className="flex items-center gap-2">
-            <Button size="sm" icon={<HiOutlinePencil />} onClick={() => setIsEditOpen(true)}>
+            <Button size="sm" icon={<HiOutlinePencil />} onClick={() => navigate(`/persons/${person.id}/edit`)}>
               {t('persons.editTitle')}
             </Button>
             {person.isActive ? (
@@ -121,12 +119,6 @@ export function PersonDetailPage() {
 
       {person && (
         <>
-          <EditPersonDialog
-            isOpen={isEditOpen}
-            person={person}
-            onClose={() => setIsEditOpen(false)}
-            onUpdated={load}
-          />
           <PersonActivateDialog
             isOpen={isActivateOpen}
             personId={person.id}

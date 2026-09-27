@@ -25,3 +25,11 @@ export const PERSON_ENDPOINTS = {
   activate: '/api/core/Person/PersonActivate',
   inactivate: '/api/core/Person/PersonInactive',
 } as const;
+
+export const FIELD_OF_STUDY_ENDPOINTS = {
+  getAll: '/api/core/FieldOfStudy/GetAll',
+} as const;
+
+export const POSITION_ENDPOINTS = {
+  getAll: '/api/core/Position/GetAll',
+} as const;

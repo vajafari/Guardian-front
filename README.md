@@ -39,7 +39,8 @@ src/
     config.ts          # API_BASE_URL (from VITE_API_BASE_URL) + endpoint paths
     authService.ts      # login()/logout()/refreshSession() — /api/core/Auth/*
     accountService.ts    # changePassword()/getCaptchaImage() — Account + Captcha
-    personService.ts      # searchPersonsByFullName() — /api/core/Person/*
+    personService.ts      # search/add/update/get/activate/inactivate — /api/core/Person/*
+    referenceDataService.ts  # getFieldOfStudies()/getPositions() — dropdown sources for the edit form
     httpClient.ts        # axios instance for *authenticated* calls: attaches the
                           # bearer token, refreshes + retries once on a 401
     tokenStorage.ts       # localStorage helpers shared by AuthContext and httpClient
@@ -65,16 +66,22 @@ src/
     ChangePasswordDialog.tsx
     ThemeToggle.tsx  # light/dark switch, see "Dark mode" below
     LanguageSwitcher.tsx   # EN / FA / AR toggle
+    AddPersonDialog.tsx    # see "Person module" below
+    PersonActivateDialog.tsx
+    PersonInactivateDialog.tsx
   pages/
     LoginPage.tsx
     DashboardPage.tsx   # content only — shell comes from DashboardLayout
     PersonsPage.tsx      # personnel search/list, see "Person module" below
+    PersonDetailPage.tsx  # /persons/:id — read-only detail view
+    EditPersonPage.tsx    # /persons/:id/edit — full page, not a dialog
   styles/
     theme.css        # Tailwind import + config + CSS custom-property theme (colors, base type)
     components.css    # component-layer CSS (.button, .card, .input, .menu-item, ...)
   types/
     auth.ts
     person.ts
+    referenceData.ts
   App.tsx        # route table, wraps everything in the ui kit's ConfigProvider
   main.tsx       # app entry, wraps App in BrowserRouter
 ```
@@ -279,44 +286,131 @@ The backend's `Person` controller (personnel records — this is a physical
 access-control system, so "Person" means an enrolled individual, not an
 `Account`/login user) is large — 24 endpoints on `Person` alone, plus
 related controllers for groups, device enrollment, cabinets, elevators,
-contracts. Guardian wires up **search/list**, **add**, and **view details**
-so far (`src/pages/PersonsPage.tsx` at `/persons`, and
-`src/pages/PersonDetailPage.tsx` at `/persons/:id`, linked from the
-"Personnel" side-menu item — renamed from the placeholder "Users" label
-since that's what it actually is now):
+contracts. All pages live under the "Personnel" side-menu item (renamed
+from the placeholder "Users" label since that's what it actually is).
 
-`searchPersonsByFullName()` (`src/api/personService.ts`) calls
-`GET /api/core/Person/SearchSummaryByFullName/{itemsPerPage}/{isActive}?q=...`
-via `httpClient` — chosen over `GridViewPersonSummary` (the endpoint a full
-data-grid would use) because that one takes a generic, undocumented
-`S/C/P/I/Pa/Cols/ParamsDictionary` query-builder contract with no OpenAPI
-schema to go on, while `SearchSummaryByFullName` is a plain, fully-typed
-`{itemsPerPage, isActive} + ?q=` search returning
-`{id, personNumberOnDevice, firstName, lastName, nationalId,
-otherUniqueIdentificationCode}[]`. **`q` must be base64-encoded** (the
-backend decodes it via `DecodeUrlReadyBase64String`) — `encodeSearchQuery()`
-in `personService.ts` handles this; an empty `q` is valid and returns every
-person matching the `isActive` filter (not an empty list). The page
-debounces the search box (300ms), has an active/inactive checkbox, and
-renders results in a plain HTML table (Tailwind-styled to match the rest of
-the app) rather than pulling in the ui kit's `Table`/`DataTable` — not
-needed yet for a single sortable-by-nothing list. Clicking a row navigates
-to `/persons/:id`.
+### Built
 
-`AddPersonDialog.tsx` posts to `Person/Add` and auto-fills the device
-number from `Person/GetFirstUnusedPersonNumberOnDevice`. `PersonDetailPage`
-calls `getPersonById()` → `GET /api/core/Person/GetById?Ids=...` — this
-must be a query param, not a JSON body: `[ApiController]` infers a complex
-GET parameter as `[FromBody]` by default, but real browsers don't send a
-body on GET (only `curl` does), so the backend action needs `[FromQuery]`
-explicitly. The `Ids` array must be serialized as repeated
-`Ids=<guid>&Ids=<guid>` (built manually via `URLSearchParams`, not axios's
-default `params: {}` array handling, which produces `Ids[]=` and silently
-binds to an empty list).
+| Page / route | What it does | Backend call(s) |
+|---|---|---|
+| `PersonsPage` — `/persons` | Search-as-you-type list (300ms debounce) with an active/inactive filter. Clicking a row opens the detail page. | `SearchSummaryByFullName` |
+| `AddPersonDialog` — dialog from `/persons` | Create a person: name, type, device number (auto-filled), start date, national ID, phone, email, active flag. | `Add`, `GetFirstUnusedPersonNumberOnDevice` |
+| `PersonDetailPage` — `/persons/:id` | Read-only view of every scalar field on the person, plus Edit / Activate / Deactivate actions. | `GetById` |
+| `EditPersonPage` — `/persons/:id/edit` | **Full page, not a dialog** — deliberately, so there's room for the fuller field set below. Edits everything `AddPersonDialog` does, plus other unique ID, fixed phone, address, father's name, birthday, emergency contacts, description, additional description, and field-of-study / position (dropdowns). | `GetById`, `Update`, `FieldOfStudy/GetAll`, `Position/GetAll` |
+| `PersonActivateDialog` / `PersonInactivateDialog` — from `PersonDetailPage` | "دعوت به کار" / "قطع کار": activate takes a start date and optional end date; deactivate requires an end date *and* a reason. Which one shows depends on the person's current `isActive`. | `PersonActivate`, `PersonInactive` |
 
-Not built yet: edit (`Person/Update`), activate/inactivate, the full
-`GridView*` data-grid endpoints, `PersonGroup`, device enrollment, or the
-cabinet/elevator/contract-person modules.
+`EditPersonPage` intentionally has **no `isActive` toggle** — changing that
+goes through Activate/Deactivate instead, which is where the backend's
+actual rules for that transition live (a required reason on deactivate,
+date validation against the existing start date). The edit form carries
+every field it doesn't expose (location/group assignments, image,
+`isActive`/`endDate`/`inactiveDescription`, `contractorContractId`)
+straight through from the loaded record unchanged, so saving a name change
+can't silently clear them.
+
+Two encoding gotchas in `personService.ts`, both non-obvious enough to be
+worth calling out:
+- `SearchSummaryByFullName`'s `q` **must be base64-encoded**
+  (`encodeSearchQuery()`) — the backend decodes it via
+  `DecodeUrlReadyBase64String` and 500s on plain text. An empty `q` is
+  valid and means "no name filter" (returns everyone matching `isActive`),
+  not "no results".
+- `GetById`'s `Ids` must be a real query string built with
+  `URLSearchParams` (`Ids=<guid>`, repeated for more than one), not
+  axios's `params: {}` object — axios serializes arrays as `Ids[]=`, which
+  the backend's model binder silently reads as empty. It also can't be a
+  JSON body: `[ApiController]` infers a complex GET parameter as
+  `[FromBody]` by default, and real browsers don't send a body on GET
+  (only `curl` does), so the backend action needs `[FromQuery]` explicitly.
+
+### Backend bugs found and fixed along the way
+
+None of these were guessed — each was found by actually driving the flow
+from this app against the real backend (not just `curl`) and reading the
+resulting stack trace. Listed here because the *next* endpoint pulled from
+this controller (GridView, PersonGroup, device enrollment, ...) should be
+assumed to have similar latent bugs until proven otherwise by the same kind
+of live test — this codebase is unusually prone to input-swap and
+inverted-condition typos.
+
+- `PersonRepository.GetFirstUnusedPersonNumberOnDeviceAsync`: a stray `[`
+  in the SQL (`[2.PersonNumberOnDevice` instead of `p2.PersonNumberOnDevice`)
+  made SQL Server read the rest of the query as one unterminated bracketed
+  identifier.
+- `AutoMapperProfile` was missing `CreateMap<PersonSaveModel, DtoPerson>()`
+  entirely, so every `Add` 500'd with an `AutoMapperMappingException`.
+- `PersonComponent.ProcessValueOfObjectForAdd` forced `IsActive = false` on
+  every add regardless of the request, which then always failed
+  `PersonLogicalValidation`'s "inactive person needs an `EndDate`" rule —
+  no person could ever be added through this endpoint.
+- `PersonController.Add`'s "save image" block had its
+  `IsNullOrWhiteSpace(model.ImagePath)` condition inverted, so it ran (and
+  failed) exactly when there was no image, and skipped saving whenever
+  there was one. `Update` had the identical bug, plus deleted the old photo
+  without ever saving the new one when a new `ImagePath` *was* given.
+- `LoggerMiddleware.FillRequestBodyAsync` NRE'd on
+  `requestLog.MainPropsData.Length` whenever `RequestMainPropNames` was set
+  but `RouteValuesNames` wasn't (`PersonController.Add`'s exact case) —
+  that field is only assigned in the other branch. Now uses the same
+  null-safe `.IsNotNullOrEmpty()` check `FillResponseBody` already used.
+- `PersonGetFirstUnusedPersonNumberOnDeviceAsync` called the repository
+  with the default `minValue` (`0`), but validation requires
+  `PersonNumberOnDevice > 0` — the number the UI auto-filled was therefore
+  always rejected. Now passes `minValue: 1`.
+- `SearchSummaryByFullName` short-circuited to an empty list whenever `q`
+  was blank, even though the search-clause builder underneath already
+  treats an empty name filter as "match everyone" — the early return was
+  fighting logic that already worked.
+- `PersonController.GetById` always requested every `Include*` flag
+  (`IncludePersonCars`, etc.) regardless of what the client asked for. This
+  incidentally surfaced a *separate*, deeper bug: `CarRepository`'s SQL
+  references `DriverFirstName`/`DriverLastName`/`DriverNationalId` columns
+  that don't exist in the current schema. Left alone (outside Person, needs
+  the real Car schema to fix correctly) — the frontend just doesn't request
+  cars.
+- `Add` and `Update` both called `LocationPersonsUpdateAsync(locationId,
+  personIds, ...)` — the method for setting which persons are assigned to
+  a *location* — passing the person's own id as `locationId` and the
+  location-id list as `personIds`. The correctly-directioned sibling,
+  `PersonLocationsUpdateAsync(personId, locationIds, ...)`, sits right next
+  to it and is what these call sites actually needed. `Update` also called
+  it (and the group equivalent) unconditionally, unlike `Add`'s existing
+  `if (...IsCollectionNotNullOrEmpty())` guard, so it could throw even when
+  the request didn't touch locations at all.
+- `PersonComponent.PersonActivateAsync`: the end-date check was backwards
+  (`endDate > startDate` throws, when that's the *valid* case — compare to
+  `InactivePersonAsync` right below it, which gets this right) and it wrote
+  `EndDate = startDate` unconditionally, discarding whatever end date was
+  actually requested.
+- `ValidateModelStateAttribute` (applied to every controller) was the one
+  place returning HTTP 400 for invalid `ModelState`, while every other
+  failure path (`HttpResponseExceptionFilter`, for both
+  `OperationCannotBeDoneException` and unhandled exceptions) returns 500
+  with an `{errorCodes, stackTrace, additionalInfo}` body. It now builds
+  that same shape and returns 500, so the error contract is consistent
+  regardless of which validation path rejected the request.
+
+### Not built yet
+
+- `contractorContractId` on the person record — the backend only exposes
+  `GetAllByContractorId(contractorId)`, not a flat list, so this needs a
+  contractor picker first, then a contract picker cascading off it.
+- `locationIds` / `personGroupIds` — need multi-select pickers backed by
+  the location and person-group search endpoints.
+- Photo upload (`hasImage`/`imagePath`/`isImageChanged`) — no file-upload
+  UI exists yet anywhere in the app.
+- The full `GridView*` + Excel-export endpoints (`GridViewPersonSummary`,
+  `GridViewPersonFullInfo`, `GridViewPersonFullInfoWithDevice`,
+  `GridViewPersonLocation`, `GridViewHistory`) — these back a fuller
+  admin data-grid than the current search/list page; not needed until
+  something actually requires paging/sorting/column-filtering.
+- `GetSummaryByIds`, `GetByRemainEndDate` (persons whose end date is
+  coming up), `GetImage` (person photo), `HistorySaveDescription` (attach
+  a note to a change-history record — blocked on `GridViewHistory` existing
+  first, since there's currently no way to see a history record to
+  annotate).
+- `PersonGroup`, device enrollment, and the cabinet/elevator/contractor
+  modules entirely.
 
 ## Available scripts
 

@@ -6,6 +6,7 @@ import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { PersonsPage } from './pages/PersonsPage';
 import { PersonDetailPage } from './pages/PersonDetailPage';
+import { EditPersonPage } from './pages/EditPersonPage';
 import { DashboardLayout } from './components/DashboardLayout';
 import { useSyncDocumentDirection } from './hooks/useSyncDocumentDirection';
 import { ConfigProvider } from './components/ui';
@@ -34,6 +35,7 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/persons" element={<PersonsPage />} />
               <Route path="/persons/:id" element={<PersonDetailPage />} />
+              <Route path="/persons/:id/edit" element={<EditPersonPage />} />
             </Route>
           </Route>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
