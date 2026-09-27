@@ -1,5 +1,7 @@
 import type { Building } from './building';
 import type { BuildingUnit } from './buildingUnit';
+import type { BuildingParkingSpot } from './buildingParkingSpot';
+import type { BuildingStorageRoom } from './buildingStorageRoom';
 
 /** Nested inside GET /api/core/Building/GetById/{id}'s floorsFullInfo. */
 export interface BuildingFloor {
@@ -20,6 +22,8 @@ export interface BuildingFloorFullInfo extends BuildingFloor {
   buildingNumber: number;
   buildingTitle: string;
   unitsFullInfo: BuildingUnit[];
+  parkingSpotsFullInfo: BuildingParkingSpot[];
+  storageRoomsFullInfo: BuildingStorageRoom[];
 }
 
 /** POST /api/core/BuildingFloor/Add and /Update body. */

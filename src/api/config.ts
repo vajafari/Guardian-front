@@ -54,3 +54,15 @@ export const BUILDING_UNIT_ENDPOINTS = {
   update: '/api/core/BuildingUnit/Update',
   delete: (id: string) => `/api/core/BuildingUnit/Delete/${id}`,
 } as const;
+
+export const BUILDING_PARKING_SPOT_ENDPOINTS = {
+  add: '/api/core/BuildingParkingSpot/Add',
+  update: '/api/core/BuildingParkingSpot/Update',
+  delete: (id: string) => `/api/core/BuildingParkingSpot/Delete/${id}`,
+} as const;
+
+export const BUILDING_STORAGE_ROOM_ENDPOINTS = {
+  add: '/api/core/BuildingStorageRoom/Add',
+  update: '/api/core/BuildingStorageRoom/Update',
+  delete: (id: string) => `/api/core/BuildingStorageRoom/Delete/${id}`,
+} as const;

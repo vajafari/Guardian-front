@@ -207,6 +207,46 @@
       "unknown": "Something went wrong"
     }
   },
+  "buildingParkingSpots": {
+    "title": "Parking spots",
+    "addButton": "Add parking spot",
+    "addTitle": "Add parking spot",
+    "editTitle": "Edit parking spot",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No parking spots found",
+    "deleteConfirm": "Delete parking spot \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "parkingSpotNumber": "Spot #",
+      "buildingUnitId": "Assigned unit"
+    },
+    "errors": {
+      "missing-fields": "Title and spot # are required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "buildingStorageRooms": {
+    "title": "Storage rooms",
+    "addButton": "Add storage room",
+    "addTitle": "Add storage room",
+    "editTitle": "Edit storage room",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No storage rooms found",
+    "deleteConfirm": "Delete storage room \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "storageRoomNumber": "Storage #",
+      "buildingUnitId": "Assigned unit"
+    },
+    "errors": {
+      "missing-fields": "Title and storage # are required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
   "footer": {
     "copyright": "© {{year}} Guardian — All rights reserved."
   }

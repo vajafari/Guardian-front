@@ -207,6 +207,46 @@
       "unknown": "خطای ناشناخته‌ای رخ داد"
     }
   },
+  "buildingParkingSpots": {
+    "title": "پارکینگ‌ها",
+    "addButton": "افزودن پارکینگ",
+    "addTitle": "افزودن پارکینگ",
+    "editTitle": "ویرایش پارکینگ",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "پارکینگی پیدا نشد",
+    "deleteConfirm": "پارکینگ «{{title}}» حذف شود؟",
+    "fields": {
+      "title": "عنوان",
+      "parkingSpotNumber": "شماره پارکینگ",
+      "buildingUnitId": "واحد مرتبط"
+    },
+    "errors": {
+      "missing-fields": "عنوان و شماره پارکینگ الزامی است",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطای ناشناخته‌ای رخ داد"
+    }
+  },
+  "buildingStorageRooms": {
+    "title": "انباری‌ها",
+    "addButton": "افزودن انباری",
+    "addTitle": "افزودن انباری",
+    "editTitle": "ویرایش انباری",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "انباری‌ای پیدا نشد",
+    "deleteConfirm": "انباری «{{title}}» حذف شود؟",
+    "fields": {
+      "title": "عنوان",
+      "storageRoomNumber": "شماره انباری",
+      "buildingUnitId": "واحد مرتبط"
+    },
+    "errors": {
+      "missing-fields": "عنوان و شماره انباری الزامی است",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطای ناشناخته‌ای رخ داد"
+    }
+  },
   "footer": {
     "copyright": "© {{year}} Guardian — تمامی حقوق محفوظ است."
   }

@@ -207,6 +207,46 @@
       "unknown": "حدث خطأ غير متوقع"
     }
   },
+  "buildingParkingSpots": {
+    "title": "مواقف السيارات",
+    "addButton": "إضافة موقف",
+    "addTitle": "إضافة موقف",
+    "editTitle": "تعديل الموقف",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على أي موقف",
+    "deleteConfirm": "حذف الموقف \"{{title}}\"؟",
+    "fields": {
+      "title": "العنوان",
+      "parkingSpotNumber": "رقم الموقف",
+      "buildingUnitId": "الوحدة المرتبطة"
+    },
+    "errors": {
+      "missing-fields": "العنوان ورقم الموقف مطلوبان",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
+    }
+  },
+  "buildingStorageRooms": {
+    "title": "غرف التخزين",
+    "addButton": "إضافة غرفة تخزين",
+    "addTitle": "إضافة غرفة تخزين",
+    "editTitle": "تعديل غرفة التخزين",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على أي غرفة تخزين",
+    "deleteConfirm": "حذف غرفة التخزين \"{{title}}\"؟",
+    "fields": {
+      "title": "العنوان",
+      "storageRoomNumber": "رقم غرفة التخزين",
+      "buildingUnitId": "الوحدة المرتبطة"
+    },
+    "errors": {
+      "missing-fields": "العنوان ورقم غرفة التخزين مطلوبان",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
+    }
+  },
   "footer": {
     "copyright": "© {{year}} Guardian — جميع الحقوق محفوظة."
   }
