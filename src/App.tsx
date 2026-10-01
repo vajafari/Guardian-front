@@ -12,6 +12,7 @@ import { PersonDetailPage } from './pages/PersonDetailPage';
 import { EditPersonPage } from './pages/EditPersonPage';
 import { ContractorsPage } from './pages/ContractorsPage';
 import { ContractorDetailPage } from './pages/ContractorDetailPage';
+import { LocationsPage } from './pages/LocationsPage';
 import { DashboardLayout } from './components/DashboardLayout';
 import { useSyncDocumentDirection } from './hooks/useSyncDocumentDirection';
 import { ConfigProvider } from './components/ui';
@@ -46,6 +47,7 @@ function App() {
               <Route path="/persons/:id/edit" element={<EditPersonPage />} />
               <Route path="/contractors" element={<ContractorsPage />} />
               <Route path="/contractors/:id" element={<ContractorDetailPage />} />
+              <Route path="/locations" element={<LocationsPage />} />
             </Route>
           </Route>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

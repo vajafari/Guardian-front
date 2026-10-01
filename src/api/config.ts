@@ -80,3 +80,9 @@ export const CONTRACTOR_CONTRACT_ENDPOINTS = {
   update: '/api/core/ContractorContract/Update',
   delete: (id: string) => `/api/core/ContractorContract/Delete/${id}`,
 } as const;
+
+export const LOCATION_ENDPOINTS = {
+  getAll: '/api/core/Location/GetAll',
+  add: '/api/core/Location/Add',
+  update: '/api/core/Location/Update',
+} as const;

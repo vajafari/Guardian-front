@@ -55,6 +55,7 @@
     "persons": "Personnel",
     "buildings": "Buildings",
     "contractors": "Contractors",
+    "locations": "Locations",
     "reports": "Reports",
     "settings": "Settings"
   },
@@ -305,6 +306,31 @@
     },
     "errors": {
       "missing-fields": "Title and contract # are required",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "locations": {
+    "title": "Locations",
+    "addButton": "Add location",
+    "addTitle": "Add location",
+    "editTitle": "Edit location",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No locations found",
+    "loadError": "Couldn't load locations. Try again.",
+    "retry": "Retry",
+    "fields": {
+      "locationNumber": "Location #",
+      "title": "Title",
+      "description": "Description",
+      "parentLocationId": "Parent location",
+      "isAutoSyncDisabled": "Auto-sync disabled"
+    },
+    "errors": {
+      "missing-fields": "Location number and title are required",
+      "number-already-exists": "This location number is already in use",
+      "parent-cycle": "The parent location can't be this location or one of its own descendants",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }
