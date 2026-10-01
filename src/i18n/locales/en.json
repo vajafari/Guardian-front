@@ -7,7 +7,8 @@
   "common": {
     "confirmTitle": "Confirm",
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "selectedCount": "{{count}} selected"
   },
   "login": {
     "title": "Guardian",
@@ -56,6 +57,7 @@
     "buildings": "Buildings",
     "contractors": "Contractors",
     "locations": "Locations",
+    "userGroups": "User groups",
     "reports": "Reports",
     "settings": "Settings"
   },
@@ -331,6 +333,44 @@
       "missing-fields": "Location number and title are required",
       "number-already-exists": "This location number is already in use",
       "parent-cycle": "The parent location can't be this location or one of its own descendants",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "userGroups": {
+    "title": "User groups",
+    "addButton": "Add user group",
+    "addTitle": "Add user group",
+    "editTitle": "Edit user group",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No user groups found",
+    "loadError": "Couldn't load user groups. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete user group \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "accessType": "Access type",
+      "maxConcurrentSessions": "Max concurrent sessions",
+      "cidrPrefix": "IP range prefix",
+      "cidrPrefixLength": "IP range prefix length",
+      "userCount": "Users",
+      "buildings": "Buildings",
+      "persons": "Persons",
+      "locations": "Locations",
+      "contractors": "Contractors"
+    },
+    "accessTypes": {
+      "1": "Admin",
+      "2": "Only self",
+      "3": "All buildings",
+      "4": "Some buildings and persons"
+    },
+    "errors": {
+      "missing-fields": "Title and max concurrent sessions are required",
+      "title-invalid": "Title is required",
+      "max-sessions-invalid": "Max concurrent sessions must be a positive number",
+      "cidr-invalid": "The IP range prefix is not a valid IP address",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }

@@ -86,3 +86,11 @@ export const LOCATION_ENDPOINTS = {
   add: '/api/core/Location/Add',
   update: '/api/core/Location/Update',
 } as const;
+
+export const USER_GROUP_ENDPOINTS = {
+  getAll: '/api/core/UserGroup/GetAll',
+  getById: (id: string) => `/api/core/UserGroup/GetById?Id=${id}&E=1&S=1&A=1&C=1&M=0&Ga=0`,
+  add: '/api/core/UserGroup/Add',
+  update: '/api/core/UserGroup/Save',
+  delete: (id: string) => `/api/core/UserGroup/Delete/${id}`,
+} as const;
