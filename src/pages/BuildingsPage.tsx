@@ -6,6 +6,7 @@ import { deleteBuilding, searchBuildings } from '../api/buildingService';
 import type { Building } from '../types/building';
 import { Alert, Button, Card, Spinner } from '../components/ui';
 import { BuildingFormDialog } from '../components/BuildingFormDialog';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 
 export function BuildingsPage() {
   const { t } = useTranslation();
@@ -15,6 +16,8 @@ export function BuildingsPage() {
   const [hasError, setHasError] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingBuilding, setEditingBuilding] = useState<Building | null>(null);
+  const [deletingBuilding, setDeletingBuilding] = useState<Building | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const load = async () => {
     setIsLoading(true);
@@ -44,15 +47,17 @@ export function BuildingsPage() {
     setIsFormOpen(true);
   };
 
-  const handleDelete = async (building: Building) => {
-    if (!window.confirm(t('buildings.deleteConfirm', { title: building.title }))) {
-      return;
-    }
+  const confirmDelete = async () => {
+    if (!deletingBuilding) return;
+    setIsDeleting(true);
     try {
-      await deleteBuilding(building.id);
+      await deleteBuilding(deletingBuilding.id);
+      setDeletingBuilding(null);
       load();
     } catch {
       setHasError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -120,7 +125,7 @@ export function BuildingsPage() {
                         icon={<HiOutlineTrash />}
                         onClick={(event) => {
                           event.stopPropagation();
-                          handleDelete(building);
+                          setDeletingBuilding(building);
                         }}
                       />
                     </div>
@@ -137,6 +142,14 @@ export function BuildingsPage() {
         building={editingBuilding}
         onClose={() => setIsFormOpen(false)}
         onSaved={load}
+      />
+
+      <ConfirmDialog
+        isOpen={!!deletingBuilding}
+        message={t('buildings.deleteConfirm', { title: deletingBuilding?.title })}
+        isConfirming={isDeleting}
+        onConfirm={confirmDelete}
+        onClose={() => setDeletingBuilding(null)}
       />
     </Card>
   );

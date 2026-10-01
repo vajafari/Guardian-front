@@ -4,6 +4,11 @@
     "ar": "AR",
     "fa": "FA"
   },
+  "common": {
+    "confirmTitle": "تایید",
+    "cancel": "انصراف",
+    "delete": "حذف"
+  },
   "login": {
     "title": "Guardian",
     "subtitle": "ورود به پنل مدیریت",

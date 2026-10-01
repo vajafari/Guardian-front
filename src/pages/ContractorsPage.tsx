@@ -6,6 +6,7 @@ import { deleteContractor, listContractors } from '../api/contractorService';
 import type { Contractor } from '../types/contractor';
 import { Alert, Button, Card, Spinner } from '../components/ui';
 import { ContractorFormDialog } from '../components/ContractorFormDialog';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 
 export function ContractorsPage() {
   const { t } = useTranslation();
@@ -15,6 +16,8 @@ export function ContractorsPage() {
   const [hasError, setHasError] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingContractor, setEditingContractor] = useState<Contractor | null>(null);
+  const [deletingContractor, setDeletingContractor] = useState<Contractor | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const load = async () => {
     setIsLoading(true);
@@ -44,15 +47,17 @@ export function ContractorsPage() {
     setIsFormOpen(true);
   };
 
-  const handleDelete = async (contractor: Contractor) => {
-    if (!window.confirm(t('contractors.deleteConfirm', { title: contractor.title }))) {
-      return;
-    }
+  const confirmDelete = async () => {
+    if (!deletingContractor) return;
+    setIsDeleting(true);
     try {
-      await deleteContractor(contractor.id);
+      await deleteContractor(deletingContractor.id);
+      setDeletingContractor(null);
       load();
     } catch {
       setHasError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -128,7 +133,7 @@ export function ContractorsPage() {
                         icon={<HiOutlineTrash />}
                         onClick={(event) => {
                           event.stopPropagation();
-                          handleDelete(contractor);
+                          setDeletingContractor(contractor);
                         }}
                       />
                     </div>
@@ -145,6 +150,14 @@ export function ContractorsPage() {
         contractor={editingContractor}
         onClose={() => setIsFormOpen(false)}
         onSaved={load}
+      />
+
+      <ConfirmDialog
+        isOpen={!!deletingContractor}
+        message={t('contractors.deleteConfirm', { title: deletingContractor?.title })}
+        isConfirming={isDeleting}
+        onConfirm={confirmDelete}
+        onClose={() => setDeletingContractor(null)}
       />
     </Card>
   );

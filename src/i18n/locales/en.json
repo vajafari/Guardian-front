@@ -4,6 +4,11 @@
     "ar": "AR",
     "fa": "FA"
   },
+  "common": {
+    "confirmTitle": "Confirm",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
   "login": {
     "title": "Guardian",
     "subtitle": "Sign in to the admin panel",

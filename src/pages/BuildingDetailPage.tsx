@@ -7,6 +7,7 @@ import { deleteBuildingFloor } from '../api/buildingFloorService';
 import type { BuildingFloor, BuildingFullInfo } from '../types/buildingFloor';
 import { Alert, Button, Card, Spinner } from '../components/ui';
 import { BuildingFloorFormDialog } from '../components/BuildingFloorFormDialog';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 
 export function BuildingDetailPage() {
   const { t } = useTranslation();
@@ -17,6 +18,8 @@ export function BuildingDetailPage() {
   const [hasError, setHasError] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingFloor, setEditingFloor] = useState<BuildingFloor | null>(null);
+  const [deletingFloor, setDeletingFloor] = useState<BuildingFloor | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const load = async () => {
     if (!id) return;
@@ -47,15 +50,17 @@ export function BuildingDetailPage() {
     setIsFormOpen(true);
   };
 
-  const handleDelete = async (floor: BuildingFloor) => {
-    if (!window.confirm(t('buildingFloors.deleteConfirm', { title: floor.title }))) {
-      return;
-    }
+  const confirmDelete = async () => {
+    if (!deletingFloor) return;
+    setIsDeleting(true);
     try {
-      await deleteBuildingFloor(floor.id);
+      await deleteBuildingFloor(deletingFloor.id);
+      setDeletingFloor(null);
       load();
     } catch {
       setHasError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -138,7 +143,7 @@ export function BuildingDetailPage() {
                             icon={<HiOutlineTrash />}
                             onClick={(event) => {
                               event.stopPropagation();
-                              handleDelete(floor);
+                              setDeletingFloor(floor);
                             }}
                           />
                         </div>
@@ -156,6 +161,14 @@ export function BuildingDetailPage() {
             floor={editingFloor}
             onClose={() => setIsFormOpen(false)}
             onSaved={load}
+          />
+
+          <ConfirmDialog
+            isOpen={!!deletingFloor}
+            message={t('buildingFloors.deleteConfirm', { title: deletingFloor?.title })}
+            isConfirming={isDeleting}
+            onConfirm={confirmDelete}
+            onClose={() => setDeletingFloor(null)}
           />
         </>
       )}

@@ -15,6 +15,7 @@ import { BuildingUnitFormDialog } from '../components/BuildingUnitFormDialog';
 import { BuildingUnitViewDialog } from '../components/BuildingUnitViewDialog';
 import { BuildingParkingSpotFormDialog } from '../components/BuildingParkingSpotFormDialog';
 import { BuildingStorageRoomFormDialog } from '../components/BuildingStorageRoomFormDialog';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 
 export function FloorDetailPage() {
   const { t } = useTranslation();
@@ -31,6 +32,10 @@ export function FloorDetailPage() {
   const [editingParkingSpot, setEditingParkingSpot] = useState<BuildingParkingSpot | null>(null);
   const [isStorageRoomFormOpen, setIsStorageRoomFormOpen] = useState(false);
   const [editingStorageRoom, setEditingStorageRoom] = useState<BuildingStorageRoom | null>(null);
+  const [deletingUnit, setDeletingUnit] = useState<BuildingUnit | null>(null);
+  const [deletingParkingSpot, setDeletingParkingSpot] = useState<BuildingParkingSpot | null>(null);
+  const [deletingStorageRoom, setDeletingStorageRoom] = useState<BuildingStorageRoom | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const load = async () => {
     if (!id) return;
@@ -66,15 +71,17 @@ export function FloorDetailPage() {
     setIsViewOpen(true);
   };
 
-  const handleDelete = async (unit: BuildingUnit) => {
-    if (!window.confirm(t('buildingUnits.deleteConfirm', { title: unit.title }))) {
-      return;
-    }
+  const confirmDeleteUnit = async () => {
+    if (!deletingUnit) return;
+    setIsDeleting(true);
     try {
-      await deleteBuildingUnit(unit.id);
+      await deleteBuildingUnit(deletingUnit.id);
+      setDeletingUnit(null);
       load();
     } catch {
       setHasError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -88,15 +95,17 @@ export function FloorDetailPage() {
     setIsParkingSpotFormOpen(true);
   };
 
-  const handleDeleteParkingSpot = async (spot: BuildingParkingSpot) => {
-    if (!window.confirm(t('buildingParkingSpots.deleteConfirm', { title: spot.title }))) {
-      return;
-    }
+  const confirmDeleteParkingSpot = async () => {
+    if (!deletingParkingSpot) return;
+    setIsDeleting(true);
     try {
-      await deleteBuildingParkingSpot(spot.id);
+      await deleteBuildingParkingSpot(deletingParkingSpot.id);
+      setDeletingParkingSpot(null);
       load();
     } catch {
       setHasError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -110,15 +119,17 @@ export function FloorDetailPage() {
     setIsStorageRoomFormOpen(true);
   };
 
-  const handleDeleteStorageRoom = async (room: BuildingStorageRoom) => {
-    if (!window.confirm(t('buildingStorageRooms.deleteConfirm', { title: room.title }))) {
-      return;
-    }
+  const confirmDeleteStorageRoom = async () => {
+    if (!deletingStorageRoom) return;
+    setIsDeleting(true);
     try {
-      await deleteBuildingStorageRoom(room.id);
+      await deleteBuildingStorageRoom(deletingStorageRoom.id);
+      setDeletingStorageRoom(null);
       load();
     } catch {
       setHasError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -197,7 +208,7 @@ export function FloorDetailPage() {
                         <div className="flex items-center justify-end gap-1">
                           <Button variant="plain" size="xs" icon={<HiOutlineEye />} onClick={() => openView(unit)} />
                           <Button variant="plain" size="xs" icon={<HiOutlinePencil />} onClick={() => openEdit(unit)} />
-                          <Button variant="plain" size="xs" icon={<HiOutlineTrash />} onClick={() => handleDelete(unit)} />
+                          <Button variant="plain" size="xs" icon={<HiOutlineTrash />} onClick={() => setDeletingUnit(unit)} />
                         </div>
                       </td>
                     </tr>
@@ -263,7 +274,7 @@ export function FloorDetailPage() {
                             variant="plain"
                             size="xs"
                             icon={<HiOutlineTrash />}
-                            onClick={() => handleDeleteParkingSpot(spot)}
+                            onClick={() => setDeletingParkingSpot(spot)}
                           />
                         </div>
                       </td>
@@ -330,7 +341,7 @@ export function FloorDetailPage() {
                             variant="plain"
                             size="xs"
                             icon={<HiOutlineTrash />}
-                            onClick={() => handleDeleteStorageRoom(room)}
+                            onClick={() => setDeletingStorageRoom(room)}
                           />
                         </div>
                       </td>
@@ -348,6 +359,28 @@ export function FloorDetailPage() {
             storageRoom={editingStorageRoom}
             onClose={() => setIsStorageRoomFormOpen(false)}
             onSaved={load}
+          />
+
+          <ConfirmDialog
+            isOpen={!!deletingUnit}
+            message={t('buildingUnits.deleteConfirm', { title: deletingUnit?.title })}
+            isConfirming={isDeleting}
+            onConfirm={confirmDeleteUnit}
+            onClose={() => setDeletingUnit(null)}
+          />
+          <ConfirmDialog
+            isOpen={!!deletingParkingSpot}
+            message={t('buildingParkingSpots.deleteConfirm', { title: deletingParkingSpot?.title })}
+            isConfirming={isDeleting}
+            onConfirm={confirmDeleteParkingSpot}
+            onClose={() => setDeletingParkingSpot(null)}
+          />
+          <ConfirmDialog
+            isOpen={!!deletingStorageRoom}
+            message={t('buildingStorageRooms.deleteConfirm', { title: deletingStorageRoom?.title })}
+            isConfirming={isDeleting}
+            onConfirm={confirmDeleteStorageRoom}
+            onClose={() => setDeletingStorageRoom(null)}
           />
         </>
       )}

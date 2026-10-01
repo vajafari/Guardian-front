@@ -4,6 +4,11 @@
     "ar": "AR",
     "fa": "FA"
   },
+  "common": {
+    "confirmTitle": "تأكيد",
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  },
   "login": {
     "title": "Guardian",
     "subtitle": "تسجيل الدخول إلى لوحة التحكم",

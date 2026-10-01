@@ -9,6 +9,7 @@ import type { ContractorContract } from '../types/contractorContract';
 import { Alert, Button, Card, Spinner } from '../components/ui';
 import { ContractorFormDialog } from '../components/ContractorFormDialog';
 import { ContractorContractFormDialog } from '../components/ContractorContractFormDialog';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 
 export function ContractorDetailPage() {
   const { t } = useTranslation();
@@ -20,6 +21,8 @@ export function ContractorDetailPage() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isContractFormOpen, setIsContractFormOpen] = useState(false);
   const [editingContract, setEditingContract] = useState<ContractorContract | null>(null);
+  const [deletingContract, setDeletingContract] = useState<ContractorContract | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const load = async () => {
     if (!id) return;
@@ -50,15 +53,17 @@ export function ContractorDetailPage() {
     setIsContractFormOpen(true);
   };
 
-  const handleDeleteContract = async (contract: ContractorContract) => {
-    if (!window.confirm(t('contractorContracts.deleteConfirm', { title: contract.title }))) {
-      return;
-    }
+  const confirmDeleteContract = async () => {
+    if (!deletingContract) return;
+    setIsDeleting(true);
     try {
-      await deleteContractorContract(contract.id);
+      await deleteContractorContract(deletingContract.id);
+      setDeletingContract(null);
       load();
     } catch {
       setHasError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -164,7 +169,7 @@ export function ContractorDetailPage() {
                             variant="plain"
                             size="xs"
                             icon={<HiOutlineTrash />}
-                            onClick={() => handleDeleteContract(contract)}
+                            onClick={() => setDeletingContract(contract)}
                           />
                         </div>
                       </td>
@@ -187,6 +192,14 @@ export function ContractorDetailPage() {
             contract={editingContract}
             onClose={() => setIsContractFormOpen(false)}
             onSaved={load}
+          />
+
+          <ConfirmDialog
+            isOpen={!!deletingContract}
+            message={t('contractorContracts.deleteConfirm', { title: deletingContract?.title })}
+            isConfirming={isDeleting}
+            onConfirm={confirmDeleteContract}
+            onClose={() => setDeletingContract(null)}
           />
         </>
       )}
