@@ -1,49 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlinePencil, HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi';
-import { deleteContractor, listContractors } from '../api/contractorService';
+import { deleteContractor, mapContractorGridRow, type ContractorGridRow } from '../api/contractorService';
+import { CONTRACTOR_ENDPOINTS } from '../api/config';
 import type { Contractor } from '../types/contractor';
-import { Alert, Button, Card, Spinner } from '../components/ui';
+import { Alert, Button, Card } from '../components/ui';
 import { ContractorFormDialog } from '../components/ContractorFormDialog';
 import { ConfirmDialog } from '../components/ConfirmDialog';
+import { GridView, type GridViewHandle } from '../components/GridView';
 
 export function ContractorsPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [contractors, setContractors] = useState<Contractor[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const gridRef = useRef<GridViewHandle>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingContractor, setEditingContractor] = useState<Contractor | null>(null);
   const [deletingContractor, setDeletingContractor] = useState<Contractor | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const load = async () => {
-    setIsLoading(true);
-    setHasError(false);
-    try {
-      const result = await listContractors();
-      setContractors(result);
-    } catch {
-      setHasError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [hasError, setHasError] = useState(false);
 
   const openAdd = () => {
     setEditingContractor(null);
     setIsFormOpen(true);
   };
 
-  const openEdit = (contractor: Contractor) => {
-    setEditingContractor(contractor);
+  const openEdit = (row: ContractorGridRow) => {
+    setEditingContractor(mapContractorGridRow(row));
     setIsFormOpen(true);
   };
 
@@ -53,7 +36,7 @@ export function ContractorsPage() {
     try {
       await deleteContractor(deletingContractor.id);
       setDeletingContractor(null);
-      load();
+      gridRef.current?.reload();
     } catch {
       setHasError(true);
     } finally {
@@ -70,86 +53,68 @@ export function ContractorsPage() {
         </Button>
       </div>
 
-      {isLoading ? (
-        <div className="flex justify-center py-10">
-          <Spinner size={28} />
-        </div>
-      ) : hasError ? (
-        <Alert type="danger" className="mb-2">
-          <div className="flex items-center justify-between gap-4">
-            <span>{t('contractors.loadError')}</span>
-            <Button size="sm" onClick={load}>
-              {t('contractors.retry')}
-            </Button>
-          </div>
+      <GridView<ContractorGridRow>
+        ref={gridRef}
+        dataUrl={CONTRACTOR_ENDPOINTS.gridView}
+        rowKey={(row) => row.Id}
+        emptyText={t('contractors.empty')}
+        onRowClick={(row) => navigate(`/contractors/${row.Id}`)}
+        columns={[
+          {
+            propertyName: 'Title',
+            header: t('contractors.fields.title'),
+            sortable: true,
+            filterOperator: 'like',
+          },
+          {
+            propertyName: 'SubjectOfActivity',
+            header: t('contractors.fields.subjectOfActivity'),
+            sortable: true,
+            filterOperator: 'like',
+            render: (row) => row.SubjectOfActivity || '—',
+          },
+          {
+            propertyName: 'PhoneNumber',
+            header: t('contractors.fields.phoneNumber'),
+            filterOperator: 'like',
+            render: (row) => row.PhoneNumber || '—',
+          },
+          {
+            propertyName: 'IsActive',
+            header: t('contractors.fields.isActive'),
+            sortable: true,
+            render: (row) => (row.IsActive ? t('persons.detail.yes') : t('persons.detail.no')),
+          },
+        ]}
+        actions={(row) => (
+          <>
+            <Button
+              variant="plain"
+              size="xs"
+              icon={<HiOutlinePencil />}
+              onClick={() => openEdit(row)}
+            />
+            <Button
+              variant="plain"
+              size="xs"
+              icon={<HiOutlineTrash />}
+              onClick={() => setDeletingContractor(mapContractorGridRow(row))}
+            />
+          </>
+        )}
+      />
+
+      {hasError && (
+        <Alert type="danger" className="mt-2">
+          {t('contractors.loadError')}
         </Alert>
-      ) : contractors.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400 py-6 text-center">{t('contractors.empty')}</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700 text-start">
-                <th className="py-2 px-3 text-start font-semibold text-gray-500 dark:text-gray-400">
-                  {t('contractors.fields.title')}
-                </th>
-                <th className="py-2 px-3 text-start font-semibold text-gray-500 dark:text-gray-400">
-                  {t('contractors.fields.subjectOfActivity')}
-                </th>
-                <th className="py-2 px-3 text-start font-semibold text-gray-500 dark:text-gray-400">
-                  {t('contractors.fields.phoneNumber')}
-                </th>
-                <th className="py-2 px-3 text-start font-semibold text-gray-500 dark:text-gray-400">
-                  {t('contractors.fields.isActive')}
-                </th>
-                <th className="py-2 px-3 text-end font-semibold text-gray-500 dark:text-gray-400" />
-              </tr>
-            </thead>
-            <tbody>
-              {contractors.map((contractor) => (
-                <tr
-                  key={contractor.id}
-                  onClick={() => navigate(`/contractors/${contractor.id}`)}
-                  className="border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-700/40 cursor-pointer"
-                >
-                  <td className="py-2 px-3">{contractor.title}</td>
-                  <td className="py-2 px-3">{contractor.subjectOfActivity ?? '—'}</td>
-                  <td className="py-2 px-3">{contractor.phoneNumber ?? '—'}</td>
-                  <td className="py-2 px-3">{contractor.isActive ? t('persons.detail.yes') : t('persons.detail.no')}</td>
-                  <td className="py-2 px-3 text-end">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button
-                        variant="plain"
-                        size="xs"
-                        icon={<HiOutlinePencil />}
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          openEdit(contractor);
-                        }}
-                      />
-                      <Button
-                        variant="plain"
-                        size="xs"
-                        icon={<HiOutlineTrash />}
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          setDeletingContractor(contractor);
-                        }}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       )}
 
       <ContractorFormDialog
         isOpen={isFormOpen}
         contractor={editingContractor}
         onClose={() => setIsFormOpen(false)}
-        onSaved={load}
+        onSaved={() => gridRef.current?.reload()}
       />
 
       <ConfirmDialog

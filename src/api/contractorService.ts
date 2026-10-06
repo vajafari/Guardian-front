@@ -8,7 +8,7 @@ import { ContractorError, type Contractor, type ContractorFullInfo, type Contrac
  * app, which is camelCase) and use "" instead of null for empty fields —
  * this maps that shape to the rest of the app's convention.
  */
-interface ContractorGridRow {
+export interface ContractorGridRow {
   Id: string;
   Title: string;
   StartDate: string;
@@ -26,7 +26,7 @@ function emptyToNull(value: string): string | null {
   return value === '' ? null : value;
 }
 
-function mapGridRow(row: ContractorGridRow): Contractor {
+export function mapContractorGridRow(row: ContractorGridRow): Contractor {
   return {
     id: row.Id,
     title: row.Title,
@@ -54,7 +54,7 @@ function mapContractorError(err: unknown): ContractorError {
 
 export async function listContractors(): Promise<Contractor[]> {
   const { data } = await httpClient.get<{ rows: ContractorGridRow[] }>(CONTRACTOR_ENDPOINTS.gridView);
-  return data.rows.map(mapGridRow);
+  return data.rows.map(mapContractorGridRow);
 }
 
 export async function getContractorById(id: string): Promise<ContractorFullInfo | null> {

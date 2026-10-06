@@ -10,6 +10,14 @@
     "delete": "Delete",
     "selectedCount": "{{count}} selected"
   },
+  "gridView": {
+    "loadError": "Couldn't load data. Try again.",
+    "retry": "Retry",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {{page}} of {{totalPages}}",
+    "totalRows": "{{count}} rows"
+  },
   "login": {
     "title": "Guardian",
     "subtitle": "Sign in to the admin panel",

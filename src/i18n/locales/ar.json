@@ -10,6 +10,14 @@
     "delete": "حذف",
     "selectedCount": "تم اختيار {{count}}"
   },
+  "gridView": {
+    "loadError": "تعذر تحميل البيانات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "previous": "السابق",
+    "next": "التالي",
+    "pageOf": "صفحة {{page}} من {{totalPages}}",
+    "totalRows": "{{count}} صف"
+  },
   "login": {
     "title": "Guardian",
     "subtitle": "تسجيل الدخول إلى لوحة التحكم",

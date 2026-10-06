@@ -10,6 +10,14 @@
     "delete": "حذف",
     "selectedCount": "{{count}} مورد انتخاب شده"
   },
+  "gridView": {
+    "loadError": "دریافت اطلاعات با خطا مواجه شد. دوباره تلاش کنید.",
+    "retry": "تلاش مجدد",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "pageOf": "صفحه {{page}} از {{totalPages}}",
+    "totalRows": "{{count}} ردیف"
+  },
   "login": {
     "title": "Guardian",
     "subtitle": "ورود به پنل مدیریت",
