@@ -5,6 +5,7 @@ interface ConfirmDialogProps {
   isOpen: boolean;
   title?: string;
   message?: string;
+  error?: string | null;
   confirmText?: string;
   isConfirming?: boolean;
   onConfirm: () => void;
@@ -15,6 +16,7 @@ export function ConfirmDialog({
   isOpen,
   title,
   message,
+  error,
   confirmText,
   isConfirming = false,
   onConfirm,
@@ -26,9 +28,15 @@ export function ConfirmDialog({
     <Dialog isOpen={isOpen} onClose={onClose} onRequestClose={onClose} width={420}>
       <h4 className="mb-4">{title ?? t('common.confirmTitle')}</h4>
 
-      <Alert type="warning" className="mb-5">
+      <Alert type="warning" className="mb-3">
         {message}
       </Alert>
+
+      {error && (
+        <Alert type="danger" className="mb-3">
+          {error}
+        </Alert>
+      )}
 
       <div className="flex justify-end gap-2">
         <Button onClick={onClose} disabled={isConfirming}>

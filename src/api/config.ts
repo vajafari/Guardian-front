@@ -89,7 +89,7 @@ export const LOCATION_ENDPOINTS = {
 
 export const USER_GROUP_ENDPOINTS = {
   getAll: '/api/core/UserGroup/GetAll',
-  getById: (id: string) => `/api/core/UserGroup/GetById?Id=${id}&E=1&S=1&A=1&C=1&M=0&Ga=0`,
+  getById: (id: string) => `/api/core/UserGroup/GetById?Id=${id}&E=1&S=1&A=1&C=1&M=1&Ga=1`,
   add: '/api/core/UserGroup/Add',
   update: '/api/core/UserGroup/Save',
   delete: (id: string) => `/api/core/UserGroup/Delete/${id}`,

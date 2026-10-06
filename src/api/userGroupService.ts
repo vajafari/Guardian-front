@@ -7,6 +7,8 @@ import { UserGroupError, type UserGroup, type UserGroupFullInfo, type UserGroupP
 const ACCOUNTING_STATUS_USER_GROUP_TITLE_IS_NOT_VALID = 1032;
 const ACCOUNTING_STATUS_MAX_CONCURRENT_SESSIONS_IS_NOT_VALID = 1036;
 const ACCOUNTING_STATUS_CIDR_IS_NOT_VALID = 1038;
+const ACCOUNTING_STATUS_CANNOT_DELETE_USER_GROUP_WITH_USERS = 1061;
+const ACCOUNTING_STATUS_CANNOT_DELETE_USER_GROUP_WITH_RELATED_DATA = 1062;
 
 function mapUserGroupError(err: unknown): UserGroupError {
   if (!(err instanceof AxiosError)) {
@@ -24,6 +26,12 @@ function mapUserGroupError(err: unknown): UserGroupError {
   }
   if (errorCodes.includes(ACCOUNTING_STATUS_CIDR_IS_NOT_VALID)) {
     return new UserGroupError('cidr-invalid');
+  }
+  if (errorCodes.includes(ACCOUNTING_STATUS_CANNOT_DELETE_USER_GROUP_WITH_USERS)) {
+    return new UserGroupError('has-users');
+  }
+  if (errorCodes.includes(ACCOUNTING_STATUS_CANNOT_DELETE_USER_GROUP_WITH_RELATED_DATA)) {
+    return new UserGroupError('has-related-data');
   }
   return new UserGroupError('unknown');
 }

@@ -1,6 +1,9 @@
 /** AccessTypeEnumeration: Admin, OnlySelf, AllBuildings, SomeBuildingsAndPersons. */
 export type AccessType = 1 | 2 | 3 | 4;
 
+/** Per-menu access level: None, OnlyView, ViewAndEdit (see Guardian.Api.Assets.Auth.MenuAccessTypes). */
+export type MenuAccessType = 0 | 1 | 2;
+
 /** Row shape from GET /api/core/UserGroup/GetAll. */
 export interface UserGroup {
   id: string;
@@ -18,6 +21,8 @@ export interface UserGroupFullInfo extends UserGroup {
   userGroupPersons: { personId: string }[];
   userGroupLocations: { locationId: string }[];
   userGroupContractors: { contractorId: string }[];
+  userGroupMenus: { menuCode: number; accessType: MenuAccessType }[];
+  userGroupAccesses: { accessibleUserGroupId: string }[];
 }
 
 /** POST /api/core/UserGroup/Add and /Save body. */
@@ -32,8 +37,8 @@ export interface UserGroupPayload {
   userGroupPersons: { userGroupId: string; personId: string }[];
   userGroupLocations: { userGroupId: string; locationId: string }[];
   userGroupContractors: { userGroupId: string; contractorId: string }[];
-  userGroupMenus: [];
-  userGroupAccesses: [];
+  userGroupMenus: { userGroupId: string; menuCode: number; accessType: MenuAccessType }[];
+  userGroupAccesses: { userGroupId: string; accessibleUserGroupId: string }[];
 }
 
 export type UserGroupErrorCode =
@@ -41,6 +46,8 @@ export type UserGroupErrorCode =
   | 'title-invalid'
   | 'max-sessions-invalid'
   | 'cidr-invalid'
+  | 'has-users'
+  | 'has-related-data'
   | 'network-error'
   | 'unknown';
 

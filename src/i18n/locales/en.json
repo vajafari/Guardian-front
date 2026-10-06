@@ -357,6 +357,7 @@
     "loadError": "Couldn't load user groups. Try again.",
     "retry": "Retry",
     "deleteConfirm": "Delete user group \"{{title}}\"?",
+    "adminAccessNote": "Admin groups have unrestricted access. Locations, contractors, accessible user groups and menu permissions don't apply and won't be saved.",
     "fields": {
       "title": "Title",
       "accessType": "Access type",
@@ -367,7 +368,9 @@
       "buildings": "Buildings",
       "persons": "Persons",
       "locations": "Locations",
-      "contractors": "Contractors"
+      "contractors": "Contractors",
+      "accessibleUserGroups": "Accessible user groups",
+      "menus": "Menu permissions"
     },
     "accessTypes": {
       "1": "Admin",
@@ -375,11 +378,18 @@
       "3": "All buildings",
       "4": "Some buildings and persons"
     },
+    "menuAccessTypes": {
+      "0": "No access",
+      "1": "View only",
+      "2": "View and edit"
+    },
     "errors": {
       "missing-fields": "Title and max concurrent sessions are required",
       "title-invalid": "Title is required",
       "max-sessions-invalid": "Max concurrent sessions must be a positive number",
       "cidr-invalid": "The IP range prefix is not a valid IP address",
+      "has-users": "This user group can't be deleted because it still has users assigned to it",
+      "has-related-data": "This user group can't be deleted because it still has related data (buildings, persons, locations, contractors, menus or accesses)",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }

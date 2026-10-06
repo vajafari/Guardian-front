@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HiOutlinePencil, HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi';
 import { deleteUserGroup, getUserGroupById, listUserGroups } from '../api/userGroupService';
-import type { UserGroup, UserGroupFullInfo } from '../types/userGroup';
+import { UserGroupError, type UserGroup, type UserGroupFullInfo } from '../types/userGroup';
 import { Alert, Button, Card, Spinner } from '../components/ui';
 import { UserGroupFormDialog } from '../components/UserGroupFormDialog';
 import { ConfirmDialog } from '../components/ConfirmDialog';
@@ -17,6 +17,7 @@ export function UserGroupsPage() {
   const [isLoadingEdit, setIsLoadingEdit] = useState(false);
   const [deletingUserGroup, setDeletingUserGroup] = useState<UserGroup | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const load = async () => {
     setIsLoading(true);
@@ -57,12 +58,13 @@ export function UserGroupsPage() {
   const confirmDelete = async () => {
     if (!deletingUserGroup) return;
     setIsDeleting(true);
+    setDeleteError(null);
     try {
       await deleteUserGroup(deletingUserGroup.id);
       setDeletingUserGroup(null);
       load();
-    } catch {
-      setHasError(true);
+    } catch (err) {
+      setDeleteError(err instanceof UserGroupError ? t(`userGroups.errors.${err.code}`) : t('userGroups.errors.unknown'));
     } finally {
       setIsDeleting(false);
     }
@@ -129,7 +131,10 @@ export function UserGroupsPage() {
                         variant="plain"
                         size="xs"
                         icon={<HiOutlineTrash />}
-                        onClick={() => setDeletingUserGroup(userGroup)}
+                        onClick={() => {
+                          setDeleteError(null);
+                          setDeletingUserGroup(userGroup);
+                        }}
                       />
                     </div>
                   </td>
@@ -150,6 +155,7 @@ export function UserGroupsPage() {
       <ConfirmDialog
         isOpen={!!deletingUserGroup}
         message={t('userGroups.deleteConfirm', { title: deletingUserGroup?.title })}
+        error={deleteError}
         isConfirming={isDeleting}
         onConfirm={confirmDelete}
         onClose={() => setDeletingUserGroup(null)}

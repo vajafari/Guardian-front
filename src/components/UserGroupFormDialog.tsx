@@ -1,15 +1,23 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { addUserGroup, updateUserGroup } from '../api/userGroupService';
+import { addUserGroup, listUserGroups, updateUserGroup } from '../api/userGroupService';
 import { searchBuildings } from '../api/buildingService';
 import { listLocations } from '../api/locationService';
 import { listContractors } from '../api/contractorService';
 import { searchPersonsByFullName } from '../api/personService';
-import { UserGroupError, type AccessType, type UserGroupErrorCode, type UserGroupFullInfo } from '../types/userGroup';
+import {
+  UserGroupError,
+  type AccessType,
+  type MenuAccessType,
+  type UserGroup,
+  type UserGroupErrorCode,
+  type UserGroupFullInfo,
+} from '../types/userGroup';
 import type { Building } from '../types/building';
 import type { Location } from '../types/location';
 import type { Contractor } from '../types/contractor';
 import type { PersonSummary } from '../types/person';
+import { groupMenuCatalogBySection } from '../data/userGroupMenus';
 import { Alert, Button, Dialog, FormContainer, FormItem, Input } from './ui';
 import { MultiSelectDropdown } from './MultiSelectDropdown';
 
@@ -21,7 +29,10 @@ interface UserGroupFormDialogProps {
 }
 
 const ACCESS_TYPES: AccessType[] = [1, 2, 3, 4];
+const ADMIN_ACCESS_TYPE: AccessType = 1;
 const SOME_BUILDINGS_AND_PERSONS: AccessType = 4;
+const MENU_ACCESS_TYPES: MenuAccessType[] = [0, 1, 2];
+const MENU_SECTIONS = groupMenuCatalogBySection();
 
 function personLabel(person: PersonSummary): string {
   return [person.firstName, person.lastName].filter(Boolean).join(' ') || person.personNumberOnDevice.toString();
@@ -38,11 +49,14 @@ export function UserGroupFormDialog({ isOpen, userGroup, onClose, onSaved }: Use
   const [personIds, setPersonIds] = useState<string[]>([]);
   const [locationIds, setLocationIds] = useState<string[]>([]);
   const [contractorIds, setContractorIds] = useState<string[]>([]);
+  const [accessGroupIds, setAccessGroupIds] = useState<string[]>([]);
+  const [menuAccessByCode, setMenuAccessByCode] = useState<Record<number, MenuAccessType>>({});
 
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
   const [contractors, setContractors] = useState<Contractor[]>([]);
   const [persons, setPersons] = useState<PersonSummary[]>([]);
+  const [allUserGroups, setAllUserGroups] = useState<UserGroup[]>([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<UserGroupErrorCode | null>(null);
@@ -59,20 +73,29 @@ export function UserGroupFormDialog({ isOpen, userGroup, onClose, onSaved }: Use
     setPersonIds(userGroup?.userGroupPersons.map((row) => row.personId) ?? []);
     setLocationIds(userGroup?.userGroupLocations.map((row) => row.locationId) ?? []);
     setContractorIds(userGroup?.userGroupContractors.map((row) => row.contractorId) ?? []);
+    setAccessGroupIds(userGroup?.userGroupAccesses.map((row) => row.accessibleUserGroupId) ?? []);
+    setMenuAccessByCode(
+      Object.fromEntries(userGroup?.userGroupMenus.map((row) => [row.menuCode, row.accessType]) ?? []),
+    );
     setError(null);
   };
 
   useEffect(() => {
     if (isOpen) {
       reset();
-      Promise.all([searchBuildings(), listLocations(), listContractors(), searchPersonsByFullName('', { itemsPerPage: 500 })]).then(
-        ([buildingsResult, locationsResult, contractorsResult, personsResult]) => {
-          setBuildings(buildingsResult);
-          setLocations(locationsResult);
-          setContractors(contractorsResult);
-          setPersons(personsResult);
-        },
-      );
+      Promise.all([
+        searchBuildings(),
+        listLocations(),
+        listContractors(),
+        searchPersonsByFullName('', { itemsPerPage: 500 }),
+        listUserGroups(),
+      ]).then(([buildingsResult, locationsResult, contractorsResult, personsResult, userGroupsResult]) => {
+        setBuildings(buildingsResult);
+        setLocations(locationsResult);
+        setContractors(contractorsResult);
+        setPersons(personsResult);
+        setAllUserGroups(userGroupsResult);
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, userGroup]);
@@ -84,6 +107,7 @@ export function UserGroupFormDialog({ isOpen, userGroup, onClose, onSaved }: Use
 
     const id = userGroup?.id ?? crypto.randomUUID();
     const isSomeBuildingsAndPersons = accessType === SOME_BUILDINGS_AND_PERSONS;
+    const isAdminAccessType = accessType === ADMIN_ACCESS_TYPE;
 
     const payload = {
       id,
@@ -96,10 +120,20 @@ export function UserGroupFormDialog({ isOpen, userGroup, onClose, onSaved }: Use
         ? buildingIds.map((buildingId) => ({ userGroupId: id, buildingId }))
         : [],
       userGroupPersons: isSomeBuildingsAndPersons ? personIds.map((personId) => ({ userGroupId: id, personId })) : [],
-      userGroupLocations: locationIds.map((locationId) => ({ userGroupId: id, locationId })),
-      userGroupContractors: contractorIds.map((contractorId) => ({ userGroupId: id, contractorId })),
-      userGroupMenus: [] as [],
-      userGroupAccesses: [] as [],
+      userGroupLocations: isAdminAccessType
+        ? []
+        : locationIds.map((locationId) => ({ userGroupId: id, locationId })),
+      userGroupContractors: isAdminAccessType
+        ? []
+        : contractorIds.map((contractorId) => ({ userGroupId: id, contractorId })),
+      userGroupMenus: isAdminAccessType
+        ? []
+        : Object.entries(menuAccessByCode)
+            .filter(([, menuAccessType]) => menuAccessType > 0)
+            .map(([menuCode, menuAccessType]) => ({ userGroupId: id, menuCode: Number(menuCode), accessType: menuAccessType })),
+      userGroupAccesses: isAdminAccessType
+        ? []
+        : accessGroupIds.map((accessibleUserGroupId) => ({ userGroupId: id, accessibleUserGroupId })),
     };
 
     try {
@@ -118,6 +152,7 @@ export function UserGroupFormDialog({ isOpen, userGroup, onClose, onSaved }: Use
   };
 
   const showBuildingsAndPersons = accessType === SOME_BUILDINGS_AND_PERSONS;
+  const isAdmin = accessType === ADMIN_ACCESS_TYPE;
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose} onRequestClose={onClose} width={720}>
@@ -182,23 +217,33 @@ export function UserGroupFormDialog({ isOpen, userGroup, onClose, onSaved }: Use
             </FormItem>
           </div>
 
-          <FormItem label={t('userGroups.fields.locations')} htmlFor="userGroupLocations">
-            <MultiSelectDropdown
-              id="userGroupLocations"
-              options={locations.map((location) => ({ value: location.id, label: location.title }))}
-              selectedValues={locationIds}
-              onChange={setLocationIds}
-            />
-          </FormItem>
+          {isAdmin && (
+            <Alert type="info" className="mb-2">
+              {t('userGroups.adminAccessNote')}
+            </Alert>
+          )}
 
-          <FormItem label={t('userGroups.fields.contractors')} htmlFor="userGroupContractors">
-            <MultiSelectDropdown
-              id="userGroupContractors"
-              options={contractors.map((contractor) => ({ value: contractor.id, label: contractor.title }))}
-              selectedValues={contractorIds}
-              onChange={setContractorIds}
-            />
-          </FormItem>
+          {!isAdmin && (
+            <>
+              <FormItem label={t('userGroups.fields.locations')} htmlFor="userGroupLocations">
+                <MultiSelectDropdown
+                  id="userGroupLocations"
+                  options={locations.map((location) => ({ value: location.id, label: location.title }))}
+                  selectedValues={locationIds}
+                  onChange={setLocationIds}
+                />
+              </FormItem>
+
+              <FormItem label={t('userGroups.fields.contractors')} htmlFor="userGroupContractors">
+                <MultiSelectDropdown
+                  id="userGroupContractors"
+                  options={contractors.map((contractor) => ({ value: contractor.id, label: contractor.title }))}
+                  selectedValues={contractorIds}
+                  onChange={setContractorIds}
+                />
+              </FormItem>
+            </>
+          )}
 
           {showBuildingsAndPersons && (
             <>
@@ -218,6 +263,50 @@ export function UserGroupFormDialog({ isOpen, userGroup, onClose, onSaved }: Use
                   selectedValues={personIds}
                   onChange={setPersonIds}
                 />
+              </FormItem>
+            </>
+          )}
+
+          {!isAdmin && (
+            <>
+              <FormItem label={t('userGroups.fields.accessibleUserGroups')} htmlFor="userGroupAccesses">
+                <MultiSelectDropdown
+                  id="userGroupAccesses"
+                  options={allUserGroups.filter((group) => group.id !== userGroup?.id).map((group) => ({ value: group.id, label: group.title }))}
+                  selectedValues={accessGroupIds}
+                  onChange={setAccessGroupIds}
+                />
+              </FormItem>
+
+              <FormItem label={t('userGroups.fields.menus')} htmlFor="userGroupMenus">
+                <div id="userGroupMenus" className="max-h-72 overflow-y-auto rounded-lg border border-gray-200 dark:border-gray-700 p-2">
+                  {MENU_SECTIONS.map(([section, entries]) => (
+                    <div key={section} className="mb-3">
+                      <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">{section}</div>
+                      {entries.map((entry) => (
+                        <div key={entry.code} className="flex items-center justify-between gap-3 py-1 text-sm">
+                          <span>{entry.title}</span>
+                          <select
+                            className="input"
+                            value={menuAccessByCode[entry.code] ?? 0}
+                            onChange={(event) =>
+                              setMenuAccessByCode((current) => ({
+                                ...current,
+                                [entry.code]: Number(event.target.value) as MenuAccessType,
+                              }))
+                            }
+                          >
+                            {MENU_ACCESS_TYPES.map((value) => (
+                              <option key={value} value={value}>
+                                {t(`userGroups.menuAccessTypes.${value}`)}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </FormItem>
             </>
           )}
