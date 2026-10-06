@@ -94,3 +94,9 @@ export const USER_GROUP_ENDPOINTS = {
   update: '/api/core/UserGroup/Save',
   delete: (id: string) => `/api/core/UserGroup/Delete/${id}`,
 } as const;
+
+export const USER_ENDPOINTS = {
+  gridView: '/api/core/Account/GridViewDataSummary',
+  save: (forceLogoutOnUserChange: 0 | 1) => `/api/core/Account/Save/${forceLogoutOnUserChange}`,
+  delete: (id: string) => `/api/core/Account/Delete/${id}`,
+} as const;

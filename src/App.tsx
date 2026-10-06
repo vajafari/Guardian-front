@@ -14,6 +14,7 @@ import { ContractorsPage } from './pages/ContractorsPage';
 import { ContractorDetailPage } from './pages/ContractorDetailPage';
 import { LocationsPage } from './pages/LocationsPage';
 import { UserGroupsPage } from './pages/UserGroupsPage';
+import { UsersPage } from './pages/UsersPage';
 import { DashboardLayout } from './components/DashboardLayout';
 import { useSyncDocumentDirection } from './hooks/useSyncDocumentDirection';
 import { ConfigProvider } from './components/ui';
@@ -50,6 +51,7 @@ function App() {
               <Route path="/contractors/:id" element={<ContractorDetailPage />} />
               <Route path="/locations" element={<LocationsPage />} />
               <Route path="/user-groups" element={<UserGroupsPage />} />
+              <Route path="/users" element={<UsersPage />} />
             </Route>
           </Route>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

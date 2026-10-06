@@ -66,6 +66,7 @@
     "contractors": "Contractors",
     "locations": "Locations",
     "userGroups": "User groups",
+    "users": "Users",
     "reports": "Reports",
     "settings": "Settings"
   },
@@ -379,6 +380,35 @@
       "title-invalid": "Title is required",
       "max-sessions-invalid": "Max concurrent sessions must be a positive number",
       "cidr-invalid": "The IP range prefix is not a valid IP address",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "addButton": "Add user",
+    "addTitle": "Add user",
+    "editTitle": "Edit user",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No users found",
+    "loadError": "Couldn't load users. Try again.",
+    "deleteConfirm": "Delete user \"{{username}}\"?",
+    "fields": {
+      "username": "Username",
+      "password": "Password",
+      "passwordKeepCurrent": "Password (leave blank to keep current)",
+      "userGroup": "User group",
+      "person": "Person",
+      "expireDate": "Expire date",
+      "isActive": "Active",
+      "isSystemAdmin": "System admin"
+    },
+    "errors": {
+      "missing-fields": "Username, person, user group and password are required",
+      "username-not-unique": "This username is already in use",
+      "password-invalid": "Password doesn't meet the required rules",
+      "last-admin": "At least one system admin must remain in the system",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }
