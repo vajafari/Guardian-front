@@ -8,6 +8,7 @@
     "confirmTitle": "Confirm",
     "cancel": "Cancel",
     "delete": "Delete",
+    "add": "Add",
     "selectedCount": "{{count}} selected"
   },
   "gridView": {
@@ -63,6 +64,8 @@
     "dashboard": "Dashboard",
     "persons": "Personnel",
     "buildings": "Buildings",
+    "buildingSpaces": "Building spaces",
+    "contracts": "Contracts",
     "contractors": "Contractors",
     "locations": "Locations",
     "userGroups": "User groups",
@@ -225,42 +228,69 @@
       "unknown": "Something went wrong"
     }
   },
-  "buildingParkingSpots": {
-    "title": "Parking spots",
-    "addButton": "Add parking spot",
-    "addTitle": "Add parking spot",
-    "editTitle": "Edit parking spot",
+  "buildingSpaces": {
+    "title": "Building spaces",
+    "addButton": "Add space",
+    "addTitle": "Add space",
+    "editTitle": "Edit space",
     "save": "Save",
     "saving": "Saving...",
-    "empty": "No parking spots found",
-    "deleteConfirm": "Delete parking spot \"{{title}}\"?",
+    "empty": "No spaces found",
+    "loadError": "Couldn't load spaces. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete space \"{{title}}\"?",
+    "ownedByBuilding": "Owned by the building",
     "fields": {
+      "building": "Building",
+      "buildingFloor": "Floor",
+      "ownerBuildingUnit": "Owner unit",
+      "spaceNumber": "Space #",
       "title": "Title",
-      "parkingSpotNumber": "Spot #",
-      "buildingUnitId": "Assigned unit"
+      "spaceType": "Space type",
+      "spaceNature": "Space nature",
+      "area": "Area (m²)",
+      "capacity": "Capacity",
+      "isChargeable": "Chargeable",
+      "isReservable": "Reservable",
+      "location": "Access control location",
+      "isActive": "Active",
+      "description": "Description"
+    },
+    "spaceTypes": {
+      "1": "Parking",
+      "2": "Storage room",
+      "3": "Commercial",
+      "4": "Roof",
+      "5": "Antenna site",
+      "6": "Billboard",
+      "7": "Gym",
+      "8": "Pool",
+      "9": "Hall",
+      "10": "Guest suite",
+      "11": "Green space",
+      "12": "Facilities",
+      "99": "Other"
+    },
+    "spaceNatures": {
+      "1": "Exclusive",
+      "2": "Shared"
     },
     "errors": {
-      "missing-fields": "Title and spot # are required",
-      "network-error": "Couldn't reach the server. Check your connection and try again",
-      "unknown": "Something went wrong"
-    }
-  },
-  "buildingStorageRooms": {
-    "title": "Storage rooms",
-    "addButton": "Add storage room",
-    "addTitle": "Add storage room",
-    "editTitle": "Edit storage room",
-    "save": "Save",
-    "saving": "Saving...",
-    "empty": "No storage rooms found",
-    "deleteConfirm": "Delete storage room \"{{title}}\"?",
-    "fields": {
-      "title": "Title",
-      "storageRoomNumber": "Storage #",
-      "buildingUnitId": "Assigned unit"
-    },
-    "errors": {
-      "missing-fields": "Title and storage # are required",
+      "missing-fields": "Building, title and space # are required",
+      "title-invalid": "Title is not valid",
+      "number-invalid": "Space # is not valid",
+      "not-found": "Space not found or you're not authorized to access it",
+      "building-required": "Building is required",
+      "type-invalid": "Space type is not valid",
+      "nature-invalid": "Space nature is not valid",
+      "number-already-exists": "This space # is already used for this type in this building",
+      "floor-not-in-building": "The selected floor does not belong to this building",
+      "owner-unit-not-in-building": "The selected owner unit does not belong to this building",
+      "owner-unit-only-for-exclusive": "An owner unit is only allowed for an exclusive space",
+      "chargeable-only-for-exclusive": "Chargeable is only allowed for an exclusive space",
+      "reservable-only-for-shared": "Reservable is only allowed for a shared space",
+      "area-invalid": "Area is not valid",
+      "capacity-invalid": "Capacity is not valid",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }
@@ -419,6 +449,108 @@
       "username-not-unique": "This username is already in use",
       "password-invalid": "Password doesn't meet the required rules",
       "last-admin": "At least one system admin must remain in the system",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "contracts": {
+    "title": "Contracts",
+    "addButton": "Add contract",
+    "addTitle": "Add contract",
+    "editTitle": "Edit contract",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No contracts found",
+    "loadError": "Couldn't load contracts. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete contract \"{{title}}\"?",
+    "fields": {
+      "building": "Building",
+      "targetType": "Contract subject",
+      "buildingUnit": "Unit",
+      "buildingSpace": "Space",
+      "target": "Unit / Space",
+      "title": "Title",
+      "contractNumber": "Contract #",
+      "contractType": "Contract type",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "shareUnit": "Share unit",
+      "description": "Description",
+      "contractPersonCount": "People"
+    },
+    "targetTypes": {
+      "unit": "Unit",
+      "space": "Space"
+    },
+    "contractTypes": {
+      "1": "Purchase",
+      "2": "Rent",
+      "3": "Key money",
+      "4": "Owner use"
+    },
+    "shareUnits": {
+      "1": "Dang",
+      "2": "Percent"
+    },
+    "contractPersonRoles": {
+      "1": "Principal",
+      "11": "Representative",
+      "21": "Family member",
+      "22": "Cohabitant",
+      "23": "Employee"
+    },
+    "contractPaymentTypes": {
+      "1": "Deposit",
+      "2": "Rent"
+    },
+    "contractPaymentPeriods": {
+      "1": "Daily",
+      "2": "Weekly",
+      "3": "Monthly",
+      "4": "Quarterly",
+      "5": "Semi-annual",
+      "6": "Annual"
+    },
+    "contractPersons": {
+      "title": "Contract people",
+      "selectPerson": "Select person",
+      "person": "Person",
+      "role": "Role",
+      "shareAmount": "Share amount"
+    },
+    "contractPaymentDetails": {
+      "title": "Payment details",
+      "paymentType": "Payment type",
+      "paymentPeriod": "Payment period",
+      "paymentDayIndex": "Payment day",
+      "amount": "Amount"
+    },
+    "errors": {
+      "missing-fields": "Building, unit/space, title and contract # are required",
+      "not-found": "Contract not found",
+      "title-invalid": "Title is not valid",
+      "number-invalid": "Contract # is not valid",
+      "number-already-exists": "Contract # must be unique",
+      "target-invalid": "The contract must belong to exactly one unit or space",
+      "start-date-invalid": "Start date is not valid",
+      "end-date-before-start-date": "End date must be after the start date",
+      "person-not-found": "Contract person not found",
+      "person-already-exists": "This person has already been added to this contract",
+      "person-id-invalid": "The selected person is not valid",
+      "payment-detail-not-found": "Payment detail not found",
+      "payment-detail-amount-invalid": "Payment amount is not valid",
+      "share-unit-invalid": "Share unit is not valid",
+      "share-unit-not-allowed-for-type": "Share unit is only allowed for an ownership contract (Purchase or Key money)",
+      "share-amount-only-for-principal": "Share can only be set for the principal party",
+      "share-amount-requires-share-unit": "The contract's share unit must be set before recording a share",
+      "share-amount-invalid": "A person's share must be greater than zero",
+      "share-amount-total-exceeds-unit-total": "The parties' total share can't exceed the share unit's total",
+      "share-unit-cannot-change": "The contract's share unit can't be changed once set",
+      "person-role-not-allowed-for-type": "An ownership contract only allows Principal and Representative; family/cohabitant/employee belong to a usage contract",
+      "usage-period-overlap": "Another usage contract (rent or owner use) is already registered for this property in this period",
+      "type-invalid": "Contract type is not valid",
+      "target-space-must-be-exclusive": "Only an exclusive space can be contracted; a shared space can't",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }

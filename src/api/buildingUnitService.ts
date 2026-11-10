@@ -1,7 +1,15 @@
 import { AxiosError } from 'axios';
 import { httpClient } from './httpClient';
 import { BUILDING_UNIT_ENDPOINTS } from './config';
-import { BuildingUnitError, type BuildingUnitPayload } from '../types/buildingUnit';
+import { BuildingUnitError, type BuildingUnit, type BuildingUnitPayload } from '../types/buildingUnit';
+
+/** POST /api/core/BuildingUnit/Search — all units of a building, regardless of floor. */
+export async function searchBuildingUnitsByBuilding(buildingId: string): Promise<BuildingUnit[]> {
+  const { data } = await httpClient.post<BuildingUnit[]>(BUILDING_UNIT_ENDPOINTS.search, {
+    filter: { buildingIds: [buildingId] },
+  });
+  return data;
+}
 
 function mapBuildingUnitError(err: unknown): BuildingUnitError {
   if (!(err instanceof AxiosError)) {

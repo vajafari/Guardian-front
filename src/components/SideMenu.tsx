@@ -10,6 +10,8 @@ import {
   HiOutlineKey,
   HiOutlineDocumentReport,
   HiOutlineCog,
+  HiOutlineCube,
+  HiOutlineClipboardList,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -17,6 +19,8 @@ const MENU_ITEMS = [
   { key: 'dashboard', icon: HiOutlineViewGrid, path: '/dashboard' },
   { key: 'persons', icon: HiOutlineUsers, path: '/persons' },
   { key: 'buildings', icon: HiOutlineOfficeBuilding, path: '/buildings' },
+  { key: 'buildingSpaces', icon: HiOutlineCube, path: '/building-spaces' },
+  { key: 'contracts', icon: HiOutlineClipboardList, path: '/contracts' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },
   { key: 'userGroups', icon: HiOutlineUserGroup, path: '/user-groups' },

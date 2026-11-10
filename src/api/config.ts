@@ -50,21 +50,26 @@ export const BUILDING_FLOOR_ENDPOINTS = {
 } as const;
 
 export const BUILDING_UNIT_ENDPOINTS = {
+  search: '/api/core/BuildingUnit/Search',
   add: '/api/core/BuildingUnit/Add',
   update: '/api/core/BuildingUnit/Update',
   delete: (id: string) => `/api/core/BuildingUnit/Delete/${id}`,
 } as const;
 
-export const BUILDING_PARKING_SPOT_ENDPOINTS = {
-  add: '/api/core/BuildingParkingSpot/Add',
-  update: '/api/core/BuildingParkingSpot/Update',
-  delete: (id: string) => `/api/core/BuildingParkingSpot/Delete/${id}`,
+export const BUILDING_SPACE_ENDPOINTS = {
+  gridView: '/api/core/BuildingSpace/GridView',
+  search: '/api/core/BuildingSpace/Search',
+  add: '/api/core/BuildingSpace/Add',
+  update: '/api/core/BuildingSpace/Update',
+  delete: (id: string) => `/api/core/BuildingSpace/Delete/${id}`,
 } as const;
 
-export const BUILDING_STORAGE_ROOM_ENDPOINTS = {
-  add: '/api/core/BuildingStorageRoom/Add',
-  update: '/api/core/BuildingStorageRoom/Update',
-  delete: (id: string) => `/api/core/BuildingStorageRoom/Delete/${id}`,
+export const CONTRACT_ENDPOINTS = {
+  gridView: '/api/core/Contract/GridView',
+  getById: (id: string) => `/api/core/Contract/GetById/${id}`,
+  aggregateSave: '/api/core/Contract/AggregateSave',
+  aggregateUpdate: '/api/core/Contract/AggregateUpdate',
+  aggregateDelete: (id: string) => `/api/core/Contract/AggregateDelete/${id}`,
 } as const;
 
 export const CONTRACTOR_ENDPOINTS = {

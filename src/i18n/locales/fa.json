@@ -8,6 +8,7 @@
     "confirmTitle": "تایید",
     "cancel": "انصراف",
     "delete": "حذف",
+    "add": "افزودن",
     "selectedCount": "{{count}} مورد انتخاب شده"
   },
   "gridView": {
@@ -63,6 +64,8 @@
     "dashboard": "داشبورد",
     "persons": "پرسنل",
     "buildings": "ساختمان‌ها",
+    "buildingSpaces": "فضاهای ساختمان",
+    "contracts": "قراردادها",
     "contractors": "پیمانکاران",
     "locations": "مناطق",
     "userGroups": "گروه‌های کاربری",
@@ -225,42 +228,69 @@
       "unknown": "خطای ناشناخته‌ای رخ داد"
     }
   },
-  "buildingParkingSpots": {
-    "title": "پارکینگ‌ها",
-    "addButton": "افزودن پارکینگ",
-    "addTitle": "افزودن پارکینگ",
-    "editTitle": "ویرایش پارکینگ",
+  "buildingSpaces": {
+    "title": "فضاهای ساختمان",
+    "addButton": "افزودن فضا",
+    "addTitle": "افزودن فضا",
+    "editTitle": "ویرایش فضا",
     "save": "ذخیره",
     "saving": "در حال ذخیره...",
-    "empty": "پارکینگی پیدا نشد",
-    "deleteConfirm": "پارکینگ «{{title}}» حذف شود؟",
+    "empty": "فضایی پیدا نشد",
+    "loadError": "دریافت فضاها با خطا مواجه شد. دوباره تلاش کنید.",
+    "retry": "تلاش مجدد",
+    "deleteConfirm": "فضای «{{title}}» حذف شود؟",
+    "ownedByBuilding": "متعلق به ساختمان",
     "fields": {
+      "building": "ساختمان",
+      "buildingFloor": "طبقه",
+      "ownerBuildingUnit": "واحد مالک",
+      "spaceNumber": "شماره فضا",
       "title": "عنوان",
-      "parkingSpotNumber": "شماره پارکینگ",
-      "buildingUnitId": "واحد مرتبط"
+      "spaceType": "نوع فضا",
+      "spaceNature": "ماهیت فضا",
+      "area": "متراژ (متر مربع)",
+      "capacity": "ظرفیت",
+      "isChargeable": "مشمول شارژ",
+      "isReservable": "قابل رزرو",
+      "location": "ناحیه کنترل تردد",
+      "isActive": "فعال",
+      "description": "شرح"
+    },
+    "spaceTypes": {
+      "1": "پارکینگ",
+      "2": "انباری",
+      "3": "فضای تجاری",
+      "4": "پشت بام",
+      "5": "جای آنتن",
+      "6": "تابلو تبلیغاتی",
+      "7": "سالن ورزشی",
+      "8": "استخر",
+      "9": "سالن اجتماعات",
+      "10": "سوئیت مهمان",
+      "11": "فضای سبز",
+      "12": "تأسیسات",
+      "99": "سایر"
+    },
+    "spaceNatures": {
+      "1": "انحصاری",
+      "2": "مشترک"
     },
     "errors": {
-      "missing-fields": "عنوان و شماره پارکینگ الزامی است",
-      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
-      "unknown": "خطای ناشناخته‌ای رخ داد"
-    }
-  },
-  "buildingStorageRooms": {
-    "title": "انباری‌ها",
-    "addButton": "افزودن انباری",
-    "addTitle": "افزودن انباری",
-    "editTitle": "ویرایش انباری",
-    "save": "ذخیره",
-    "saving": "در حال ذخیره...",
-    "empty": "انباری‌ای پیدا نشد",
-    "deleteConfirm": "انباری «{{title}}» حذف شود؟",
-    "fields": {
-      "title": "عنوان",
-      "storageRoomNumber": "شماره انباری",
-      "buildingUnitId": "واحد مرتبط"
-    },
-    "errors": {
-      "missing-fields": "عنوان و شماره انباری الزامی است",
+      "missing-fields": "ساختمان، عنوان و شماره فضا الزامی است",
+      "title-invalid": "عنوان معتبر نمی‌باشد",
+      "number-invalid": "شماره فضا معتبر نمی‌باشد",
+      "not-found": "فضا یافت نشد و یا شما مجاز به دسترسی به آن نیستید",
+      "building-required": "ساختمان الزامی است",
+      "type-invalid": "نوع فضا معتبر نمی‌باشد",
+      "nature-invalid": "ماهیت فضا معتبر نمی‌باشد",
+      "number-already-exists": "شماره فضا برای این نوع در این ساختمان تکراری است",
+      "floor-not-in-building": "طبقه انتخاب شده متعلق به این ساختمان نیست",
+      "owner-unit-not-in-building": "واحد مالک انتخاب شده متعلق به این ساختمان نیست",
+      "owner-unit-only-for-exclusive": "واحد مالک فقط برای فضای انحصاری مجاز است",
+      "chargeable-only-for-exclusive": "مشمول شارژ بودن فقط برای فضای انحصاری مجاز است",
+      "reservable-only-for-shared": "قابل رزرو بودن فقط برای فضای مشترک مجاز است",
+      "area-invalid": "متراژ فضا معتبر نمی‌باشد",
+      "capacity-invalid": "ظرفیت فضا معتبر نمی‌باشد",
       "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
       "unknown": "خطای ناشناخته‌ای رخ داد"
     }
@@ -419,6 +449,108 @@
       "username-not-unique": "این نام کاربری قبلاً استفاده شده است",
       "password-invalid": "رمز عبور با قوانین لازم مطابقت ندارد",
       "last-admin": "حداقل یک مدیر سیستم باید در سیستم باقی بماند",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطای ناشناخته‌ای رخ داد"
+    }
+  },
+  "contracts": {
+    "title": "قراردادها",
+    "addButton": "افزودن قرارداد",
+    "addTitle": "افزودن قرارداد",
+    "editTitle": "ویرایش قرارداد",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "قراردادی پیدا نشد",
+    "loadError": "دریافت قراردادها با خطا مواجه شد. دوباره تلاش کنید.",
+    "retry": "تلاش مجدد",
+    "deleteConfirm": "قرارداد «{{title}}» حذف شود؟",
+    "fields": {
+      "building": "ساختمان",
+      "targetType": "موضوع قرارداد",
+      "buildingUnit": "واحد",
+      "buildingSpace": "فضا",
+      "target": "واحد / فضا",
+      "title": "عنوان",
+      "contractNumber": "شماره قرارداد",
+      "contractType": "نوع قرارداد",
+      "startDate": "تاریخ شروع",
+      "endDate": "تاریخ پایان",
+      "shareUnit": "واحد تقسیم سهم",
+      "description": "شرح",
+      "contractPersonCount": "تعداد اشخاص"
+    },
+    "targetTypes": {
+      "unit": "واحد",
+      "space": "فضا"
+    },
+    "contractTypes": {
+      "1": "خرید قطعی",
+      "2": "اجاره",
+      "3": "خرید سرقفلی",
+      "4": "استفاده مالک"
+    },
+    "shareUnits": {
+      "1": "دانگ",
+      "2": "درصد"
+    },
+    "contractPersonRoles": {
+      "1": "طرف اصلی",
+      "11": "نماینده",
+      "21": "عضو خانواده",
+      "22": "ساکن غیر خانواده",
+      "23": "کارمند / خدمه"
+    },
+    "contractPaymentTypes": {
+      "1": "ودیعه",
+      "2": "اجاره"
+    },
+    "contractPaymentPeriods": {
+      "1": "روزانه",
+      "2": "هفتگی",
+      "3": "ماهانه",
+      "4": "سه ماهه",
+      "5": "شش ماهه",
+      "6": "سالانه"
+    },
+    "contractPersons": {
+      "title": "اشخاص قرارداد",
+      "selectPerson": "انتخاب شخص",
+      "person": "شخص",
+      "role": "نقش",
+      "shareAmount": "میزان سهم"
+    },
+    "contractPaymentDetails": {
+      "title": "اقساط پرداخت",
+      "paymentType": "نوع پرداخت",
+      "paymentPeriod": "بازه پرداخت",
+      "paymentDayIndex": "روز پرداخت",
+      "amount": "مبلغ"
+    },
+    "errors": {
+      "missing-fields": "ساختمان، واحد/فضا، عنوان و شماره قرارداد الزامی است",
+      "not-found": "قرارداد یافت نشد",
+      "title-invalid": "عنوان قرارداد معتبر نمی‌باشد",
+      "number-invalid": "شماره قرارداد معتبر نمی‌باشد",
+      "number-already-exists": "شماره قرارداد می‌بایست منحصر به فرد باشد",
+      "target-invalid": "قرارداد می‌بایست متعلق به دقیقاً یک واحد یا فضا باشد",
+      "start-date-invalid": "تاریخ شروع قرارداد معتبر نمی‌باشد",
+      "end-date-before-start-date": "تاریخ پایان قرارداد می‌بایست بعد از تاریخ شروع باشد",
+      "person-not-found": "شخص قرارداد یافت نشد",
+      "person-already-exists": "این شخص قبلاً به این قرارداد اضافه شده است",
+      "person-id-invalid": "شخص انتخاب‌شده معتبر نمی‌باشد",
+      "payment-detail-not-found": "جزئیات پرداخت یافت نشد",
+      "payment-detail-amount-invalid": "مبلغ پرداخت معتبر نمی‌باشد",
+      "share-unit-invalid": "واحد تقسیم سهم معتبر نمی‌باشد",
+      "share-unit-not-allowed-for-type": "واحد تقسیم سهم فقط برای قرارداد مالکیت (خرید قطعی یا خرید سرقفلی) مجاز است",
+      "share-amount-only-for-principal": "سهم فقط برای طرف اصلی قرارداد قابل ثبت است",
+      "share-amount-requires-share-unit": "برای ثبت سهم، واحد تقسیم سهم قرارداد می‌بایست مشخص باشد",
+      "share-amount-invalid": "سهم شخص می‌بایست بزرگ‌تر از صفر باشد",
+      "share-amount-total-exceeds-unit-total": "جمع سهم طرفین قرارداد نمی‌تواند از کل واحد تقسیم سهم بیشتر باشد",
+      "share-unit-cannot-change": "واحد تقسیم سهم قرارداد پس از ثبت قابل تغییر نیست",
+      "person-role-not-allowed-for-type": "در قرارداد مالکیت فقط طرف اصلی و نماینده مجاز است؛ خانواده، هم‌خانه و کارمند به قرارداد استفاده اضافه می‌شوند",
+      "usage-period-overlap": "در این بازه زمانی قرارداد استفاده دیگری (اجاره یا استفاده مالک) برای این ملک ثبت شده است",
+      "type-invalid": "نوع قرارداد معتبر نمی‌باشد",
+      "target-space-must-be-exclusive": "قرارداد فقط برای فضای انحصاری مجاز است؛ فضای مشترک قرارداد نمی‌گیرد",
       "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
       "unknown": "خطای ناشناخته‌ای رخ داد"
     }

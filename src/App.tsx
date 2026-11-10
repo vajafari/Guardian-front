@@ -8,6 +8,8 @@ import { PersonsPage } from './pages/PersonsPage';
 import { BuildingsPage } from './pages/BuildingsPage';
 import { BuildingDetailPage } from './pages/BuildingDetailPage';
 import { FloorDetailPage } from './pages/FloorDetailPage';
+import { BuildingSpacesPage } from './pages/BuildingSpacesPage';
+import { ContractsPage } from './pages/ContractsPage';
 import { PersonDetailPage } from './pages/PersonDetailPage';
 import { EditPersonPage } from './pages/EditPersonPage';
 import { ContractorsPage } from './pages/ContractorsPage';
@@ -45,6 +47,8 @@ function App() {
               <Route path="/buildings" element={<BuildingsPage />} />
               <Route path="/buildings/:id" element={<BuildingDetailPage />} />
               <Route path="/floors/:id" element={<FloorDetailPage />} />
+              <Route path="/building-spaces" element={<BuildingSpacesPage />} />
+              <Route path="/contracts" element={<ContractsPage />} />
               <Route path="/persons/:id" element={<PersonDetailPage />} />
               <Route path="/persons/:id/edit" element={<EditPersonPage />} />
               <Route path="/contractors" element={<ContractorsPage />} />

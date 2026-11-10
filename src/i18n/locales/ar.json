@@ -8,6 +8,7 @@
     "confirmTitle": "تأكيد",
     "cancel": "إلغاء",
     "delete": "حذف",
+    "add": "إضافة",
     "selectedCount": "تم اختيار {{count}}"
   },
   "gridView": {
@@ -63,6 +64,8 @@
     "dashboard": "لوحة التحكم",
     "persons": "الموظفون",
     "buildings": "المباني",
+    "buildingSpaces": "فضاءات المبنى",
+    "contracts": "العقود",
     "contractors": "المقاولون",
     "locations": "المناطق",
     "userGroups": "مجموعات المستخدمين",
@@ -225,42 +228,69 @@
       "unknown": "حدث خطأ غير متوقع"
     }
   },
-  "buildingParkingSpots": {
-    "title": "مواقف السيارات",
-    "addButton": "إضافة موقف",
-    "addTitle": "إضافة موقف",
-    "editTitle": "تعديل الموقف",
+  "buildingSpaces": {
+    "title": "فضاءات المبنى",
+    "addButton": "إضافة فضاء",
+    "addTitle": "إضافة فضاء",
+    "editTitle": "تعديل الفضاء",
     "save": "حفظ",
     "saving": "جارٍ الحفظ...",
-    "empty": "لم يتم العثور على أي موقف",
-    "deleteConfirm": "حذف الموقف \"{{title}}\"؟",
+    "empty": "لم يتم العثور على أي فضاء",
+    "loadError": "تعذر تحميل الفضاءات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "deleteConfirm": "حذف الفضاء \"{{title}}\"؟",
+    "ownedByBuilding": "مملوك للمبنى",
     "fields": {
+      "building": "المبنى",
+      "buildingFloor": "الطابق",
+      "ownerBuildingUnit": "الوحدة المالكة",
+      "spaceNumber": "رقم الفضاء",
       "title": "العنوان",
-      "parkingSpotNumber": "رقم الموقف",
-      "buildingUnitId": "الوحدة المرتبطة"
+      "spaceType": "نوع الفضاء",
+      "spaceNature": "طبيعة الفضاء",
+      "area": "المساحة (م²)",
+      "capacity": "السعة",
+      "isChargeable": "خاضع للرسوم",
+      "isReservable": "قابل للحجز",
+      "location": "منطقة التحكم بالدخول",
+      "isActive": "نشط",
+      "description": "الوصف"
+    },
+    "spaceTypes": {
+      "1": "موقف سيارات",
+      "2": "غرفة تخزين",
+      "3": "فضاء تجاري",
+      "4": "سطح",
+      "5": "موقع هوائي",
+      "6": "لوحة إعلانية",
+      "7": "صالة رياضية",
+      "8": "مسبح",
+      "9": "قاعة مناسبات",
+      "10": "جناح ضيوف",
+      "11": "مساحة خضراء",
+      "12": "مرافق",
+      "99": "أخرى"
+    },
+    "spaceNatures": {
+      "1": "حصري",
+      "2": "مشترك"
     },
     "errors": {
-      "missing-fields": "العنوان ورقم الموقف مطلوبان",
-      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
-      "unknown": "حدث خطأ غير متوقع"
-    }
-  },
-  "buildingStorageRooms": {
-    "title": "غرف التخزين",
-    "addButton": "إضافة غرفة تخزين",
-    "addTitle": "إضافة غرفة تخزين",
-    "editTitle": "تعديل غرفة التخزين",
-    "save": "حفظ",
-    "saving": "جارٍ الحفظ...",
-    "empty": "لم يتم العثور على أي غرفة تخزين",
-    "deleteConfirm": "حذف غرفة التخزين \"{{title}}\"؟",
-    "fields": {
-      "title": "العنوان",
-      "storageRoomNumber": "رقم غرفة التخزين",
-      "buildingUnitId": "الوحدة المرتبطة"
-    },
-    "errors": {
-      "missing-fields": "العنوان ورقم غرفة التخزين مطلوبان",
+      "missing-fields": "المبنى والعنوان ورقم الفضاء مطلوبة",
+      "title-invalid": "العنوان غير صالح",
+      "number-invalid": "رقم الفضاء غير صالح",
+      "not-found": "لم يتم العثور على الفضاء أو لا تملك صلاحية الوصول إليه",
+      "building-required": "المبنى مطلوب",
+      "type-invalid": "نوع الفضاء غير صالح",
+      "nature-invalid": "طبيعة الفضاء غير صالحة",
+      "number-already-exists": "رقم الفضاء مستخدم لهذا النوع في هذا المبنى",
+      "floor-not-in-building": "الطابق المحدد لا ينتمي إلى هذا المبنى",
+      "owner-unit-not-in-building": "الوحدة المالكة المحددة لا تنتمي إلى هذا المبنى",
+      "owner-unit-only-for-exclusive": "الوحدة المالكة مسموحة فقط للفضاء الحصري",
+      "chargeable-only-for-exclusive": "الخضوع للرسوم مسموح فقط للفضاء الحصري",
+      "reservable-only-for-shared": "القابلية للحجز مسموحة فقط للفضاء المشترك",
+      "area-invalid": "المساحة غير صالحة",
+      "capacity-invalid": "السعة غير صالحة",
       "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
       "unknown": "حدث خطأ غير متوقع"
     }
@@ -419,6 +449,108 @@
       "username-not-unique": "اسم المستخدم هذا مستخدم بالفعل",
       "password-invalid": "كلمة المرور لا تستوفي القواعد المطلوبة",
       "last-admin": "يجب أن يبقى مدير نظام واحد على الأقل في النظام",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
+      "unknown": "حدث خطأ غير متوقع"
+    }
+  },
+  "contracts": {
+    "title": "العقود",
+    "addButton": "إضافة عقد",
+    "addTitle": "إضافة عقد",
+    "editTitle": "تعديل العقد",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على أي عقد",
+    "loadError": "تعذر تحميل العقود. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "deleteConfirm": "حذف العقد \"{{title}}\"؟",
+    "fields": {
+      "building": "المبنى",
+      "targetType": "موضوع العقد",
+      "buildingUnit": "الوحدة",
+      "buildingSpace": "الفضاء",
+      "target": "الوحدة / الفضاء",
+      "title": "العنوان",
+      "contractNumber": "رقم العقد",
+      "contractType": "نوع العقد",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "shareUnit": "وحدة تقسيم الحصة",
+      "description": "الوصف",
+      "contractPersonCount": "عدد الأشخاص"
+    },
+    "targetTypes": {
+      "unit": "الوحدة",
+      "space": "الفضاء"
+    },
+    "contractTypes": {
+      "1": "شراء قطعي",
+      "2": "إيجار",
+      "3": "شراء حق السرقفلية",
+      "4": "استخدام المالك"
+    },
+    "shareUnits": {
+      "1": "دانغ",
+      "2": "نسبة مئوية"
+    },
+    "contractPersonRoles": {
+      "1": "الطرف الأصلي",
+      "11": "ممثل",
+      "21": "عضو العائلة",
+      "22": "ساكن غير عائلي",
+      "23": "موظف / خادم"
+    },
+    "contractPaymentTypes": {
+      "1": "وديعة",
+      "2": "إيجار"
+    },
+    "contractPaymentPeriods": {
+      "1": "يومي",
+      "2": "أسبوعي",
+      "3": "شهري",
+      "4": "ربع سنوي",
+      "5": "نصف سنوي",
+      "6": "سنوي"
+    },
+    "contractPersons": {
+      "title": "أشخاص العقد",
+      "selectPerson": "اختر شخصًا",
+      "person": "الشخص",
+      "role": "الدور",
+      "shareAmount": "مقدار الحصة"
+    },
+    "contractPaymentDetails": {
+      "title": "أقساط الدفع",
+      "paymentType": "نوع الدفع",
+      "paymentPeriod": "فترة الدفع",
+      "paymentDayIndex": "يوم الدفع",
+      "amount": "المبلغ"
+    },
+    "errors": {
+      "missing-fields": "المبنى والوحدة/الفضاء والعنوان ورقم العقد مطلوبة",
+      "not-found": "لم يتم العثور على العقد",
+      "title-invalid": "عنوان العقد غير صالح",
+      "number-invalid": "رقم العقد غير صالح",
+      "number-already-exists": "رقم العقد يجب أن يكون فريدًا",
+      "target-invalid": "يجب أن ينتمي العقد إلى وحدة أو فضاء واحد فقط",
+      "start-date-invalid": "تاريخ البدء غير صالح",
+      "end-date-before-start-date": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
+      "person-not-found": "لم يتم العثور على شخص العقد",
+      "person-already-exists": "تمت إضافة هذا الشخص إلى هذا العقد من قبل",
+      "person-id-invalid": "الشخص المحدد غير صالح",
+      "payment-detail-not-found": "لم يتم العثور على تفاصيل الدفع",
+      "payment-detail-amount-invalid": "مبلغ الدفع غير صالح",
+      "share-unit-invalid": "وحدة تقسيم الحصة غير صالحة",
+      "share-unit-not-allowed-for-type": "وحدة تقسيم الحصة مسموحة فقط لعقد الملكية (شراء قطعي أو شراء حق السرقفلية)",
+      "share-amount-only-for-principal": "لا يمكن تسجيل الحصة إلا للطرف الأصلي",
+      "share-amount-requires-share-unit": "يجب تحديد وحدة تقسيم الحصة للعقد قبل تسجيل أي حصة",
+      "share-amount-invalid": "يجب أن تكون حصة الشخص أكبر من الصفر",
+      "share-amount-total-exceeds-unit-total": "لا يمكن أن يتجاوز إجمالي حصص الأطراف إجمالي وحدة تقسيم الحصة",
+      "share-unit-cannot-change": "لا يمكن تغيير وحدة تقسيم الحصة بعد تسجيلها",
+      "person-role-not-allowed-for-type": "عقد الملكية يسمح فقط بالطرف الأصلي والممثل؛ العائلة والساكن غير العائلي والموظف ينتمون إلى عقد الاستخدام",
+      "usage-period-overlap": "يوجد عقد استخدام آخر (إيجار أو استخدام مالك) مسجل لهذا العقار في هذه الفترة",
+      "type-invalid": "نوع العقد غير صالح",
+      "target-space-must-be-exclusive": "يمكن التعاقد فقط على فضاء حصري؛ الفضاء المشترك لا يقبل التعاقد",
       "network-error": "تعذر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى",
       "unknown": "حدث خطأ غير متوقع"
     }
