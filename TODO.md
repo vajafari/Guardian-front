@@ -1,5 +1,20 @@
 # Guardian frontend — remaining work
 
+## FieldOfStudy + Position — done and verified end-to-end against a live backend
+
+Two tiny reference-data catalogs, previously only consumed read-only (`GetAll`) by `EditPersonPage`'s dropdowns — now have their own admin GridView pages. Both flat, no child collections, both `Add`/`Update` take the DTO directly (no SaveModel, no AutoMapper involved — no mapping-trap risk like Device/PersonGroup had).
+
+**One real backend bug found and fixed (`Guardian-back`, separate commit) — editing a Position's number had never worked on this backend:**
+- `PositionComponent.UpdateAsync` looked up the existing row by `PositionNumbers = [entity.PositionNumber]` (the *new* number being saved) instead of `Ids = [entity.Id]`. Changing a position's number on edit would search for a row with that brand-new number, find nothing, and throw a wrong "not found" (3003) — blocking any edit that changes the number. Fixed to look up by `Ids`.
+
+**Verified in the browser (Edge via Playwright) after the fix:**
+- FieldOfStudy: added, edited the title, deleted — all three confirmed via direct SQL.
+- Position: added (`PositionNumber` 100); deliberately reused the same number on a second Add — correct mapped message ("This position # is already used by another position", 3000) rendered. Edited the existing row and **changed its PositionNumber from 100 to 101** (the exact case the bug blocked) — succeeded, confirmed via SQL the same row now has the new number. Deleted it, confirmed via SQL.
+- Noted but not fixed (same spirit as `PositionNumber`'s empty-table quirk already logged for Device's `DeviceNumber`): `GetFirstUnusedNumber` returns `0` when `core.Position` is completely empty (first-ever Add), since the gap-finding query returns no rows. Minor, easily overridden in the editable field.
+
+### Not yet done (known gap, not fixed — out of scope for this pass)
+- Unlike `AddAsync`, `PositionComponent.UpdateAsync` has no duplicate-number check if you edit a position's number to one already used by a *different* row — would hit a raw SQL unique-constraint violation instead of a clean 3000 error. Same spirit as the UserGroup delete-guard gap above — flagging, not fixing.
+
 ## Camera — done and verified end-to-end against a live backend
 
 Standalone hardware-registry module, structurally almost identical to Device (flat entity: Title/IP/Port/Location/ModuleId-flags/IoType/IsActive, plus UserName/Password/CameraProducer/CameraTask/RtspString/ApiBasicAuth* fields). No child/aggregate collection, so no detail page — flat GridView page + dialog, same shape as `PersonGroupsPage`/`BuildingSpacesPage`.
@@ -98,6 +113,10 @@ Built per the approved plan (`playful-wondering-fountain.md`): `tsc -b && vite b
 ### Not yet done
 - `SettingsInJson` (BuildingSpace's per-type advanced JSON config) is intentionally left out of the form — out of scope for this pass.
 - Only the "unit" target path and the "purchase" contract type were exercised in the browser; the "space" target and usage-type (Rent/OwnerUse) paths, plus the usage-period-overlap (4620) and share-amount (4614-4617) validations, are implemented per the backend's rules but not individually click-tested.
+
+## ParkPlaceGroup — deferred, not started
+
+Looked more complete than it is: `ParkPlaceGroupController` itself has full CRUD, but `DtoParkPlaceGroup.ParkingId` is required and validated against `core.Parking` (throws `ParkingStatusParkingNotFoundInDatabase` otherwise) — and **no `ParkingController` exists at all**, even though `ParkingComponent.ParkingAddAsync/UpdateAsync/DeleteAsync/Search` is fully implemented. Same gap on the `CarParkPlaceGroups` many-to-many side: managed through `CarComponent`, but **no `CarController` exists either**. `core.Parking`/`core.Car`/`core.ParkPlaceGroup` are all empty, unseeded. Building this module for real would mean adding two new backend controllers (Parking, Car), not just a frontend pass — user chose to skip for now rather than decide on that scope immediately (same call as Attendance).
 
 ## Open questions
 

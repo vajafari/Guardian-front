@@ -69,6 +69,8 @@
     "contracts": "Contracts",
     "devices": "Devices",
     "cameras": "Cameras",
+    "fieldOfStudies": "Fields of study",
+    "positions": "Positions",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -729,6 +731,51 @@
       "camera-task-invalid": "Camera task is not valid",
       "location-not-found": "Location not found in the database",
       "not-found": "Camera not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "fieldOfStudies": {
+    "title": "Fields of study",
+    "addButton": "Add field of study",
+    "addTitle": "Add field of study",
+    "editTitle": "Edit field of study",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No fields of study found",
+    "loadError": "Couldn't load fields of study. Try again.",
+    "deleteConfirm": "Delete field of study \"{{title}}\"?",
+    "fields": {
+      "title": "Title"
+    },
+    "errors": {
+      "missing-fields": "Title is required",
+      "title-invalid": "Title is not valid",
+      "not-found": "Field of study not found",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "positions": {
+    "title": "Positions",
+    "addButton": "Add position",
+    "addTitle": "Add position",
+    "editTitle": "Edit position",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No positions found",
+    "loadError": "Couldn't load positions. Try again.",
+    "deleteConfirm": "Delete position \"{{title}}\"?",
+    "fields": {
+      "positionNumber": "Position #",
+      "title": "Title"
+    },
+    "errors": {
+      "missing-fields": "Position # and title are required",
+      "number-invalid": "Position # is not valid",
+      "title-invalid": "Title is not valid",
+      "number-already-exists": "This position # is already used by another position",
+      "not-found": "Position not found",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }

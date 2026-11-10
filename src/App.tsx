@@ -12,6 +12,8 @@ import { BuildingSpacesPage } from './pages/BuildingSpacesPage';
 import { ContractsPage } from './pages/ContractsPage';
 import { DevicesPage } from './pages/DevicesPage';
 import { CamerasPage } from './pages/CamerasPage';
+import { FieldOfStudiesPage } from './pages/FieldOfStudiesPage';
+import { PositionsPage } from './pages/PositionsPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -58,6 +60,8 @@ function App() {
               <Route path="/devices" element={<DevicesPage />} />
               <Route path="/devices/:id" element={<DeviceDetailPage />} />
               <Route path="/cameras" element={<CamerasPage />} />
+              <Route path="/field-of-studies" element={<FieldOfStudiesPage />} />
+              <Route path="/positions" element={<PositionsPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

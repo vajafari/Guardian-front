@@ -34,6 +34,21 @@ export const POSITION_ENDPOINTS = {
   getAll: '/api/core/Position/GetAll',
 } as const;
 
+export const FIELD_OF_STUDY_ADMIN_ENDPOINTS = {
+  gridView: '/api/core/FieldOfStudy/GridViewData',
+  add: '/api/core/FieldOfStudy/Add',
+  update: '/api/core/FieldOfStudy/Update',
+  delete: (id: string) => `/api/core/FieldOfStudy/Delete/${id}`,
+} as const;
+
+export const POSITION_ADMIN_ENDPOINTS = {
+  gridView: '/api/core/Position/GridViewData',
+  getFirstUnusedNumber: '/api/core/Position/GetFirstUnusedNumber',
+  add: '/api/core/Position/Add',
+  update: '/api/core/Position/Update',
+  delete: (id: string) => `/api/core/Position/Delete/${id}`,
+} as const;
+
 export const BUILDING_ENDPOINTS = {
   search: '/api/core/Building/Search',
   getById: (id: string) => `/api/core/Building/GetById/${id}`,

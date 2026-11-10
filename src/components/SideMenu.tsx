@@ -16,6 +16,8 @@ import {
   HiOutlineSwitchVertical,
   HiOutlineCollection,
   HiOutlineVideoCamera,
+  HiOutlineAcademicCap,
+  HiOutlineIdentification,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -28,6 +30,8 @@ const MENU_ITEMS = [
   { key: 'contracts', icon: HiOutlineClipboardList, path: '/contracts' },
   { key: 'devices', icon: HiOutlineServer, path: '/devices' },
   { key: 'cameras', icon: HiOutlineVideoCamera, path: '/cameras' },
+  { key: 'fieldOfStudies', icon: HiOutlineAcademicCap, path: '/field-of-studies' },
+  { key: 'positions', icon: HiOutlineIdentification, path: '/positions' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },
