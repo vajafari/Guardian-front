@@ -64,6 +64,24 @@ export const BUILDING_SPACE_ENDPOINTS = {
   delete: (id: string) => `/api/core/BuildingSpace/Delete/${id}`,
 } as const;
 
+export const DEVICE_ENDPOINTS = {
+  getFirstUnusedNumber: '/api/core/Device/GetFirstUnusedNumber',
+  gridView: '/api/core/Device/GridViewData',
+  getById: (id: string) => `/api/core/Device/GetById/${id}`,
+  save: (editMode: 0 | 1) => `/api/core/Device/Save/${editMode}`,
+  delete: (id: string) => `/api/core/Device/Delete/${id}`,
+} as const;
+
+export const DEVICE_TYPE_ENDPOINTS = {
+  getAll: '/api/core/DeviceType/GetAllDeviceTypes',
+} as const;
+
+export const DEVICE_DOOR_BASE_ENDPOINTS = {
+  searchFullInfo: '/api/core/DeviceDoorBase/SearchDeviceDoorFullInfo',
+  save: (editMode: 0 | 1) => `/api/core/DeviceDoorBase/SaveDeviceDoor/${editMode}`,
+  delete: (id: string) => `/api/core/DeviceDoorBase/DeleteDeviceDoor/${id}`,
+} as const;
+
 export const CONTRACT_ENDPOINTS = {
   gridView: '/api/core/Contract/GridView',
   getById: (id: string) => `/api/core/Contract/GetById/${id}`,
