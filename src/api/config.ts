@@ -98,6 +98,14 @@ export const ELEVATOR_FLOOR_PERSON_ENDPOINTS = {
   searchFullInfo: '/api/core/ElevatorFloorPerson/SearchFullInfo',
 } as const;
 
+export const PERSON_GROUP_ENDPOINTS = {
+  gridView: '/api/core/PersonGroup/GridViewData',
+  getById: (id: string) => `/api/core/PersonGroup/GetById/${id}`,
+  add: '/api/core/PersonGroup/Add',
+  update: '/api/core/PersonGroup/Save',
+  delete: (id: string) => `/api/core/PersonGroup/Delete/${id}`,
+} as const;
+
 export const CONTRACT_ENDPOINTS = {
   gridView: '/api/core/Contract/GridView',
   getById: (id: string) => `/api/core/Contract/GetById/${id}`,

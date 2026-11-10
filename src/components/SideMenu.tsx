@@ -14,12 +14,14 @@ import {
   HiOutlineClipboardList,
   HiOutlineServer,
   HiOutlineSwitchVertical,
+  HiOutlineCollection,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
 const MENU_ITEMS = [
   { key: 'dashboard', icon: HiOutlineViewGrid, path: '/dashboard' },
   { key: 'persons', icon: HiOutlineUsers, path: '/persons' },
+  { key: 'personGroups', icon: HiOutlineCollection, path: '/person-groups' },
   { key: 'buildings', icon: HiOutlineOfficeBuilding, path: '/buildings' },
   { key: 'buildingSpaces', icon: HiOutlineCube, path: '/building-spaces' },
   { key: 'contracts', icon: HiOutlineClipboardList, path: '/contracts' },

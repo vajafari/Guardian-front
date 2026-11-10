@@ -1,5 +1,21 @@
 # Guardian frontend — remaining work
 
+## PersonGroup — done and verified end-to-end against a live backend
+
+Logical groupings of persons for bulk access grants elsewhere. Simplest aggregate shape so far: no nested child table, just a flat `personIds` full-replacement list bundled directly into the same `Add`/`Save` call (`PersonGroupController.Add`/`Save` call `PersonGroupComponent` then `PersonComponent.GroupPersonsUpdateAsync` in sequence, same full-replacement pattern as `ElevatorFloorPerson`).
+
+**Two real backend bugs found and fixed (both in `Guardian-back`, one commit) — PersonGroup add/update had never worked on this backend before this session:**
+1. `PersonGroupSaveModel.Id` was typed `int` with `[LocalizedRequired]`, while `DtoPersonGroup.Id` (and every other entity's id) is `Guid` — client-generated ids were being silently discarded/rejected.
+2. `CreateMap<PersonGroupSaveModel, DtoPersonGroup>()` didn't exist at all in `AutoMapperProfile.cs` (not even commented out) — `mapper.Map<DtoPersonGroup>(model)` always threw, surfaced as a generic 500.
+
+**Verified in the browser (Edge via Playwright) after both fixes:**
+- Added a group with 2 persons selected via the `MultiSelectDropdown`; confirmed `core.PersonGroup` (1 row) and `core.PersonGroupPerson` (2 rows) via direct SQL.
+- Reopened the group for edit — the person picker correctly pre-filled ("2 selected"), confirming the full-replacement round-trip.
+- Deliberately reused an existing group's title on Add — correct mapped message ("This title is already used by another group", 35000) rendered in the dialog.
+
+### Not yet done
+- `PersonGroupLocation` has a `CreateMap` and DTOs on the backend but **no controller action anywhere** exposes it — same "business/mapping ready, no exposed endpoint" gap as Attendance. Out of scope for this pass.
+
 ## Elevator + ElevatorFloor + ElevatorFloorPerson — done and verified end-to-end against a live backend
 
 Aggregate pattern like Contract: `Elevator`'s own save bundles its `ElevatorFloors` in one call (`ElevatorFloorController` has no standalone Add/Update/Delete at all — floors are never managed except through the elevator). Floor↔person access is a separate full-replacement many-to-many in both directions; only the floor-centric direction (`SaveElevatorFloorPersons`, manage persons from the elevator's detail page) is built — person-centric (`SavePersonElevatorFloors`, would live on `PersonDetailPage`) is deferred, not started.

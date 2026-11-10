@@ -63,6 +63,7 @@
     "groupTitle": "Main Menu",
     "dashboard": "Dashboard",
     "persons": "Personnel",
+    "personGroups": "Personnel groups",
     "buildings": "Buildings",
     "buildingSpaces": "Building spaces",
     "contracts": "Contracts",
@@ -740,6 +741,31 @@
       "back": "Back",
       "loadError": "Couldn't load this elevator. Try again.",
       "notFound": "Elevator not found"
+    }
+  },
+  "personGroups": {
+    "title": "Personnel groups",
+    "addButton": "Add group",
+    "addTitle": "Add group",
+    "editTitle": "Edit group",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No personnel groups found",
+    "loadError": "Couldn't load personnel groups. Try again.",
+    "deleteConfirm": "Delete group \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "description": "Description",
+      "persons": "People",
+      "personCount": "People"
+    },
+    "errors": {
+      "missing-fields": "Title is required",
+      "title-already-exists": "This title is already used by another group",
+      "title-invalid": "The group must have a title",
+      "not-found": "Personnel group not found",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
     }
   },
   "footer": {

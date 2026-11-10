@@ -14,6 +14,7 @@ import { DevicesPage } from './pages/DevicesPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
+import { PersonGroupsPage } from './pages/PersonGroupsPage';
 import { PersonDetailPage } from './pages/PersonDetailPage';
 import { EditPersonPage } from './pages/EditPersonPage';
 import { ContractorsPage } from './pages/ContractorsPage';
@@ -57,6 +58,7 @@ function App() {
               <Route path="/devices/:id" element={<DeviceDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
+              <Route path="/person-groups" element={<PersonGroupsPage />} />
               <Route path="/persons/:id" element={<PersonDetailPage />} />
               <Route path="/persons/:id/edit" element={<EditPersonPage />} />
               <Route path="/contractors" element={<ContractorsPage />} />
