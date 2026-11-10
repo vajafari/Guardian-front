@@ -71,6 +71,7 @@
     "cameras": "Cameras",
     "fieldOfStudies": "Fields of study",
     "positions": "Positions",
+    "cabinetRooms": "Cabinet rooms",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -778,6 +779,59 @@
       "not-found": "Position not found",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
+    }
+  },
+  "cabinetRooms": {
+    "title": "Cabinet rooms",
+    "addButton": "Add cabinet room",
+    "addTitle": "Add cabinet room",
+    "editTitle": "Edit cabinet room",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No cabinet rooms found",
+    "loadError": "Couldn't load cabinet rooms. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete cabinet room \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "description": "Description",
+      "capacity": "Capacity",
+      "location": "Location",
+      "isShared": "Shared",
+      "isAuto": "Automatic",
+      "isMultiple": "Multiple per person",
+      "isActive": "Active"
+    },
+    "cabinets": {
+      "title": "Cabinets",
+      "empty": "No cabinets",
+      "cabinetNumber": "Cabinet #",
+      "description": "Description",
+      "personCount": "Persons"
+    },
+    "cabinetPersons": {
+      "title": "Persons in cabinet #{{cabinetNumber}}",
+      "persons": "Persons",
+      "manageButton": "Manage people"
+    },
+    "errors": {
+      "missing-fields": "Title, capacity and location are required",
+      "title-invalid": "Title is not valid",
+      "cabinets-empty": "At least one cabinet is required",
+      "capacity-invalid": "Capacity is not valid",
+      "cabinet-number-invalid": "A cabinet #'s number must be between 1 and the room's capacity",
+      "cabinet-number-must-be-unique": "A cabinet's number is already used in this room",
+      "cannot-assign-person-auto-room": "People can't be manually assigned to an automatic cabinet room",
+      "cabinet-not-shared": "This cabinet isn't shared — only one person can be assigned to it",
+      "location-not-found": "Location not found in the database",
+      "not-found": "Cabinet room not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this cabinet room. Try again.",
+      "notFound": "Cabinet room not found"
     }
   },
   "deviceDoors": {

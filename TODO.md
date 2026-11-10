@@ -1,5 +1,24 @@
 # Guardian frontend — remaining work
 
+## CabinetRoom + Cabinet + CabinetPerson — done and verified end-to-end against a live backend
+
+Same aggregate shape as Elevator: `Cabinet` rows are managed entirely as a nested collection inside `CabinetRoom`'s save (`CabinetRoomController.Save/{editMode}`), exactly like `ElevatorFloor` under `Elevator` — `CabinetController` itself is read-only and isn't called by the frontend. Initially misdiagnosed as a backend gap (because `CabinetController` has no Add/Update/Delete) before reading `CabinetRoomComponent` closely — it's fully buildable with zero new backend surface.
+
+**No backend bugs found** — both AutoMapper maps (`CabinetSaveModel→DtoCabinet`, `CabinetRoomSaveModel→DtoCabinetRoom`) already existed, and `CabinetRoomRepository`'s transactional insert/update/delete correctly cascades to `Cabinet`/`CabinetPerson` rows in application code (no DB-level FK cascade, but handled manually in one transaction — verified, no raw-FK-violation risk).
+
+Built the cabinet-centric person-assignment direction only (`SaveCabinetPersons`, manage persons from the Cabinet Room detail page) — same scope-cut as Elevator. The person-centric direction (`SavePersonCabinets`) is available on the backend but would need a new section on `PersonDetailPage`; deferred, not started.
+
+**Verified in the browser (Edge via Playwright):**
+- Created a CabinetRoom (Capacity 3, IsShared=false, IsAuto=false) with 2 cabinets against an existing Location; confirmed both `core.CabinetRoom`/`core.Cabinet` rows via SQL.
+- Reopened for edit — both cabinets came back pre-filled; added a 3rd, removed one, saved — confirmed the exact resulting set via SQL (aggregate round-trip works correctly).
+- Opened "Manage people" on a cabinet, assigned 1 person — confirmed the `core.CabinetPerson` row via SQL.
+- Deliberately tried assigning a 2nd person to the same (non-shared) cabinet — correct mapped message ("This cabinet isn't shared — only one person can be assigned to it", 33709) rendered; confirmed via SQL the second assignment was rejected (still only 1 row).
+- Deleted the room — confirmed via SQL that `CabinetRoom`, `Cabinet`, and `CabinetPerson` rows all cascaded away in the same transaction.
+
+### Not yet done
+- Person-centric cabinet assignment (`SavePersonCabinets`) — would need a new section on `PersonDetailPage`/`EditPersonPage`; deferred, not started (same as Elevator's `SavePersonElevatorFloors`).
+- `IsMultiple`/`IsAuto` business rules tied to the person-centric direction (33708, 33710) aren't exercised by this pass since only the cabinet-centric direction was built.
+
 ## FieldOfStudy + Position — done and verified end-to-end against a live backend
 
 Two tiny reference-data catalogs, previously only consumed read-only (`GetAll`) by `EditPersonPage`'s dropdowns — now have their own admin GridView pages. Both flat, no child collections, both `Add`/`Update` take the DTO directly (no SaveModel, no AutoMapper involved — no mapping-trap risk like Device/PersonGroup had).

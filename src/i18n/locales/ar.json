@@ -71,6 +71,7 @@
     "cameras": "الكاميرات",
     "fieldOfStudies": "التخصصات الدراسية",
     "positions": "المناصب",
+    "cabinetRooms": "غرف الخزائن",
     "elevators": "المصاعد",
     "contractors": "المقاولون",
     "locations": "المناطق",
@@ -778,6 +779,59 @@
       "not-found": "لم يتم العثور على المنصب",
       "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
       "unknown": "حدث خطأ ما"
+    }
+  },
+  "cabinetRooms": {
+    "title": "غرف الخزائن",
+    "addButton": "إضافة غرفة خزائن",
+    "addTitle": "إضافة غرفة خزائن",
+    "editTitle": "تعديل غرفة الخزائن",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على غرف خزائن",
+    "loadError": "تعذر تحميل غرف الخزائن. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "deleteConfirm": "حذف غرفة الخزائن \"{{title}}\"؟",
+    "fields": {
+      "title": "العنوان",
+      "description": "الوصف",
+      "capacity": "السعة",
+      "location": "الموقع",
+      "isShared": "مشتركة",
+      "isAuto": "تلقائية",
+      "isMultiple": "عدة خزائن لكل شخص",
+      "isActive": "نشطة"
+    },
+    "cabinets": {
+      "title": "الخزائن",
+      "empty": "لا توجد خزائن",
+      "cabinetNumber": "رقم الخزانة",
+      "description": "الوصف",
+      "personCount": "عدد الأشخاص"
+    },
+    "cabinetPersons": {
+      "title": "أشخاص الخزانة رقم {{cabinetNumber}}",
+      "persons": "الأشخاص",
+      "manageButton": "إدارة الأشخاص"
+    },
+    "errors": {
+      "missing-fields": "العنوان والسعة والموقع مطلوبة",
+      "title-invalid": "العنوان غير صالح",
+      "cabinets-empty": "مطلوب خزانة واحدة على الأقل",
+      "capacity-invalid": "السعة غير صالحة",
+      "cabinet-number-invalid": "يجب أن يكون رقم الخزانة بين 1 وسعة الغرفة",
+      "cabinet-number-must-be-unique": "رقم هذه الخزانة مستخدم بالفعل في هذه الغرفة",
+      "cannot-assign-person-auto-room": "لا يمكن تخصيص شخص يدويًا في غرفة خزائن تلقائية",
+      "cabinet-not-shared": "هذه الخزانة غير مشتركة — يمكن تخصيص شخص واحد فقط لها",
+      "location-not-found": "لم يتم العثور على الموقع في قاعدة البيانات",
+      "not-found": "لم يتم العثور على غرفة الخزائن أو لا تملك صلاحية الوصول إليها",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل غرفة الخزائن هذه. حاول مرة أخرى.",
+      "notFound": "لم يتم العثور على غرفة الخزائن"
     }
   },
   "deviceDoors": {

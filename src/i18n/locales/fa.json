@@ -71,6 +71,7 @@
     "cameras": "دوربین‌ها",
     "fieldOfStudies": "رشته‌های تحصیلی",
     "positions": "سمت‌های سازمانی",
+    "cabinetRooms": "کمدداری‌ها",
     "elevators": "آسانسورها",
     "contractors": "پیمانکاران",
     "locations": "مناطق",
@@ -778,6 +779,59 @@
       "not-found": "سمت پیدا نشد",
       "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
       "unknown": "خطایی رخ داد"
+    }
+  },
+  "cabinetRooms": {
+    "title": "کمدداری‌ها",
+    "addButton": "افزودن کمدداری",
+    "addTitle": "افزودن کمدداری",
+    "editTitle": "ویرایش کمدداری",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "کمدداری‌ای یافت نشد",
+    "loadError": "بارگذاری کمدداری‌ها ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "deleteConfirm": "کمدداری «{{title}}» حذف شود؟",
+    "fields": {
+      "title": "عنوان",
+      "description": "توضیحات",
+      "capacity": "ظرفیت",
+      "location": "مکان",
+      "isShared": "اشتراکی",
+      "isAuto": "خودکار",
+      "isMultiple": "چند کمد برای هر شخص",
+      "isActive": "فعال"
+    },
+    "cabinets": {
+      "title": "کمدها",
+      "empty": "کمدی وجود ندارد",
+      "cabinetNumber": "شماره کمد",
+      "description": "توضیحات",
+      "personCount": "تعداد اشخاص"
+    },
+    "cabinetPersons": {
+      "title": "اشخاص کمد شماره {{cabinetNumber}}",
+      "persons": "اشخاص",
+      "manageButton": "مدیریت افراد"
+    },
+    "errors": {
+      "missing-fields": "عنوان، ظرفیت و مکان الزامی هستند",
+      "title-invalid": "عنوان معتبر نیست",
+      "cabinets-empty": "حداقل یک کمد الزامی است",
+      "capacity-invalid": "ظرفیت معتبر نیست",
+      "cabinet-number-invalid": "شماره کمد باید بین ۱ تا ظرفیت کمدداری باشد",
+      "cabinet-number-must-be-unique": "این شماره کمد قبلاً در این کمدداری استفاده شده است",
+      "cannot-assign-person-auto-room": "در کمدداری خودکار نمی‌توان شخصی را به‌صورت دستی تخصیص داد",
+      "cabinet-not-shared": "این کمد اشتراکی نیست — فقط یک نفر می‌تواند به آن تخصیص داده شود",
+      "location-not-found": "مکان در پایگاه داده یافت نشد",
+      "not-found": "کمدداری پیدا نشد یا دسترسی ندارید",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این کمدداری ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "کمدداری پیدا نشد"
     }
   },
   "deviceDoors": {

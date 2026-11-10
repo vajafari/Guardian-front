@@ -120,6 +120,14 @@ export const ELEVATOR_FLOOR_PERSON_ENDPOINTS = {
   searchFullInfo: '/api/core/ElevatorFloorPerson/SearchFullInfo',
 } as const;
 
+export const CABINET_ROOM_ENDPOINTS = {
+  gridView: '/api/core/CabinetRoom/GridViewData',
+  getById: (id: string) => `/api/core/CabinetRoom/GetById/${id}`,
+  save: (editMode: 0 | 1) => `/api/core/CabinetRoom/Save/${editMode}`,
+  delete: (id: string) => `/api/core/CabinetRoom/Delete/${id}`,
+  saveCabinetPersons: '/api/core/CabinetRoom/SaveCabinetPersons',
+} as const;
+
 export const PERSON_GROUP_ENDPOINTS = {
   gridView: '/api/core/PersonGroup/GridViewData',
   getById: (id: string) => `/api/core/PersonGroup/GetById/${id}`,
