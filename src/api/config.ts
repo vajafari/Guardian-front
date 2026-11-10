@@ -82,6 +82,22 @@ export const DEVICE_DOOR_BASE_ENDPOINTS = {
   delete: (id: string) => `/api/core/DeviceDoorBase/DeleteDeviceDoor/${id}`,
 } as const;
 
+export const ELEVATOR_ENDPOINTS = {
+  gridView: '/api/core/Elevator/GridViewData',
+  search: '/api/core/Elevator/Search',
+  save: (editMode: 0 | 1) => `/api/core/Elevator/Save/${editMode}`,
+  delete: (id: string) => `/api/core/Elevator/Delete/${id}`,
+  saveElevatorFloorPersons: '/api/core/Elevator/SaveElevatorFloorPersons',
+} as const;
+
+export const ELEVATOR_FLOOR_ENDPOINTS = {
+  searchFullInfo: '/api/core/ElevatorFloor/SearchFullInfo',
+} as const;
+
+export const ELEVATOR_FLOOR_PERSON_ENDPOINTS = {
+  searchFullInfo: '/api/core/ElevatorFloorPerson/SearchFullInfo',
+} as const;
+
 export const CONTRACT_ENDPOINTS = {
   gridView: '/api/core/Contract/GridView',
   getById: (id: string) => `/api/core/Contract/GetById/${id}`,

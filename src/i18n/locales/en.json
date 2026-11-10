@@ -67,6 +67,7 @@
     "buildingSpaces": "Building spaces",
     "contracts": "Contracts",
     "devices": "Devices",
+    "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
     "userGroups": "User groups",
@@ -691,6 +692,54 @@
       "not-found": "Door not found or you're not authorized to access it",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
+    }
+  },
+  "elevators": {
+    "title": "Elevators",
+    "addButton": "Add elevator",
+    "addTitle": "Add elevator",
+    "editTitle": "Edit elevator",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No elevators found",
+    "loadError": "Couldn't load elevators. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete elevator \"{{title}}\"?",
+    "fields": {
+      "building": "Building",
+      "location": "Access control location",
+      "floorCount": "Floor count",
+      "title": "Title",
+      "validFloors": "Valid floors (comma-separated)"
+    },
+    "floors": {
+      "title": "Floors",
+      "empty": "No floors defined",
+      "floorTitle": "Floor title",
+      "actualFloorNumber": "Actual floor #",
+      "hardwareFloorNumber": "Hardware floor #",
+      "personCount": "People"
+    },
+    "floorPersons": {
+      "title": "People on floor \"{{floor}}\"",
+      "persons": "People with access",
+      "manageButton": "Manage people"
+    },
+    "errors": {
+      "missing-fields": "Building, location, title and floor count are required",
+      "not-found": "Elevator not found or you're not authorized to access it",
+      "number-invalid": "Elevator # is not valid",
+      "title-invalid": "Title is not valid",
+      "floors-invalid": "The number of floors defined must be between 1 and the total floor count",
+      "floor-title-invalid": "Floor title is not valid",
+      "floor-number-must-be-unique": "A floor's actual or hardware number is already used on this elevator",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this elevator. Try again.",
+      "notFound": "Elevator not found"
     }
   },
   "footer": {

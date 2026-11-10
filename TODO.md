@@ -1,5 +1,23 @@
 # Guardian frontend — remaining work
 
+## Elevator + ElevatorFloor + ElevatorFloorPerson — done and verified end-to-end against a live backend
+
+Aggregate pattern like Contract: `Elevator`'s own save bundles its `ElevatorFloors` in one call (`ElevatorFloorController` has no standalone Add/Update/Delete at all — floors are never managed except through the elevator). Floor↔person access is a separate full-replacement many-to-many in both directions; only the floor-centric direction (`SaveElevatorFloorPersons`, manage persons from the elevator's detail page) is built — person-centric (`SavePersonElevatorFloors`, would live on `PersonDetailPage`) is deferred, not started.
+
+**Attendance was considered first and deferred**: `AttendanceController` has zero endpoints for listing/searching attendance records (only Hook-reset and Delete actions), even though `AttendanceComponent`'s `AttendanceGridSearchAsync`/`GetCountAsync` (and the `InvalidAttendance`/`ParkingAttendance` equivalents) are fully implemented and ready — nothing in any controller calls them. Building a report page would require adding a new GridView controller action (not a bug fix, new backend surface) — user chose to skip for now rather than decide on that tradeoff immediately.
+
+**Verified in the browser (Edge via Playwright):**
+- Created an elevator (3 floors: Ground/First/Second) against the existing test building/location; confirmed all rows in `core.Elevator`/`core.ElevatorFloor` match what was entered.
+- Detail page shows floor count, building/location (resolved via local lookup — `GetById`/`Search` don't join those titles, only the GridView row does), valid-floors list, and the floors table with live `PersonCount`.
+- Opened "Manage people" on a floor, assigned a person via the full-replacement endpoint, confirmed the floor's `PersonCount` updated from 0 → 1 on reload.
+- Reopened the elevator for edit — all 3 existing floors came back pre-filled (titles + numbers), confirming the aggregate round-trip.
+- Deliberately added a 4th floor reusing an existing `ActualFloorNumber` — correct mapped message ("A floor's actual or hardware number is already used on this elevator", 33505) shown.
+- Backend quirk handled: unlike every other aggregate module built so far (Contract), `ElevatorComponent.ElevatorUpdateAsync` classifies a floor as "new" by checking `Id == Guid.Empty` specifically, not just "not found in the existing set" — so newly-added floor rows are sent with the all-zeros GUID, not a client-generated `crypto.randomUUID()`.
+
+### Not yet done
+- Person-centric floor assignment (`SavePersonElevatorFloors`) — would need a new section on `PersonDetailPage`/`EditPersonPage`; deferred, not started.
+- `ValidFloorsInJsonFormat`'s exact product meaning wasn't fully clear from the backend alone (no logical validation touches its contents) — exposed as a plain comma-separated number input; revisit if it turns out to mean something more specific.
+
 ## Device + DeviceDoorBase — done and verified end-to-end against a live backend
 
 Hardware configuration layer: what physical access-control device sits at a Location, and which doors/readers it exposes. Scope deliberately excludes vendor/SDK internals (`ProducerEnumeration`-specific settings, `DeviceSettingInJson`'s per-type config) and `ReaderCameraId` (no `Camera` module exists yet) — same spirit as earlier modules' scope cuts.
