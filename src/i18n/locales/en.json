@@ -68,6 +68,7 @@
     "buildingSpaces": "Building spaces",
     "contracts": "Contracts",
     "devices": "Devices",
+    "cameras": "Cameras",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -666,6 +667,70 @@
       "back": "Back",
       "loadError": "Couldn't load this device. Try again.",
       "notFound": "Device not found"
+    }
+  },
+  "cameras": {
+    "title": "Cameras",
+    "addButton": "Add camera",
+    "addTitle": "Add camera",
+    "editTitle": "Edit camera",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No cameras found",
+    "loadError": "Couldn't load cameras. Try again.",
+    "deleteConfirm": "Delete camera \"{{title}}\"?",
+    "fields": {
+      "title": "Title",
+      "ipAddress": "IP address",
+      "port": "Port",
+      "userName": "Username",
+      "password": "Password",
+      "location": "Location",
+      "cameraProducer": "Manufacturer",
+      "cameraTask": "Task",
+      "rtspString": "RTSP stream URL",
+      "apiBasicAuthUsername": "API basic-auth username",
+      "apiBasicAuthPassword": "API basic-auth password",
+      "moduleId": "Modules",
+      "ioType": "I/O type",
+      "isActive": "Active"
+    },
+    "cameraProducers": {
+      "1": "Hikvision",
+      "2": "Dahua",
+      "3": "Generic (ONVIF/RTSP)"
+    },
+    "cameraTasks": {
+      "1": "Monitoring",
+      "2": "License plate recognition",
+      "3": "Face recognition"
+    },
+    "ioTypes": {
+      "0": "None",
+      "1": "Input",
+      "2": "Output",
+      "3": "Input and output"
+    },
+    "moduleFlags": {
+      "1": "Base system",
+      "2": "Access control",
+      "4": "Attendance",
+      "8": "Visitors",
+      "16": "Elevator",
+      "32": "Cabinet",
+      "64": "Report builder",
+      "256": "Parking"
+    },
+    "errors": {
+      "missing-fields": "Title, IP address, port and location are required",
+      "title-invalid": "Title is not valid",
+      "ip-invalid": "IP address is not valid",
+      "port-invalid": "Port is not valid",
+      "camera-task-invalid": "Camera task is not valid",
+      "location-not-found": "Location not found in the database",
+      "not-found": "Camera not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
     }
   },
   "deviceDoors": {

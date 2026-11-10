@@ -1,5 +1,20 @@
 # Guardian frontend — remaining work
 
+## Camera — done and verified end-to-end against a live backend
+
+Standalone hardware-registry module, structurally almost identical to Device (flat entity: Title/IP/Port/Location/ModuleId-flags/IoType/IsActive, plus UserName/Password/CameraProducer/CameraTask/RtspString/ApiBasicAuth* fields). No child/aggregate collection, so no detail page — flat GridView page + dialog, same shape as `PersonGroupsPage`/`BuildingSpacesPage`.
+
+**No backend bugs found this time** — `CreateMap<CameraSaveModel, DtoCamera>()` already existed and `CameraComponent`'s add/update/delete logic is clean.
+
+**Verified in the browser (Edge via Playwright):**
+- Added a camera (Hikvision/FaceRecognition, Elevator + Base module flags) against an existing Location; confirmed the `core.Camera` row via direct SQL, including `CameraSettingsInJson` landing as `'{}'` (NOT NULL column, same trap as `Device.DeviceSettingInJson` — this form doesn't expose per-vendor settings either, so always sends `{}`).
+- Edited it (title + IoType) — fields came back correctly pre-filled, and the change round-tripped (confirmed via SQL).
+- Deliberately submitted an invalid IP address (`"not-an-ip"`) — correct mapped message ("IP address is not valid", 13602) rendered in the dialog.
+- Deleted it — confirmed the row is gone via SQL.
+
+### Not yet done
+- `DeviceDoorBase`'s `ReaderCameraId` field is still out of scope for this pass (the Device module's door form doesn't expose a camera picker) — could be revisited now that a Camera module exists, but wasn't requested.
+
 ## PersonGroup — done and verified end-to-end against a live backend
 
 Logical groupings of persons for bulk access grants elsewhere. Simplest aggregate shape so far: no nested child table, just a flat `personIds` full-replacement list bundled directly into the same `Add`/`Save` call (`PersonGroupController.Add`/`Save` call `PersonGroupComponent` then `PersonComponent.GroupPersonsUpdateAsync` in sequence, same full-replacement pattern as `ElevatorFloorPerson`).

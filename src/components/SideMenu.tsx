@@ -15,6 +15,7 @@ import {
   HiOutlineServer,
   HiOutlineSwitchVertical,
   HiOutlineCollection,
+  HiOutlineVideoCamera,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -26,6 +27,7 @@ const MENU_ITEMS = [
   { key: 'buildingSpaces', icon: HiOutlineCube, path: '/building-spaces' },
   { key: 'contracts', icon: HiOutlineClipboardList, path: '/contracts' },
   { key: 'devices', icon: HiOutlineServer, path: '/devices' },
+  { key: 'cameras', icon: HiOutlineVideoCamera, path: '/cameras' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },

@@ -72,6 +72,13 @@ export const DEVICE_ENDPOINTS = {
   delete: (id: string) => `/api/core/Device/Delete/${id}`,
 } as const;
 
+export const CAMERA_ENDPOINTS = {
+  gridView: '/api/core/Camera/GridViewData',
+  getById: (id: string) => `/api/core/Camera/GetById/${id}`,
+  save: (editMode: 0 | 1) => `/api/core/Camera/Save/${editMode}`,
+  delete: (id: string) => `/api/core/Camera/Delete/${id}`,
+} as const;
+
 export const DEVICE_TYPE_ENDPOINTS = {
   getAll: '/api/core/DeviceType/GetAllDeviceTypes',
 } as const;
