@@ -14,8 +14,16 @@ First screen in the brand-new `fin` namespace (full investigation + phased plan 
 
 **Environment note (not a bug in this code):** during this session the dev Vite server was briefly bound to IPv6-loopback only (`[::1]:5173`) instead of IPv4, and the backend (`Guardian.Api.exe`) was intermittently slow/unresponsive for 10–20s stretches a couple of times (recovered on its own both times — possibly a debugger breakpoint pause, never confirmed). Neither affected the actual verification results once the server was reachable.
 
+## fin: ResidentUsers + MenuBundleApply — done and verified end-to-end against a live backend
+
+The two `QuickSetup` follow-ups, added as two more always-visible cards on the same `/fin-setup` page (not gated behind a fresh wizard run — both are standalone, idempotent actions).
+
+**Verified in the browser (Edge via Playwright):**
+- `ResidentUsers` against the building from the earlier `QuickSetup` test run — result summary rendered correctly ("1 active resident(s) found — 1 already had a login, 0 new login(s) created"), matching the one existing contract principal who already had a login.
+- `MenuBundleApply` with the `BuildingManager` bundle — success message rendered; confirmed via SQL exactly 10 `core.UserGroupMenu` rows landed on the target group: the 9 finance form menus at `AccessType=2` (ViewAndEdit) plus the chart-of-accounts menu at `AccessType=1` (OnlyView), matching `FinMenuBundles.GetMenus(BuildingManager)` precisely.
+- `MenuBundleApply` with the `Accountant` bundle also succeeded — confirms this dev environment's `AccountingMode` is set to `Advanced` (the 37000 "advanced-mode-only" error path exists and is mapped, but wasn't actually triggered since the environment is already in advanced mode).
+
 ### Not yet done
-- `ResidentUsers` (bulk-create resident logins) and `MenuBundleApply` (grant a UserGroup a finance menu-permission bundle) — the two natural follow-ups to `QuickSetup`, deliberately deferred to keep this pass scoped to the wizard itself.
 - Everything else in `fin` — see `FIN_MODULE_PLAN.md` for the full phased plan (charges/billing cycle, cash/bank/cheques, expenses, reporting).
 
 ## CabinetRoom + Cabinet + CabinetPerson — done and verified end-to-end against a live backend

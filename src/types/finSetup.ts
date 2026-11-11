@@ -29,10 +29,40 @@ export interface FinQuickSetupResult {
   serviceBillingTypeIds: string[];
 }
 
+/** POST /api/fin/FinSetup/ResidentUsers body. */
+export interface FinResidentUsersPayload {
+  buildingIds: string[];
+  userGroupId: string;
+  password: string;
+}
+
+export interface FinBulkUserCreateError {
+  personId: string;
+  errorMessage: string;
+}
+
+export interface FinBulkUserCreateResult {
+  countActivePerson: number;
+  countExistingUser: number;
+  countCreatedUser: number;
+  errors: FinBulkUserCreateError[];
+}
+
+/** FinMenuBundleEnumeration. */
+export type FinMenuBundle = 1 | 2 | 3 | 4;
+
+/** POST /api/fin/FinSetup/MenuBundleApply body. */
+export interface FinMenuBundleApplyPayload {
+  userGroupId: string;
+  bundle: FinMenuBundle;
+}
+
 export type FinSetupErrorCode =
   | 'missing-fields'
   | 'building-already-has-accounting-entity'
   | 'partially-created'
+  | 'no-principal-found'
+  | 'advanced-mode-only'
   | 'network-error'
   | 'unknown';
 

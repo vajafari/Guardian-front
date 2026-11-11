@@ -870,8 +870,36 @@
       "missing-fields": "Check the required fields — title, buildings, fiscal year, bank account title and a valid monthly charge amount are all required",
       "building-already-has-accounting-entity": "One of the selected buildings already belongs to another accounting entity",
       "partially-created": "Setup failed partway through and couldn't be fully rolled back — contact the backend team before retrying, the accounting entity may need manual cleanup",
+      "no-principal-found": "No eligible resident without a login was found in the selected buildings",
+      "advanced-mode-only": "This bundle is only available in advanced accounting mode",
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
+    },
+    "residentUsers": {
+      "title": "Bulk-create resident logins",
+      "save": "Create logins",
+      "userGroup": "Resident user group",
+      "password": "Initial password",
+      "result": "{{active}} active resident(s) found — {{existing}} already had a login, {{created}} new login(s) created"
+    },
+    "menuBundle": {
+      "title": "Apply a finance menu bundle",
+      "save": "Apply bundle",
+      "userGroup": "User group",
+      "bundle": "Bundle",
+      "success": "Bundle applied successfully",
+      "bundles": {
+        "1": "Building manager",
+        "2": "Observer",
+        "3": "Accountant",
+        "4": "Resident"
+      },
+      "bundleDescriptions": {
+        "1": "All finance forms and reports, view-only chart of accounts",
+        "2": "Read-only access to all finance forms and reports",
+        "3": "Building manager, plus manual journal entries and year-end lock/close — advanced accounting mode only",
+        "4": "Only \"my statement\", with access restricted to the user's own records"
+      }
     },
     "success": {
       "title": "Financial setup completed successfully",

@@ -180,4 +180,6 @@ export const USER_ENDPOINTS = {
 
 export const FIN_SETUP_ENDPOINTS = {
   quickSetup: '/api/fin/FinSetup/QuickSetup',
+  residentUsers: '/api/fin/FinSetup/ResidentUsers',
+  menuBundleApply: '/api/fin/FinSetup/MenuBundleApply',
 } as const;

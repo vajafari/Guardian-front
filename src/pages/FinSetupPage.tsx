@@ -1,13 +1,23 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { quickSetup } from '../api/finSetupService';
+import { applyMenuBundle, quickSetup, residentUsers } from '../api/finSetupService';
 import { searchBuildings } from '../api/buildingService';
-import { FinSetupError, type FinQuickSetupResult, type FinSetupErrorCode, type LateFeeMode } from '../types/finSetup';
+import { listUserGroups } from '../api/userGroupService';
+import {
+  FinSetupError,
+  type FinBulkUserCreateResult,
+  type FinMenuBundle,
+  type FinQuickSetupResult,
+  type FinSetupErrorCode,
+  type LateFeeMode,
+} from '../types/finSetup';
 import type { Building } from '../types/building';
+import type { UserGroup } from '../types/userGroup';
 import { Alert, Button, Card, FormContainer, FormItem, Input } from '../components/ui';
 import { MultiSelectDropdown } from '../components/MultiSelectDropdown';
 
 const LATE_FEE_MODE_OPTIONS: LateFeeMode[] = [0, 1, 2];
+const MENU_BUNDLE_OPTIONS: FinMenuBundle[] = [1, 2, 3, 4];
 
 export function FinSetupPage() {
   const { t } = useTranslation();
@@ -70,8 +80,7 @@ export function FinSetupPage() {
     }
   };
 
-  if (result) {
-    return (
+  const quickSetupCard = result ? (
       <Card>
         <h1 className="mb-4">{t('finSetup.title')}</h1>
         <Alert type="success" className="mb-4">
@@ -105,10 +114,7 @@ export function FinSetupPage() {
         </div>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">{t('finSetup.success.whatsNext')}</p>
       </Card>
-    );
-  }
-
-  return (
+    ) : (
     <Card>
       <h1 className="mb-4">{t('finSetup.title')}</h1>
 
@@ -248,6 +254,205 @@ export function FinSetupPage() {
 
           <Button variant="solid" block type="submit" loading={isSubmitting}>
             {isSubmitting ? t('finSetup.saving') : t('finSetup.save')}
+          </Button>
+        </FormContainer>
+      </form>
+    </Card>
+  );
+
+  return (
+    <>
+      {quickSetupCard}
+      <ResidentUsersCard />
+      <MenuBundleCard />
+    </>
+  );
+}
+
+function ResidentUsersCard() {
+  const { t } = useTranslation();
+  const [buildingIds, setBuildingIds] = useState<string[]>([]);
+  const [userGroupId, setUserGroupId] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [buildings, setBuildings] = useState<Building[]>([]);
+  const [userGroups, setUserGroups] = useState<UserGroup[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<FinSetupErrorCode | null>(null);
+  const [result, setResult] = useState<FinBulkUserCreateResult | null>(null);
+
+  useEffect(() => {
+    searchBuildings().then(setBuildings);
+    listUserGroups().then(setUserGroups);
+  }, []);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setResult(null);
+    setIsSubmitting(true);
+
+    try {
+      const created = await residentUsers({ buildingIds, userGroupId, password });
+      setResult(created);
+    } catch (err) {
+      setError(err instanceof FinSetupError ? err.code : 'unknown');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Card className="mt-6">
+      <h4 className="mb-4">{t('finSetup.residentUsers.title')}</h4>
+
+      <form onSubmit={handleSubmit}>
+        <FormContainer>
+          {error && (
+            <Alert type="danger" className="mb-4">
+              {t(`finSetup.errors.${error}`)}
+            </Alert>
+          )}
+          {result && (
+            <Alert type="success" className="mb-4">
+              {t('finSetup.residentUsers.result', {
+                active: result.countActivePerson,
+                existing: result.countExistingUser,
+                created: result.countCreatedUser,
+              })}
+            </Alert>
+          )}
+
+          <div className="grid grid-cols-3 gap-3">
+            <FormItem label={t('finSetup.fields.buildings')} htmlFor="finSetupResidentBuildings">
+              <MultiSelectDropdown
+                id="finSetupResidentBuildings"
+                options={buildings.map((building) => ({ value: building.id, label: building.title }))}
+                selectedValues={buildingIds}
+                onChange={setBuildingIds}
+              />
+            </FormItem>
+            <FormItem label={t('finSetup.residentUsers.userGroup')} htmlFor="finSetupResidentUserGroup">
+              <select
+                id="finSetupResidentUserGroup"
+                className="input"
+                value={userGroupId}
+                onChange={(event) => setUserGroupId(event.target.value)}
+                required
+              >
+                <option value="">—</option>
+                {userGroups.map((userGroup) => (
+                  <option key={userGroup.id} value={userGroup.id}>
+                    {userGroup.title}
+                  </option>
+                ))}
+              </select>
+            </FormItem>
+            <FormItem label={t('finSetup.residentUsers.password')} htmlFor="finSetupResidentPassword">
+              <Input
+                id="finSetupResidentPassword"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+            </FormItem>
+          </div>
+
+          <Button variant="solid" block type="submit" loading={isSubmitting}>
+            {isSubmitting ? t('finSetup.saving') : t('finSetup.residentUsers.save')}
+          </Button>
+        </FormContainer>
+      </form>
+    </Card>
+  );
+}
+
+function MenuBundleCard() {
+  const { t } = useTranslation();
+  const [userGroupId, setUserGroupId] = useState('');
+  const [bundle, setBundle] = useState<FinMenuBundle>(1);
+
+  const [userGroups, setUserGroups] = useState<UserGroup[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<FinSetupErrorCode | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    listUserGroups().then(setUserGroups);
+  }, []);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setSuccess(false);
+    setIsSubmitting(true);
+
+    try {
+      await applyMenuBundle({ userGroupId, bundle });
+      setSuccess(true);
+    } catch (err) {
+      setError(err instanceof FinSetupError ? err.code : 'unknown');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Card className="mt-6">
+      <h4 className="mb-4">{t('finSetup.menuBundle.title')}</h4>
+
+      <form onSubmit={handleSubmit}>
+        <FormContainer>
+          {error && (
+            <Alert type="danger" className="mb-4">
+              {t(`finSetup.errors.${error}`)}
+            </Alert>
+          )}
+          {success && (
+            <Alert type="success" className="mb-4">
+              {t('finSetup.menuBundle.success')}
+            </Alert>
+          )}
+
+          <div className="grid grid-cols-2 gap-3">
+            <FormItem label={t('finSetup.menuBundle.userGroup')} htmlFor="finSetupBundleUserGroup">
+              <select
+                id="finSetupBundleUserGroup"
+                className="input"
+                value={userGroupId}
+                onChange={(event) => setUserGroupId(event.target.value)}
+                required
+              >
+                <option value="">—</option>
+                {userGroups.map((userGroup) => (
+                  <option key={userGroup.id} value={userGroup.id}>
+                    {userGroup.title}
+                  </option>
+                ))}
+              </select>
+            </FormItem>
+            <FormItem label={t('finSetup.menuBundle.bundle')} htmlFor="finSetupBundle">
+              <select
+                id="finSetupBundle"
+                className="input"
+                value={bundle}
+                onChange={(event) => setBundle(Number(event.target.value) as FinMenuBundle)}
+              >
+                {MENU_BUNDLE_OPTIONS.map((value) => (
+                  <option key={value} value={value}>
+                    {t(`finSetup.menuBundle.bundles.${value}`)}
+                  </option>
+                ))}
+              </select>
+            </FormItem>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+            {t(`finSetup.menuBundle.bundleDescriptions.${bundle}`)}
+          </p>
+
+          <Button variant="solid" block type="submit" loading={isSubmitting}>
+            {isSubmitting ? t('finSetup.saving') : t('finSetup.menuBundle.save')}
           </Button>
         </FormContainer>
       </form>
