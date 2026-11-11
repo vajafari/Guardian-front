@@ -82,6 +82,7 @@
     "receipts": "Receipts",
     "cheques": "Cheques",
     "chequeFates": "Cheque fates",
+    "partyPayments": "Party payments",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -1286,10 +1287,12 @@
     "fieldLabel": "Party",
     "modes": {
       "existing": "Existing party",
-      "person": "Link a person"
+      "person": "Link a person",
+      "vendor": "New vendor"
     },
     "existingPartyReused": "This person already has a party — reusing it.",
-    "partyCreated": "A new party was created for this person."
+    "partyCreated": "A new party was created.",
+    "createVendor": "Create"
   },
   "lateFeeRuns": {
     "title": "Late fee runs",
@@ -1537,6 +1540,74 @@
       "loadError": "Couldn't load this cheque fate. Try again.",
       "notFound": "Cheque fate not found",
       "items": "Cheques"
+    }
+  },
+  "partyPayments": {
+    "title": "Party payments",
+    "addButton": "New payment",
+    "addTitle": "Pay a party",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No payments found",
+    "loadError": "Couldn't load payments. Try again.",
+    "retry": "Retry",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "party": "Party",
+      "cashAccount": "Cash account",
+      "paymentMethod": "Payment method",
+      "amount": "Amount",
+      "documentDate": "Document date",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "settledAmount": "Settled",
+      "unsettledAmount": "Unsettled",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "paymentMethods": {
+      "1": "Cash account",
+      "2": "Issued cheque",
+      "3": "Spend a received cheque"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "issuedCheques": {
+      "title": "Issued cheques",
+      "addLine": "Add cheque",
+      "total": "Cheques total: {{total}}"
+    },
+    "endorsedCheques": {
+      "title": "Spend a received cheque",
+      "originalParty": "Originally from",
+      "noneAvailable": "This party has no pending received cheques to spend"
+    },
+    "cancel": {
+      "title": "Cancel payment",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel payment"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "settled-account-invalid": "This settled account isn't valid",
+      "endorsed-cheque-invalid": "Pick at least one pending received cheque to spend, matching the payment amount",
+      "sayad-not-unique": "One of these Sayad IDs is already used by another cheque",
+      "cancel-reason-required": "A cancellation reason is required",
+      "moved-cheques-can-not-cancel": "One of this payment's cheques has already moved on and can't be cancelled",
+      "credit-in-use": "This payment's unsettled credit has already been used elsewhere and can't be cancelled",
+      "not-found": "Payment not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this payment. Try again.",
+      "notFound": "Payment not found",
+      "cheques": "Cheques"
     }
   },
   "deviceDoors": {

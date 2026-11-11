@@ -1,5 +1,27 @@
 # Guardian frontend — remaining work
 
+## fin: PartyPayment (pay a vendor/payee) — done and verified end-to-end against a live backend
+
+The mirror image of `Receipt`: money going out to a payee `Party` instead of coming in from a resident. Also the piece that finally unlocks the `Issued`-direction `Cheque`/`ChequeFate` lifecycle, stuck at `Pending` forever since every fate kind needs a posted source document and none existed for Issued cheques before this. Built all three `PaymentMethod`s (`CashAccount`/`IssuedCheque`/`EndorsedCheque`); `Settlements`/`AutoSettle` left always empty/false this pass (confirmed directly in `ExpenseComponent.cs` that this is explicitly legal — a pure advance payment, not an error — so `ExpenseInvoice` is not a blocker, just a deferred piece for when it lands).
+
+Also extended `PartyPickerField` (used by `ServiceBilling`/`Receipt`/`Cheque`/`ChequeFate` too) with a third mode, "new vendor" — a quick-create for a plain Title-only `Party`, since vendors are essentially never Person-linked the way residents are.
+
+**No backend bugs found** — all three AutoMapper maps (`PartyPaymentSaveModel→DtoPartyPayment`, `IssuedChequeSaveModel→DtoCheque`, `PaymentSettlementSaveModel→DtoPaymentSettlement`) already existed.
+
+**One real frontend bug found and fixed during this pass**: the `EndorsedCheque` picker was filtering the party's own Pending Received cheques by `cheque.partyId === partyId` (the payee being paid) — but endorsement means handing a cheque *received from one party* to pay *a different party*, and the backend's own validation (confirmed by reading `ExpenseComponent.cs` directly) scopes `EndorsedChequeIds` only by `AccountingEntity`+`ChequeDirection=Received`+`Status=Pending`, with no party restriction at all. Fixed by showing all eligible pending cheques entity-wide, with an "Originally from" column so the user can see whose cheque they're spending. Verified the fix with a genuine cross-party test (endorsed a cheque received from one party to pay a different one).
+
+**Verified in the browser (Edge via Playwright), reusing the `QuickSetup` test `AccountingEntity`:**
+- Quick-created a Title-only vendor `Party` via the new `PartyPickerField` mode — confirmed via SQL (`PartyType=Legal`, no Person/Contractor link).
+- Paid that vendor via `CashAccount` method — confirmed via SQL (`fin.PartyPayment`, real `fin.JournalEntry`, full `Amount` as `UnsettledAmount` since no settlements).
+- Paid via `IssuedCheque` method — confirmed via SQL (new `fin.Cheque` at `ChequeDirection=Issued, Status=Pending`).
+- **The unlocking moment**: ran `ChequeFate=Cleared` on that issued cheque — confirmed it no longer 37769s now that a real `PartyPayment` source document exists; `Cheque.Status`→Cleared, new `JournalEntry`.
+- `EndorsedCheque` method, cross-party (after the fix above) — confirmed via SQL (`Cheque.Status`→Endorsed, `EndorsedToPartyId` correctly set to the new payee, distinct from the cheque's original `PartyId`).
+- Opened the detail page, confirmed fields + cheques table render. Cancelled the cash-method payment — confirmed via SQL (`Status`→Cancelled, reversing `JournalEntry`). Tried cancelling the issued-cheque payment after its cheque already cleared — correctly rejected (37727), message rendered correctly.
+
+### Not yet done
+- `Settlements`/`AutoSettle` (settling against an `ExpenseInvoice` or `OpeningBalance` line) — deferred until `ExpenseInvoice` exists; every payment this pass is a pure advance/credit.
+- `SettledAccountId` is fixed to the system `PayableToParties` (2110) account only — 2130/2140 are advanced-mode + `Payroll`-dependent, not usable yet.
+
 ## fin: Cheque + ChequeFate (+ ReceivedCheque wired into Receipt) — done and verified end-to-end against a live backend
 
 Closes the gap deliberately left open in the `Receipt` pass: `ReceivedCheque` was deferred because a cheque entered that way would sit at `Status=Pending` forever with no UI to ever move it. Built standalone `Cheque` CRUD (both `Received`/`Issued` directions, flat list+dialog page mirroring `CashAccountsPage.tsx`), `ChequeFate` (posted form — Deposited/Cleared/Bounced/Returned — mirroring `LateFeeRun`'s list+detail+cancel shape), and wired `PaymentMethod=ReceivedCheque` into `ReceiptFormDialog` so the whole received-cheque lifecycle (Receipt → Cheque Pending → Deposited → Cleared/Bounced) is now actually exercisable end to end.

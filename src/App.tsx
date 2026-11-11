@@ -32,6 +32,8 @@ import { ReceiptDetailPage } from './pages/ReceiptDetailPage';
 import { ChequesPage } from './pages/ChequesPage';
 import { ChequeFatesPage } from './pages/ChequeFatesPage';
 import { ChequeFateDetailPage } from './pages/ChequeFateDetailPage';
+import { PartyPaymentsPage } from './pages/PartyPaymentsPage';
+import { PartyPaymentDetailPage } from './pages/PartyPaymentDetailPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -98,6 +100,8 @@ function App() {
               <Route path="/fin/cheques" element={<ChequesPage />} />
               <Route path="/fin/cheque-fates" element={<ChequeFatesPage />} />
               <Route path="/fin/cheque-fates/:id" element={<ChequeFateDetailPage />} />
+              <Route path="/fin/party-payments" element={<PartyPaymentsPage />} />
+              <Route path="/fin/party-payments/:id" element={<PartyPaymentDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { addPartyForPerson, searchActiveParties, searchPartiesByPerson } from '../api/partyService';
+import { addPartyForPerson, addPartyWithTitle, searchActiveParties, searchPartiesByPerson } from '../api/partyService';
 import { searchPersonsByFullName } from '../api/personService';
 import type { PartyFullInfo } from '../types/party';
 import type { PersonSummary } from '../types/person';
-import { FormItem } from './ui';
+import { Button, FormItem, Input } from './ui';
 
-type PartyPickerMode = 'existing' | 'person';
+type PartyPickerMode = 'existing' | 'person' | 'vendor';
 
 interface PartyPickerFieldProps {
   isOpen: boolean;
@@ -24,6 +24,7 @@ export function PartyPickerField({ isOpen, onResolved }: PartyPickerFieldProps) 
   const [persons, setPersons] = useState<PersonSummary[]>([]);
   const [selectedPartyId, setSelectedPartyId] = useState('');
   const [selectedPersonId, setSelectedPersonId] = useState('');
+  const [vendorTitle, setVendorTitle] = useState('');
   const [isResolving, setIsResolving] = useState(false);
   const [note, setNote] = useState<string | null>(null);
 
@@ -32,6 +33,7 @@ export function PartyPickerField({ isOpen, onResolved }: PartyPickerFieldProps) 
       setMode('existing');
       setSelectedPartyId('');
       setSelectedPersonId('');
+      setVendorTitle('');
       setNote(null);
       onResolved('');
       Promise.all([searchActiveParties(), searchPersonsByFullName('', { itemsPerPage: 500 })]).then(
@@ -48,6 +50,7 @@ export function PartyPickerField({ isOpen, onResolved }: PartyPickerFieldProps) 
     setMode(newMode);
     setSelectedPartyId('');
     setSelectedPersonId('');
+    setVendorTitle('');
     setNote(null);
     onResolved('');
   };
@@ -79,6 +82,18 @@ export function PartyPickerField({ isOpen, onResolved }: PartyPickerFieldProps) 
     }
   };
 
+  const handleCreateVendor = async () => {
+    if (!vendorTitle.trim()) return;
+    setIsResolving(true);
+    try {
+      const created = await addPartyWithTitle(vendorTitle.trim());
+      setNote(t('party.partyCreated'));
+      onResolved(created.id);
+    } finally {
+      setIsResolving(false);
+    }
+  };
+
   return (
     <FormItem label={t('party.fieldLabel')} htmlFor="partyPickerExisting">
       <div className="flex items-center gap-4 mb-2">
@@ -89,6 +104,10 @@ export function PartyPickerField({ isOpen, onResolved }: PartyPickerFieldProps) 
         <label className="flex items-center gap-2 text-sm">
           <input type="radio" name="partyPickerMode" checked={mode === 'person'} onChange={() => handleModeChange('person')} />
           {t('party.modes.person')}
+        </label>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="radio" name="partyPickerMode" checked={mode === 'vendor'} onChange={() => handleModeChange('vendor')} />
+          {t('party.modes.vendor')}
         </label>
       </div>
 
@@ -107,7 +126,7 @@ export function PartyPickerField({ isOpen, onResolved }: PartyPickerFieldProps) 
             </option>
           ))}
         </select>
-      ) : (
+      ) : mode === 'person' ? (
         <select
           id="partyPickerPerson"
           className="input"
@@ -123,6 +142,18 @@ export function PartyPickerField({ isOpen, onResolved }: PartyPickerFieldProps) 
             </option>
           ))}
         </select>
+      ) : (
+        <div className="flex items-center gap-3">
+          <Input
+            id="partyPickerVendorTitle"
+            value={vendorTitle}
+            onChange={(event) => setVendorTitle(event.target.value)}
+            disabled={isResolving}
+          />
+          <Button type="button" size="sm" loading={isResolving} disabled={!vendorTitle.trim()} onClick={handleCreateVendor}>
+            {t('party.createVendor')}
+          </Button>
+        </div>
       )}
 
       {note && <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{note}</p>}

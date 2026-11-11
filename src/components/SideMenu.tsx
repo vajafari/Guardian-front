@@ -29,6 +29,7 @@ import {
   HiOutlineCash,
   HiOutlineDocumentText,
   HiOutlineSwitchHorizontal,
+  HiOutlineScale,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -54,6 +55,7 @@ const MENU_ITEMS = [
   { key: 'receipts', icon: HiOutlineCash, path: '/fin/receipts' },
   { key: 'cheques', icon: HiOutlineDocumentText, path: '/fin/cheques' },
   { key: 'chequeFates', icon: HiOutlineSwitchHorizontal, path: '/fin/cheque-fates' },
+  { key: 'partyPayments', icon: HiOutlineScale, path: '/fin/party-payments' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },

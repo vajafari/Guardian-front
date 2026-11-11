@@ -46,3 +46,13 @@ export async function searchAccountingEntityBuildings(accountingEntityId: string
   });
   return data;
 }
+
+const ACCOUNT_CODE_PAYABLE_TO_PARTIES = 2110;
+
+/** Resolves the system "Payable to parties" (2110) account's real id — PartyPayment's SettledAccountId this pass. */
+export async function getPayableToPartiesAccountId(): Promise<string> {
+  const { data } = await httpClient.post<Array<{ id: string }>>(FIN_REFERENCE_DATA_ENDPOINTS.searchChartOfAccounts, {
+    filter: { codes: [ACCOUNT_CODE_PAYABLE_TO_PARTIES] },
+  });
+  return data[0].id;
+}

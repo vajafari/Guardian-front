@@ -62,3 +62,24 @@ export async function addPartyForPerson(personId: string): Promise<Party> {
     throw mapPartyError(err);
   }
 }
+
+export async function addPartyWithTitle(title: string): Promise<Party> {
+  const payload: PartyPayload = {
+    id: crypto.randomUUID(),
+    partyType: 2,
+    personId: null,
+    contractorId: null,
+    title,
+    nationalCode: null,
+    economicCode: null,
+    mobileNumber: null,
+    isActive: true,
+    description: null,
+  };
+  try {
+    const { data } = await httpClient.post<Party>(PARTY_ENDPOINTS.add, payload);
+    return data;
+  } catch (err) {
+    throw mapPartyError(err);
+  }
+}

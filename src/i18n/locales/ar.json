@@ -82,6 +82,7 @@
     "receipts": "إيصالات القبض",
     "cheques": "الشيكات",
     "chequeFates": "مصير الشيك",
+    "partyPayments": "دفعات الأطراف",
     "elevators": "المصاعد",
     "contractors": "المقاولون",
     "locations": "المناطق",
@@ -1286,10 +1287,12 @@
     "fieldLabel": "الطرف",
     "modes": {
       "existing": "طرف موجود",
-      "person": "ربط بشخص"
+      "person": "ربط بشخص",
+      "vendor": "مورد جديد"
     },
     "existingPartyReused": "هذا الشخص لديه طرف بالفعل — سيتم استخدامه.",
-    "partyCreated": "تم إنشاء طرف جديد لهذا الشخص."
+    "partyCreated": "تم إنشاء طرف جديد.",
+    "createVendor": "إنشاء"
   },
   "lateFeeRuns": {
     "title": "عمليات الغرامة",
@@ -1537,6 +1540,74 @@
       "loadError": "تعذر تحميل هذا المصير. حاول مرة أخرى.",
       "notFound": "مصير الشيك غير موجود",
       "items": "الشيكات"
+    }
+  },
+  "partyPayments": {
+    "title": "دفعات الأطراف",
+    "addButton": "دفعة جديدة",
+    "addTitle": "دفع لطرف",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على دفعات",
+    "loadError": "تعذر تحميل الدفعات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "party": "الطرف",
+      "cashAccount": "حساب النقد والبنك",
+      "paymentMethod": "طريقة الدفع",
+      "amount": "المبلغ",
+      "documentDate": "تاريخ المستند",
+      "description": "الوصف",
+      "documentNumber": "رقم المستند",
+      "settledAmount": "المسوّى",
+      "unsettledAmount": "غير المسوّى",
+      "status": "الحالة",
+      "cancelReason": "سبب الإلغاء"
+    },
+    "paymentMethods": {
+      "1": "حساب نقد وبنك",
+      "2": "شيك مصدر",
+      "3": "إنفاق شيك مقبوض"
+    },
+    "statuses": {
+      "1": "مسودة",
+      "2": "مرحّل",
+      "3": "ملغى"
+    },
+    "issuedCheques": {
+      "title": "الشيكات المصدرة",
+      "addLine": "إضافة شيك",
+      "total": "إجمالي الشيكات: {{total}}"
+    },
+    "endorsedCheques": {
+      "title": "إنفاق شيك مقبوض",
+      "originalParty": "مستلم أصلاً من",
+      "noneAvailable": "لا توجد شيكات مقبوضة في الانتظار لهذا الطرف لإنفاقها"
+    },
+    "cancel": {
+      "title": "إلغاء الدفعة",
+      "reason": "سبب الإلغاء",
+      "reversalDate": "تاريخ القيد العكسي",
+      "confirm": "إلغاء الدفعة"
+    },
+    "errors": {
+      "missing-fields": "تحقق من الحقول المطلوبة",
+      "settled-account-invalid": "حساب التسوية هذا غير صالح",
+      "endorsed-cheque-invalid": "اختر شيكًا مقبوضًا واحدًا على الأقل في الانتظار بما يطابق مبلغ الدفعة",
+      "sayad-not-unique": "أحد أرقام سياد هذه مستخدم بالفعل لشيك آخر",
+      "cancel-reason-required": "سبب الإلغاء مطلوب",
+      "moved-cheques-can-not-cancel": "أحد شيكات هذه الدفعة تقدّم بالفعل ولا يمكن إلغاؤه",
+      "credit-in-use": "تم استخدام رصيد هذه الدفعة غير المسوّى في مكان آخر ولا يمكن إلغاؤه",
+      "not-found": "الدفعة غير موجودة أو لا تملك صلاحية الوصول إليها",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل هذه الدفعة. حاول مرة أخرى.",
+      "notFound": "الدفعة غير موجودة",
+      "cheques": "الشيكات"
     }
   },
   "deviceDoors": {

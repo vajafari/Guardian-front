@@ -191,6 +191,7 @@ export const FIN_REFERENCE_DATA_ENDPOINTS = {
   searchFunds: '/api/fin/Fund/Search',
   searchCostCategories: '/api/fin/CostCategory/Search',
   searchAccountingEntityBuildings: '/api/fin/AccountingEntityBuilding/SearchFullInfo',
+  searchChartOfAccounts: '/api/fin/ChartOfAccount/Search',
 } as const;
 
 export const CHARGE_PLAN_ENDPOINTS = {
@@ -291,4 +292,11 @@ export const CHEQUE_FATE_ENDPOINTS = {
   getById: (id: string) => `/api/fin/ChequeFate/GetById/${id}`,
   add: '/api/fin/ChequeFate/Add',
   cancel: '/api/fin/ChequeFate/Cancel',
+} as const;
+
+export const PARTY_PAYMENT_ENDPOINTS = {
+  gridView: '/api/fin/PartyPayment/GridView',
+  getById: (id: string) => `/api/fin/PartyPayment/GetById/${id}`,
+  add: '/api/fin/PartyPayment/Add',
+  cancel: '/api/fin/PartyPayment/Cancel',
 } as const;
