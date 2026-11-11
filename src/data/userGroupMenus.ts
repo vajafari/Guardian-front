@@ -1,9 +1,15 @@
 /**
- * Mirrors Guardian.Api.Assets.Auth.UserMenuCodeConstants on the backend (126 codes).
+ * Mirrors Guardian.Api.Assets.Auth.UserMenuCodeConstants on the backend (139 codes:
+ * 126 Core + the 13-code "8000 حسابداری" fin block, added once the fin module's menu
+ * codes were noticed missing here — core.UserGroupMenu access for fin pages is a hard
+ * security boundary, not cosmetic: AuthController turns each granted row straight into
+ * a `K_{code}_{accessType}` role claim at login, and every fin controller's
+ * [AuthorizeRoles] checks exactly that).
  * Titles were cross-referenced against the legacy Karnama.Angular app's own menu
  * catalog (page-address-keys.ts) where a confident match existed; a handful fall
  * back to the backend's own Persian doc-comment where the Angular title was
- * ambiguous (a list page and a sub-action sharing the same code) or missing.
+ * ambiguous (a list page and a sub-action sharing the same code) or missing — the
+ * fin codes all use the backend's own doc-comment directly (no Angular equivalent).
  */
 export interface MenuCatalogEntry {
   code: number;
@@ -116,6 +122,19 @@ export const USER_GROUP_MENU_CATALOG: MenuCatalogEntry[] = [
   { code: 7003, backendKeyName: 'WareDeliveryPermissionTypeDefinition', section: '7000 تحویل کالا', title: 'نوع مجوز' },
   { code: 7004, backendKeyName: 'WareDeliveryTransitions', section: '7000 تحویل کالا', title: 'ورود و خروج کالا' },
   { code: 7005, backendKeyName: 'WareDeliveryRequestManagement', section: '7000 تحویل کالا', title: 'درخواست ورود و خروج کالا' },
+  { code: 8000, backendKeyName: 'FinAccountingEntityManagement', section: '8000 حسابداری', title: 'مجموعه‌های حسابداری و سال‌های مالی' },
+  { code: 8001, backendKeyName: 'FinChartOfAccountManagement', section: '8000 حسابداری', title: 'سرفصل حساب‌ها، صندوق‌ها و دسته‌های هزینه' },
+  { code: 8002, backendKeyName: 'FinTreasuryManagement', section: '8000 حسابداری', title: 'حساب‌های نقد و بانک و چک‌ها' },
+  { code: 8003, backendKeyName: 'FinPartyManagement', section: '8000 حسابداری', title: 'طرف‌حساب‌ها' },
+  { code: 8004, backendKeyName: 'FinJournalManagement', section: '8000 حسابداری', title: 'اسناد حسابداری' },
+  { code: 8005, backendKeyName: 'FinPostingRuleManagement', section: '8000 حسابداری', title: 'الگوهای سند' },
+  { code: 8006, backendKeyName: 'FinExpenseManagement', section: '8000 حسابداری', title: 'فاکتورهای هزینه و پرداخت به طرف‌حساب‌ها' },
+  { code: 8007, backendKeyName: 'FinChargeManagement', section: '8000 حسابداری', title: 'برنامه شارژ، صدور شارژ و دیرکرد' },
+  { code: 8008, backendKeyName: 'FinReceiptManagement', section: '8000 حسابداری', title: 'رسید دریافت، واریزی نامشخص، بخشودگی و ودیعه ساختمان' },
+  { code: 8009, backendKeyName: 'FinPayrollManagement', section: '8000 حسابداری', title: 'حقوق ماهانه (مود پیشرفته)' },
+  { code: 8010, backendKeyName: 'FinYearEndManagement', section: '8000 حسابداری', title: 'مانده اول دوره و بستن و بازکردن سال' },
+  { code: 8011, backendKeyName: 'FinReport', section: '8000 حسابداری', title: 'گزارش‌های مالی' },
+  { code: 8012, backendKeyName: 'FinMyStatement', section: '8000 حسابداری', title: 'صورت‌حساب ساکن یا مالک از واحدها و فضاهای خودش' },
   { code: 10000, backendKeyName: 'LogReport', section: '10_000 گزارشات', title: 'گزارش رویدادها' },
   { code: 10001, backendKeyName: 'PersonAttendanceReport', section: '10_000 گزارشات', title: 'گزارش تردد پرسنل' },
   { code: 10002, backendKeyName: 'PersonLocationReport', section: '10_000 گزارشات', title: 'گزارش نواحی مجاز پرسنل' },

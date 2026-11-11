@@ -1,5 +1,35 @@
 # Guardian frontend — remaining work
 
+## UserGroup menu-permission catalog: added the missing 13 `fin` codes — done and verified end-to-end
+
+Prompted by the user asking to check whether menu access control existed and whether it was actually scoped correctly. Investigation (via a research fork, confirmed directly against backend source) found a real, non-cosmetic gap: `src/data/userGroupMenus.ts` (the catalog `UserGroupFormDialog.tsx` uses to let an admin grant/revoke per-menu access on a `UserGroup`) mirrors the backend's 126 Core menu codes but was **missing all 13 of the backend's `fin` module codes** (8000–8012, the `#region 8000 حسابداری` block in `Guardian.Api.Assets.Auth.UserMenuCodeConstants`).
+
+**Confirmed this is a hard security boundary, not a cosmetic gap**: traced the full chain — `AuthController` turns every granted `core.UserGroupMenu` row into a `K_{menuCode}_{accessType}` role claim at login (`RoleNames.GetName`), and every single `fin` controller's `[AuthorizeRoles(...)]` checks exactly those role names (e.g. `FinChargeManagementRead` literally is `"K_8007_1"`). For any non-admin `UserGroup`, `fin` API access is controlled **exclusively** by these 13 codes — there's no other path. (This is also why the gap never surfaced during all our testing this session: the `Admin` test user holds the blanket `AdminSystem` claim that bypasses per-menu checks entirely.)
+
+Before this fix, the only way to grant a non-admin group *any* fin access at all was the all-or-nothing `FinSetup.MenuBundleApply` bundle shortcut — there was no way to fine-tune individual fin permissions (e.g. "can view Receipts but not post PartyPayments") through the UserGroup edit screen, because the screen's own catalog didn't know these codes existed.
+
+**Fix**: added all 13 codes (`FinAccountingEntityManagement` through `FinMyStatement`) to `USER_GROUP_MENU_CATALOG`, titled directly from the backend's own Persian doc-comments (no Angular-legacy equivalent exists for these, unlike the Core codes), grouped under a new "8000 حسابداری" section matching the backend's own region name.
+
+**Verified in the browser (Edge via Playwright)**: the new section renders correctly in `UserGroupFormDialog`'s menu-permissions list (13 new rows, each with the usual None/OnlyView/ViewAndEdit dropdown). Created a test group, granted `FinChargeManagement` → `ViewAndEdit`, saved — confirmed via SQL (`core.UserGroupMenu`: `MenuCode=8007, AccessType=2`) that it round-trips correctly to the real table.
+
+### Not yet done (scoped out, by the user's explicit choice)
+- **Frontend enforcement**: `SideMenu.tsx` still shows every menu item to every logged-in user unconditionally, and `ProtectedRoute.tsx` only checks authentication — neither filters based on the user's actual granted menu codes. A user in a restricted group would still see (and could still navigate to) menu items that the backend will correctly 403 on click. Closing this requires decoding the JWT's role claims client-side (nothing currently does this — `AuthUser`/`AuthContext` only store `userId`/`entityTitle`) and mapping every route to its required `menuCode` + minimum `AccessType`. Deferred — the user asked for the catalog fix only, not full nav/route gating, for now.
+- Left a test `UserGroup` ("Fin Menu Test Group") in the dev DB from verification — not cleaned up, ask if you want it removed.
+
+## SideMenu: grouped into collapsible submenus — done and verified end-to-end
+
+The sidebar had grown to 28 flat items (the `fin` module alone added 11). Reorganized `src/components/SideMenu.tsx` into 5 collapsible groups using the UI kit's existing (previously unused) `Menu.MenuCollapse` primitive — no new component needed:
+- **Personnel**: Persons, Groups, Fields of study, Positions
+- **Property**: Buildings, Building spaces, Contracts, Contractors
+- **Hardware & access**: Devices, Cameras, Cabinet rooms, Elevators, Locations
+- **Financial**: all 11 `fin` items
+- **Access management**: User groups, Users
+- Dashboard/Reports/Settings stay top-level, ungrouped.
+
+The active route's group auto-expands and highlights on load/reload (`Menu`'s `defaultExpandedKeys`/`defaultCollapseActiveKeys`, computed from the current path), and more than one group can be open at once.
+
+**One real layout bug found and fixed along the way**: `MenuItem` (the UI kit's leaf-row primitive) renders at a fixed height with no text wrapping — any label long enough to need two lines gets its icon and text clipped/overflowing instead of wrapping, which only became visible now that nested indentation leaves less horizontal room. Rather than touch the shared primitive (used everywhere), shortened the handful of labels that were long enough to trigger it, in all three locales (e.g. English "Service billing types"→"Billing types", Persian "صورت‌حساب‌های خدمات"→"صدور خدمات", Arabic "مجموعات المستخدمين"→"المجموعات"). Verified clean (icon + single-line label on every item) in English, Persian (RTL), and Arabic.
+
 ## fin: PartyPayment (pay a vendor/payee) — done and verified end-to-end against a live backend
 
 The mirror image of `Receipt`: money going out to a payee `Party` instead of coming in from a resident. Also the piece that finally unlocks the `Issued`-direction `Cheque`/`ChequeFate` lifecycle, stuck at `Pending` forever since every fate kind needs a posted source document and none existed for Issued cheques before this. Built all three `PaymentMethod`s (`CashAccount`/`IssuedCheque`/`EndorsedCheque`); `Settlements`/`AutoSettle` left always empty/false this pass (confirmed directly in `ExpenseComponent.cs` that this is explicitly legal — a pure advance payment, not an error — so `ExpenseInvoice` is not a blocker, just a deferred piece for when it lands).
