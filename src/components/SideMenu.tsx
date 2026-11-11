@@ -26,6 +26,7 @@ import {
   HiOutlineReceiptTax,
   HiOutlineClock,
   HiOutlineCreditCard,
+  HiOutlineCash,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -48,6 +49,7 @@ const MENU_ITEMS = [
   { key: 'cashAccounts', icon: HiOutlineCreditCard, path: '/fin/cash-accounts' },
   { key: 'serviceBillings', icon: HiOutlineReceiptTax, path: '/fin/service-billings' },
   { key: 'lateFeeRuns', icon: HiOutlineClock, path: '/fin/late-fee-runs' },
+  { key: 'receipts', icon: HiOutlineCash, path: '/fin/receipts' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },

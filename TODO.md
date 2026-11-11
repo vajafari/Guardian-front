@@ -1,5 +1,27 @@
 # Guardian frontend — remaining work
 
+## fin: Receipt (Collection — resident pays, settles receivables) — done and verified end-to-end against a live backend
+
+The piece that actually closes the loop: `ChargeIssue`/`ServiceBilling`/`LateFeeRun` all generate open `Receivable`s, but nothing could settle them until now. Built `ReceiptKind = Collection` with Cash/Card/Transfer payment methods only this pass — `ReceivedCheque` is deferred (the backend can create the `Cheque` row inline with no dependency, but it'd sit at `Status=Pending` forever with no `ChequeFate` UI to ever move it yet); `DepositIdentification`/`OtherIncome` kinds deferred too (need `UnidentifiedDeposit`/an `Account` picker, neither built).
+
+**No backend bugs found** — all three AutoMapper maps (`ReceiptSaveModel→DtoReceipt`, `ReceivedChequeSaveModel→DtoCheque`, `ReceivableSettlementSaveModel→DtoReceivableSettlement`) already existed.
+
+**Two real frontend bugs found and fixed during this pass** (both in the new `searchOpenReceivablesByParty` helper, not backend):
+1. The manual-allocation receivables picker didn't exclude `Overpayment`-kind credit rows (negative `OpenAmount`) — a user could pick that row and the browser's own `min=0`/`max={negative}` constraint on the amount input would silently block form submission with no visible error. Fixed by filtering to `receivableKinds: [Charge, Rent, LateFee, ServiceBilling, Opening]` (excluding `Overpayment`), matching the backend's own `ReceivableBuildAllocationsAsync` scope.
+2. `ReceivableFilter.OnlyOpen` does **not** implicitly filter by `Status` (confirmed by reading `ReceivableRepository.cs`'s own WHERE-clause builder) — a cancelled receivable with no settlements still shows a nonzero computed `OpenAmount` and was incorrectly appearing as allocatable. Fixed by also passing `statuses: [Active]` explicitly, matching how the backend's own internal allocation engine combines these two filters.
+
+**Verified in the browser (Edge via Playwright), reusing a test `Party` with real open receivables from earlier `ChargeIssue`/`ServiceBilling`/`LateFeeRun` passes:**
+- Auto-allocate a receipt for less than the total open amount — confirmed via SQL (`fin.Receipt`, `fin.ReceivableSettlement`, correct `fin.Receivable` open-amount reduction, new `fin.JournalEntry`).
+- A second receipt for more than the remaining open amount — confirmed the overflow correctly created a negative `Overpayment`-kind `Receivable`, falling back to the last allocated receivable's own unit (no `OverpaymentBuildingUnitId` needed in the common case).
+- Confirmed the documented overpayment-carry-forward behavior live: a subsequent `ServiceBilling` for that same party automatically netted against the sitting credit, with no frontend logic needed.
+- Manual allocation (uncheck auto-allocate, pick a specific open receivable, enter an amount) — confirmed the exact `ReceivableSettlement` row matched what was picked, after the two bug fixes above.
+- Opened the detail page — all fields and the allocations table rendered correctly (`ReceivableTitle` is already human-readable server-side, no client-side title-resolution join needed this time, unlike `ChargeDiscount`).
+- Cancelled a receipt with a reason — confirmed via SQL (`Status`→Cancelled, its own settlement reversed, the receivable's open amount restored, a reversing `fin.JournalEntry` appeared).
+
+### Not yet done
+- `ReceivedCheque` payment method, `DepositIdentification`/`OtherIncome` receipt kinds — deferred, see above.
+- Didn't exercise the `overpayment-target-required` (37904) error path — never actually triggered since the fallback (last allocated receivable's own unit/space) always resolved in testing.
+
 ## fin: CashAccount editing — done and verified end-to-end against a live backend
 
 Last item from the original "what's left in Phase 2" list: `QuickSetup` creates one `CashAccount` (type=Bank) per entity, but there was no screen to edit it, add more (petty cash/cash box), or delete one. Simple standalone master-data CRUD, built as a single list+dialog page (`CashAccountsPage.tsx`) mirroring `ServiceBillingTypesPage.tsx`'s exact shape.

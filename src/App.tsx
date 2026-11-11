@@ -27,6 +27,8 @@ import { ServiceBillingDetailPage } from './pages/ServiceBillingDetailPage';
 import { LateFeeRunsPage } from './pages/LateFeeRunsPage';
 import { LateFeeRunDetailPage } from './pages/LateFeeRunDetailPage';
 import { CashAccountsPage } from './pages/CashAccountsPage';
+import { ReceiptsPage } from './pages/ReceiptsPage';
+import { ReceiptDetailPage } from './pages/ReceiptDetailPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -88,6 +90,8 @@ function App() {
               <Route path="/fin/late-fee-runs" element={<LateFeeRunsPage />} />
               <Route path="/fin/late-fee-runs/:id" element={<LateFeeRunDetailPage />} />
               <Route path="/fin/cash-accounts" element={<CashAccountsPage />} />
+              <Route path="/fin/receipts" element={<ReceiptsPage />} />
+              <Route path="/fin/receipts/:id" element={<ReceiptDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

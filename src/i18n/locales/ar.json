@@ -79,6 +79,7 @@
     "cashAccounts": "حسابات النقد والبنك",
     "serviceBillings": "فواتير الخدمات",
     "lateFeeRuns": "عمليات الغرامة",
+    "receipts": "إيصالات القبض",
     "elevators": "المصاعد",
     "contractors": "المقاولون",
     "locations": "المناطق",
@@ -1348,6 +1349,71 @@
       "unitOrSpace": "الوحدة / المساحة",
       "party": "الطرف",
       "feePeriod": "فترة الغرامة"
+    }
+  },
+  "receipts": {
+    "title": "إيصالات القبض",
+    "addButton": "إيصال قبض جديد",
+    "addTitle": "إضافة إيصال قبض",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على إيصالات",
+    "loadError": "تعذر تحميل الإيصالات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "party": "الطرف",
+      "cashAccount": "حساب النقد والبنك",
+      "paymentMethod": "طريقة الدفع",
+      "amount": "المبلغ",
+      "documentDate": "تاريخ المستند",
+      "description": "الوصف",
+      "documentNumber": "رقم المستند",
+      "allocatedAmount": "المخصص",
+      "overpaymentAmount": "الدفع الزائد",
+      "status": "الحالة",
+      "cancelReason": "سبب الإلغاء"
+    },
+    "paymentMethods": {
+      "1": "نقدًا",
+      "2": "بطاقة",
+      "3": "تحويل"
+    },
+    "statuses": {
+      "1": "مسودة",
+      "2": "مرحّل",
+      "3": "ملغى"
+    },
+    "allocation": {
+      "autoAllocate": "تخصيص تلقائي للمستحقات الأقدم أولاً",
+      "noOpenReceivables": "لا توجد مستحقات مفتوحة لهذا الطرف",
+      "receivableTitle": "الرسم",
+      "dueDate": "تاريخ الاستحقاق",
+      "openAmount": "المبلغ المستحق",
+      "allocateAmount": "تخصيص",
+      "allocatedTotal": "المخصص حتى الآن: {{total}}"
+    },
+    "cancel": {
+      "title": "إلغاء إيصال القبض",
+      "reason": "سبب الإلغاء",
+      "reversalDate": "تاريخ القيد العكسي",
+      "confirm": "إلغاء الإيصال"
+    },
+    "errors": {
+      "missing-fields": "تحقق من الحقول المطلوبة",
+      "allocation-invalid": "التخصيص غير صالح — تحقق من أنه لا يتجاوز المبلغ أو الرصيد المفتوح لأي مستحق",
+      "overpayment-target-required": "هذا الدفع يتجاوز المستحقات المفتوحة — اختر وحدة أو مساحة لرصيد الدفع الزائد",
+      "cancel-reason-required": "سبب الإلغاء مطلوب",
+      "credit-in-use": "تم استخدام رصيد الدفع الزائد لهذا الإيصال في مكان آخر ولا يمكن إلغاؤه",
+      "not-found": "الإيصال غير موجود أو لا تملك صلاحية الوصول إليه",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل هذا الإيصال. حاول مرة أخرى.",
+      "notFound": "الإيصال غير موجود",
+      "allocations": "التخصيصات"
     }
   },
   "deviceDoors": {

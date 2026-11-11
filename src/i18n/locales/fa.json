@@ -79,6 +79,7 @@
     "cashAccounts": "حساب‌های نقد و بانک",
     "serviceBillings": "صورت‌حساب‌های خدمات",
     "lateFeeRuns": "اجراهای دیرکرد",
+    "receipts": "رسیدهای دریافت",
     "elevators": "آسانسورها",
     "contractors": "پیمانکاران",
     "locations": "مناطق",
@@ -1348,6 +1349,71 @@
       "unitOrSpace": "واحد / فضا",
       "party": "طرف حساب",
       "feePeriod": "بازه دیرکرد"
+    }
+  },
+  "receipts": {
+    "title": "رسیدهای دریافت",
+    "addButton": "رسید دریافت جدید",
+    "addTitle": "افزودن رسید دریافت",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "رسیدی یافت نشد",
+    "loadError": "بارگذاری رسیدها ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "fields": {
+      "accountingEntity": "مجموعه حسابداری",
+      "party": "طرف حساب",
+      "cashAccount": "حساب نقد و بانک",
+      "paymentMethod": "روش دریافت",
+      "amount": "مبلغ",
+      "documentDate": "تاریخ سند",
+      "description": "توضیحات",
+      "documentNumber": "شماره سند",
+      "allocatedAmount": "تخصیص‌یافته",
+      "overpaymentAmount": "اضافه پرداخت",
+      "status": "وضعیت",
+      "cancelReason": "دلیل ابطال"
+    },
+    "paymentMethods": {
+      "1": "نقد",
+      "2": "کارت",
+      "3": "انتقال"
+    },
+    "statuses": {
+      "1": "پیش‌نویس",
+      "2": "ثبت قطعی",
+      "3": "ابطال شده"
+    },
+    "allocation": {
+      "autoAllocate": "تخصیص خودکار به قدیمی‌ترین مطالبات باز",
+      "noOpenReceivables": "مطالبه بازی برای این طرف حساب وجود ندارد",
+      "receivableTitle": "شارژ",
+      "dueDate": "سررسید",
+      "openAmount": "مانده باز",
+      "allocateAmount": "تخصیص",
+      "allocatedTotal": "تخصیص‌یافته تا الان: {{total}}"
+    },
+    "cancel": {
+      "title": "ابطال رسید دریافت",
+      "reason": "دلیل ابطال",
+      "reversalDate": "تاریخ سند معکوس",
+      "confirm": "ابطال رسید"
+    },
+    "errors": {
+      "missing-fields": "فیلدهای الزامی را بررسی کنید",
+      "allocation-invalid": "تخصیص نامعتبر است — بررسی کنید از مبلغ کل یا مانده باز هر مطالبه بیشتر نشده باشد",
+      "overpayment-target-required": "این پرداخت از مطالبات باز بیشتر است — یک واحد یا فضا برای اعتبار اضافه پرداخت انتخاب کنید",
+      "cancel-reason-required": "دلیل ابطال الزامی است",
+      "credit-in-use": "اعتبار اضافه‌پرداخت این رسید قبلاً جای دیگری استفاده شده و قابل ابطال نیست",
+      "not-found": "رسید پیدا نشد یا دسترسی ندارید",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این رسید ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "رسید پیدا نشد",
+      "allocations": "تخصیص‌ها"
     }
   },
   "deviceDoors": {

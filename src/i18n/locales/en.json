@@ -79,6 +79,7 @@
     "cashAccounts": "Cash & bank accounts",
     "serviceBillings": "Service billings",
     "lateFeeRuns": "Late fee runs",
+    "receipts": "Receipts",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -1348,6 +1349,71 @@
       "unitOrSpace": "Unit / space",
       "party": "Party",
       "feePeriod": "Fee period"
+    }
+  },
+  "receipts": {
+    "title": "Receipts",
+    "addButton": "New receipt",
+    "addTitle": "Add receipt",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No receipts found",
+    "loadError": "Couldn't load receipts. Try again.",
+    "retry": "Retry",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "party": "Party",
+      "cashAccount": "Cash account",
+      "paymentMethod": "Payment method",
+      "amount": "Amount",
+      "documentDate": "Document date",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "allocatedAmount": "Allocated",
+      "overpaymentAmount": "Overpayment",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "paymentMethods": {
+      "1": "Cash",
+      "2": "Card",
+      "3": "Transfer"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "allocation": {
+      "autoAllocate": "Auto-allocate to oldest open charges first",
+      "noOpenReceivables": "No open receivables for this party",
+      "receivableTitle": "Charge",
+      "dueDate": "Due date",
+      "openAmount": "Open amount",
+      "allocateAmount": "Allocate",
+      "allocatedTotal": "Allocated so far: {{total}}"
+    },
+    "cancel": {
+      "title": "Cancel receipt",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel receipt"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "allocation-invalid": "The allocation isn't valid — check it doesn't exceed the amount or any receivable's open balance",
+      "overpayment-target-required": "This payment exceeds the open charges — pick a unit or space for the overpayment credit",
+      "cancel-reason-required": "A cancellation reason is required",
+      "credit-in-use": "This receipt's overpayment credit has already been used elsewhere and can't be cancelled",
+      "not-found": "Receipt not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this receipt. Try again.",
+      "notFound": "Receipt not found",
+      "allocations": "Allocations"
     }
   },
   "deviceDoors": {

@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { httpClient } from './httpClient';
 import { CASH_ACCOUNT_ENDPOINTS } from './config';
 import { extractErrorCodes } from './errorCodes';
-import { CashAccountError, type CashAccountPayload, type CashAccountType } from '../types/cashAccount';
+import { CashAccountError, type CashAccount, type CashAccountPayload, type CashAccountType } from '../types/cashAccount';
 
 const FIN_STATUS_CASH_ACCOUNT_NOT_FOUND = 37300;
 const FIN_STATUS_CASH_ACCOUNT_TITLE_IS_NOT_VALID = 37301;
@@ -63,6 +63,13 @@ function mapCashAccountError(err: unknown): CashAccountError {
     return new CashAccountError('not-found');
   }
   return new CashAccountError('unknown');
+}
+
+export async function searchCashAccountsByEntity(accountingEntityId: string): Promise<CashAccount[]> {
+  const { data } = await httpClient.post<CashAccount[]>(CASH_ACCOUNT_ENDPOINTS.search, {
+    filter: { accountingEntityIds: [accountingEntityId], isActive: true },
+  });
+  return data;
 }
 
 export async function saveCashAccount(payload: CashAccountPayload, isEdit: boolean): Promise<void> {

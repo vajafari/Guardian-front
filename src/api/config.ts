@@ -260,7 +260,19 @@ export const LATE_FEE_RUN_ENDPOINTS = {
 
 export const CASH_ACCOUNT_ENDPOINTS = {
   gridView: '/api/fin/CashAccount/GridView',
+  search: '/api/fin/CashAccount/Search',
   add: '/api/fin/CashAccount/Add',
   update: '/api/fin/CashAccount/Update',
   delete: (id: string) => `/api/fin/CashAccount/Delete/${id}`,
+} as const;
+
+export const RECEIPT_ENDPOINTS = {
+  gridView: '/api/fin/Receipt/GridView',
+  getById: (id: string) => `/api/fin/Receipt/GetById/${id}`,
+  add: '/api/fin/Receipt/Add',
+  cancel: '/api/fin/Receipt/Cancel',
+} as const;
+
+export const RECEIVABLE_ENDPOINTS = {
+  searchFullInfo: '/api/fin/Receivable/SearchFullInfo',
 } as const;
