@@ -249,3 +249,18 @@ export const PARTY_ENDPOINTS = {
   searchFullInfo: '/api/fin/Party/SearchFullInfo',
   add: '/api/fin/Party/Add',
 } as const;
+
+export const LATE_FEE_RUN_ENDPOINTS = {
+  gridView: '/api/fin/LateFeeRun/GridView',
+  getById: (id: string) => `/api/fin/LateFeeRun/GetById/${id}`,
+  preview: '/api/fin/LateFeeRun/Preview',
+  add: '/api/fin/LateFeeRun/Add',
+  cancel: '/api/fin/LateFeeRun/Cancel',
+} as const;
+
+export const CASH_ACCOUNT_ENDPOINTS = {
+  gridView: '/api/fin/CashAccount/GridView',
+  add: '/api/fin/CashAccount/Add',
+  update: '/api/fin/CashAccount/Update',
+  delete: (id: string) => `/api/fin/CashAccount/Delete/${id}`,
+} as const;

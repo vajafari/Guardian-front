@@ -1,5 +1,40 @@
 # Guardian frontend — remaining work
 
+## fin: CashAccount editing — done and verified end-to-end against a live backend
+
+Last item from the original "what's left in Phase 2" list: `QuickSetup` creates one `CashAccount` (type=Bank) per entity, but there was no screen to edit it, add more (petty cash/cash box), or delete one. Simple standalone master-data CRUD, built as a single list+dialog page (`CashAccountsPage.tsx`) mirroring `ServiceBillingTypesPage.tsx`'s exact shape.
+
+**No backend bugs found** — `CashAccountSaveModel→DtoCashAccount` AutoMapper map already existed.
+
+**Verified in the browser (Edge via Playwright), reusing the `QuickSetup` test `AccountingEntity` and its one Bank `CashAccount`:**
+- Edited the existing Bank account's `Title` and `Sheba` — confirmed via SQL.
+- Added a new `PettyCash` account with a custodian via "link a person" mode (reusing the `PartyPickerField` built for `ServiceBilling`) — confirmed via SQL the correct `Party` was reused (same person already had one from earlier testing, no duplicate created).
+- Tried an invalid `Sheba` (wrong prefix/length) on a Bank account — correctly rejected (37303), "IBAN must start with IR followed by 24 digits" rendered correctly; confirmed via SQL no stray row was created.
+- Deleted the unused `PettyCash` account — confirmed via SQL.
+
+### Not yet done
+- Didn't exercise the `bank-fields-not-allowed` (37306) path — the UI design itself makes it unreachable (bank-only fields are hidden entirely when `CashAccountType != Bank`), so there was nothing to test.
+- Didn't exercise the `in-use`/can't-delete (37004) path — none of this session's test postings (`ChargeIssue`/`ServiceBilling`/`LateFeeRun`) actually reference a `CashAccount` directly (they post through `Fund`s, not `CashAccount`s; `CashAccountId` only appears on `Receipt`/`Payment` journal lines, which haven't been built yet) — same for the disabled-type-select-when-used behavior, not directly exercised.
+
+With this, every item from the original Phase 2 list (ChargePlan/ChargeComponent/ChargeCoefficient/ChargeDiscount editing, ChargeIssue, ServiceBilling, LateFeeRun, CashAccount editing) is done.
+
+## fin: LateFeeRun (standalone late-fee calculation) — done and verified end-to-end against a live backend
+
+Closes the last Phase-2 item: `ChargeIssue.Add` can run late fees inline via its `RunLateFee` checkbox, but there was no way to run late-fee calculation on its own, at any time. `LateFeeRun` is architecturally almost identical to `ChargeIssue` — scoped to one `AccountingEntity`, mandatory Preview-before-Add, `Cancel` via the same `FinFormCancelModel` shape — so `LateFeeRunFormDialog`/`LateFeeRunCancelDialog`/`LateFeeRunsPage`/`LateFeeRunDetailPage` directly mirror `ChargeIssue`'s own files, simplified (no FiscalYear/FiscalPeriod picker needed, since it isn't period-scoped).
+
+**No backend bugs found** — `LateFeeRunSaveModel→DtoLateFeeRun` AutoMapper map already existed. Confirmed (via direct controller read + a fork research pass) that this reuses the exact same `ChargeIssuingComponent` calculation logic as `ChargeIssue`'s inline `RunLateFee` — no divergence between the two paths to worry about.
+
+**Verified in the browser (Edge via Playwright), reusing the `QuickSetup` test `AccountingEntity`:**
+- Issued a fresh `ChargeIssue` for an earlier fiscal period (600,000, due 2025-04-04) to have a real overdue receivable to test against (the plan's `GraceDays`=5, `LateFeeRate`=2%/month).
+- Ran a `LateFeeRun` with `DocumentDate`=2025-05-01 — Preview showed "1 late fee(s) totaling 9,000"; confirmed via SQL the fee's `FeeFromDate`/`FeeToDate` (2025-04-10 → 2025-05-01) exactly matches end-of-grace-days through the calculation date.
+- **Idempotency**: ran a second `LateFeeRun` with `DocumentDate`=2025-06-01 against the same overdue receivable — confirmed via SQL it only charged the *incremental* period (`FeeFromDate`=2025-05-02, the day after the first run's `FeeToDate`, amount 12,000), never re-charging the already-covered days. Proves running this repeatedly is safe.
+- **Cancel-order constraint**: tried cancelling the older run while a newer one still existed — correctly rejected (37844), "Only the most recent late fee run for this accounting entity can be cancelled" rendered correctly. Cancelled in the correct order (newest first, then the older one) — both confirmed via SQL (`Status`→Cancelled, both fee `Receivable`s cancelled, reversing `JournalEntry` rows for each).
+- Opened the detail page — all fields and the late-fees lines table rendered correctly (unit title, party name, amount, fee period, open amount).
+
+### Not yet done
+- `ExcludedReceivableIds` (excluding specific overdue receivables from a run) — not exposed in this pass's UI, same scope-cut as other deferred fields elsewhere in `fin`.
+- Didn't exercise the `late-fee-off`/`nothing-to-calculate` (37841/37842) error paths directly — the generic error-code-mapping pipeline is already proven correct across many other codes in this and prior passes, so this was judged low-value to spend more time on.
+
 ## fin: ServiceBilling (ad-hoc service charges) — done and verified end-to-end against a live backend
 
 Closes the last big functional gap in `fin`: `ServiceBillingType` (the catalog) has had full CRUD for a while, but nothing could actually issue a charge against it. `ServiceBilling` is that missing piece — a single ad-hoc charge against one `Party` for one `BuildingUnit`/`BuildingSpace`, posted immediately (no Preview step, unlike `ChargeIssue`) through the same generic posting engine. Added `ServiceBillingsPage` (GridView list + "New service billing"), `ServiceBillingFormDialog`, `ServiceBillingDetailPage`, and `ServiceBillingCancelDialog` (same `FinFormCancelModel` shape as `ChargeIssue`'s, but narrower — blocked once a real Receipt has settled it, not just its own auto-applied overpayment credit).

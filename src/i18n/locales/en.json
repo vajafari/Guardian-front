@@ -76,7 +76,9 @@
     "chargeIssues": "Charge issues",
     "chargePlans": "Charge plans",
     "serviceBillingTypes": "Service billing types",
+    "cashAccounts": "Cash & bank accounts",
     "serviceBillings": "Service billings",
+    "lateFeeRuns": "Late fee runs",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -1166,6 +1168,48 @@
       "unknown": "Something went wrong"
     }
   },
+  "cashAccounts": {
+    "title": "Cash & bank accounts",
+    "addButton": "Add cash account",
+    "addTitle": "Add cash account",
+    "editTitle": "Edit cash account",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No cash accounts found",
+    "deleteConfirm": "Delete \"{{title}}\"?",
+    "changeCustodian": "Change",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "cashAccountType": "Type",
+      "title": "Title",
+      "bankName": "Bank name",
+      "branchName": "Branch name",
+      "accountNumber": "Account #",
+      "accountNumberOrCustodian": "Account # / custodian",
+      "sheba": "IBAN (Sheba)",
+      "cardNumber": "Card #",
+      "custodian": "Custodian",
+      "isActive": "Active",
+      "description": "Description"
+    },
+    "types": {
+      "1": "Bank account",
+      "2": "Cash box",
+      "3": "Petty cash"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "sheba-invalid": "IBAN must start with IR followed by 24 digits",
+      "card-number-invalid": "Card number must be exactly 16 digits",
+      "custodian-not-found": "The selected custodian party wasn't found",
+      "bank-fields-not-allowed": "Bank fields (bank name, account #, IBAN, card #) are only allowed for bank accounts",
+      "type-can-not-be-changed": "This account's type can't be changed — it's already used in a journal entry",
+      "in-use": "This account is already used in a journal entry or cheque and can't be deleted",
+      "not-found": "Cash account not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
   "serviceBillings": {
     "title": "Service billings",
     "addButton": "New service billing",
@@ -1243,6 +1287,68 @@
     },
     "existingPartyReused": "This person already has a party — reusing it.",
     "partyCreated": "A new party was created for this person."
+  },
+  "lateFeeRuns": {
+    "title": "Late fee runs",
+    "addButton": "New late fee run",
+    "addTitle": "Run late fee calculation",
+    "save": "Save",
+    "saving": "Running...",
+    "empty": "No late fee runs found",
+    "loadError": "Couldn't load late fee runs. Try again.",
+    "retry": "Retry",
+    "previewButton": "Preview",
+    "previewing": "Calculating...",
+    "runButton": "Run",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "documentDate": "Calculate as of",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "feeCount": "Fee count",
+      "totalAmount": "Total amount",
+      "amount": "Amount",
+      "openAmount": "Open amount",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "preview": {
+      "title": "Preview",
+      "summary": "{{count}} late fee(s) totaling {{total}}"
+    },
+    "cancel": {
+      "title": "Cancel late fee run",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel run"
+    },
+    "errors": {
+      "missing-fields": "Pick an accounting entity and a calculation date first",
+      "accounting-entity-not-found": "The selected accounting entity wasn't found",
+      "charge-plan-not-found": "This accounting entity has no charge plan yet",
+      "late-fee-off": "Late fees are turned off for this accounting entity's charge plan",
+      "nothing-to-calculate": "Nothing to calculate — there are no overdue receivables past the grace period",
+      "cancel-reason-required": "A cancellation reason is required",
+      "not-latest-run": "Only the most recent late fee run for this accounting entity can be cancelled",
+      "already-settled": "Some fees in this run have already been settled by a receipt — cancel those first",
+      "not-found": "Late fee run not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this late fee run. Try again.",
+      "notFound": "Late fee run not found",
+      "fees": "Late fees",
+      "unitOrSpace": "Unit / space",
+      "party": "Party",
+      "feePeriod": "Fee period"
+    }
   },
   "deviceDoors": {
     "title": "Doors",
