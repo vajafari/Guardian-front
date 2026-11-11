@@ -22,6 +22,8 @@ import { ChargeIssueDetailPage } from './pages/ChargeIssueDetailPage';
 import { ChargePlansPage } from './pages/ChargePlansPage';
 import { ChargePlanDetailPage } from './pages/ChargePlanDetailPage';
 import { ServiceBillingTypesPage } from './pages/ServiceBillingTypesPage';
+import { ServiceBillingsPage } from './pages/ServiceBillingsPage';
+import { ServiceBillingDetailPage } from './pages/ServiceBillingDetailPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -78,6 +80,8 @@ function App() {
               <Route path="/fin/charge-plans" element={<ChargePlansPage />} />
               <Route path="/fin/charge-plans/:id" element={<ChargePlanDetailPage />} />
               <Route path="/fin/service-billing-types" element={<ServiceBillingTypesPage />} />
+              <Route path="/fin/service-billings" element={<ServiceBillingsPage />} />
+              <Route path="/fin/service-billings/:id" element={<ServiceBillingDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

@@ -76,6 +76,7 @@
     "chargeIssues": "صدور شارژ",
     "chargePlans": "برنامه‌های شارژ",
     "serviceBillingTypes": "انواع صورت‌حساب خدمات",
+    "serviceBillings": "صورت‌حساب‌های خدمات",
     "elevators": "آسانسورها",
     "contractors": "پیمانکاران",
     "locations": "مناطق",
@@ -1164,6 +1165,84 @@
       "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
       "unknown": "خطایی رخ داد"
     }
+  },
+  "serviceBillings": {
+    "title": "صورت‌حساب‌های خدمات",
+    "addButton": "صورت‌حساب خدمات جدید",
+    "addTitle": "افزودن صورت‌حساب خدمات",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "صورت‌حسابی یافت نشد",
+    "loadError": "بارگذاری صورت‌حساب‌های خدمات ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "fields": {
+      "accountingEntity": "مجموعه حسابداری",
+      "serviceBillingType": "نوع صورت‌حساب خدمات",
+      "party": "طرف حساب",
+      "building": "ساختمان",
+      "targetType": "هدف",
+      "buildingUnit": "واحد",
+      "buildingSpace": "فضا",
+      "buildingUnitOrSpace": "واحد / فضا",
+      "title": "عنوان",
+      "amount": "مبلغ",
+      "documentDate": "تاریخ سند",
+      "dueDate": "سررسید",
+      "fund": "صندوق",
+      "costCategory": "دسته هزینه",
+      "description": "توضیحات",
+      "documentNumber": "شماره سند",
+      "openAmount": "مانده",
+      "status": "وضعیت",
+      "cancelReason": "دلیل ابطال"
+    },
+    "targetTypes": {
+      "unit": "واحد",
+      "space": "فضا"
+    },
+    "statuses": {
+      "1": "پیش‌نویس",
+      "2": "ثبت قطعی",
+      "3": "ابطال شده"
+    },
+    "cancel": {
+      "title": "ابطال صورت‌حساب خدمات",
+      "reason": "دلیل ابطال",
+      "reversalDate": "تاریخ سند معکوس",
+      "confirm": "ابطال"
+    },
+    "errors": {
+      "missing-fields": "فیلدهای الزامی را بررسی کنید",
+      "document-date-invalid": "تاریخ سند نامعتبر است، یا سررسید زودتر از تاریخ سند است",
+      "type-not-found": "نوع صورت‌حساب خدمات پیدا نشد",
+      "type-inactive": "این نوع صورت‌حساب خدمات فعال نیست",
+      "party-not-found": "ابتدا یک طرف حساب انتخاب کنید",
+      "party-inactive": "این طرف حساب فعال نیست",
+      "fund-not-found": "صندوق پیدا نشد",
+      "fund-inactive": "این صندوق فعال نیست",
+      "cost-category-not-found": "دسته هزینه پیدا نشد",
+      "cost-category-inactive": "این دسته هزینه فعال نیست",
+      "cost-category-not-leaf": "دسته هزینه باید یک دسته برگ باشد (بدون زیردسته)",
+      "cancel-reason-required": "دلیل ابطال الزامی است",
+      "already-settled": "این صورت‌حساب قبلاً با یک دریافت تسویه شده است — ابتدا آن را ابطال کنید",
+      "not-found": "صورت‌حساب پیدا نشد یا دسترسی ندارید",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این صورت‌حساب ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "صورت‌حساب پیدا نشد"
+    }
+  },
+  "party": {
+    "fieldLabel": "طرف حساب",
+    "modes": {
+      "existing": "طرف حساب موجود",
+      "person": "اتصال به یک شخص"
+    },
+    "existingPartyReused": "این شخص قبلاً طرف حساب دارد — همان استفاده می‌شود.",
+    "partyCreated": "یک طرف حساب جدید برای این شخص ایجاد شد."
   },
   "deviceDoors": {
     "title": "درب‌ها",

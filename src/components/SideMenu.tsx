@@ -23,6 +23,7 @@ import {
   HiOutlineCalculator,
   HiOutlineAdjustments,
   HiOutlineTicket,
+  HiOutlineReceiptTax,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -42,6 +43,7 @@ const MENU_ITEMS = [
   { key: 'chargeIssues', icon: HiOutlineCalculator, path: '/fin/charge-issues' },
   { key: 'chargePlans', icon: HiOutlineAdjustments, path: '/fin/charge-plans' },
   { key: 'serviceBillingTypes', icon: HiOutlineTicket, path: '/fin/service-billing-types' },
+  { key: 'serviceBillings', icon: HiOutlineReceiptTax, path: '/fin/service-billings' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },

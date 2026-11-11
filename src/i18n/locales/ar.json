@@ -76,6 +76,7 @@
     "chargeIssues": "إصدارات الرسوم",
     "chargePlans": "برامج الرسوم",
     "serviceBillingTypes": "أنواع فواتير الخدمات",
+    "serviceBillings": "فواتير الخدمات",
     "elevators": "المصاعد",
     "contractors": "المقاولون",
     "locations": "المناطق",
@@ -1164,6 +1165,84 @@
       "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
       "unknown": "حدث خطأ ما"
     }
+  },
+  "serviceBillings": {
+    "title": "فواتير الخدمات",
+    "addButton": "فاتورة خدمات جديدة",
+    "addTitle": "إضافة فاتورة خدمات",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على فواتير",
+    "loadError": "تعذر تحميل فواتير الخدمات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "serviceBillingType": "نوع فاتورة الخدمات",
+      "party": "الطرف",
+      "building": "المبنى",
+      "targetType": "الهدف",
+      "buildingUnit": "الوحدة",
+      "buildingSpace": "المساحة",
+      "buildingUnitOrSpace": "الوحدة / المساحة",
+      "title": "العنوان",
+      "amount": "المبلغ",
+      "documentDate": "تاريخ المستند",
+      "dueDate": "تاريخ الاستحقاق",
+      "fund": "الصندوق",
+      "costCategory": "فئة التكلفة",
+      "description": "الوصف",
+      "documentNumber": "رقم المستند",
+      "openAmount": "المبلغ المستحق",
+      "status": "الحالة",
+      "cancelReason": "سبب الإلغاء"
+    },
+    "targetTypes": {
+      "unit": "وحدة",
+      "space": "مساحة"
+    },
+    "statuses": {
+      "1": "مسودة",
+      "2": "مرحّل",
+      "3": "ملغى"
+    },
+    "cancel": {
+      "title": "إلغاء فاتورة الخدمات",
+      "reason": "سبب الإلغاء",
+      "reversalDate": "تاريخ القيد العكسي",
+      "confirm": "إلغاء"
+    },
+    "errors": {
+      "missing-fields": "تحقق من الحقول المطلوبة",
+      "document-date-invalid": "تاريخ المستند غير صالح، أو تاريخ الاستحقاق أقدم من تاريخ المستند",
+      "type-not-found": "نوع فاتورة الخدمات غير موجود",
+      "type-inactive": "هذا النوع غير نشط",
+      "party-not-found": "اختر طرفًا أولاً",
+      "party-inactive": "هذا الطرف غير نشط",
+      "fund-not-found": "الصندوق غير موجود",
+      "fund-inactive": "هذا الصندوق غير نشط",
+      "cost-category-not-found": "فئة التكلفة غير موجودة",
+      "cost-category-inactive": "فئة التكلفة هذه غير نشطة",
+      "cost-category-not-leaf": "يجب أن تكون فئة التكلفة فئة ورقية (بدون فئات فرعية)",
+      "cancel-reason-required": "سبب الإلغاء مطلوب",
+      "already-settled": "تمت تسوية هذه الفاتورة بإيصال — ألغ ذلك أولاً",
+      "not-found": "الفاتورة غير موجودة أو لا تملك صلاحية الوصول إليها",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل هذه الفاتورة. حاول مرة أخرى.",
+      "notFound": "الفاتورة غير موجودة"
+    }
+  },
+  "party": {
+    "fieldLabel": "الطرف",
+    "modes": {
+      "existing": "طرف موجود",
+      "person": "ربط بشخص"
+    },
+    "existingPartyReused": "هذا الشخص لديه طرف بالفعل — سيتم استخدامه.",
+    "partyCreated": "تم إنشاء طرف جديد لهذا الشخص."
   },
   "deviceDoors": {
     "title": "الأبواب",

@@ -224,6 +224,7 @@ export const CHARGE_DISCOUNT_ENDPOINTS = {
 
 export const SERVICE_BILLING_TYPE_ENDPOINTS = {
   gridView: '/api/fin/ServiceBillingType/GridView',
+  search: '/api/fin/ServiceBillingType/Search',
   add: '/api/fin/ServiceBillingType/Add',
   update: '/api/fin/ServiceBillingType/Update',
   delete: (id: string) => `/api/fin/ServiceBillingType/Delete/${id}`,
@@ -235,4 +236,16 @@ export const CHARGE_ISSUE_ENDPOINTS = {
   preview: '/api/fin/ChargeIssue/Preview',
   add: '/api/fin/ChargeIssue/Add',
   cancel: '/api/fin/ChargeIssue/Cancel',
+} as const;
+
+export const SERVICE_BILLING_ENDPOINTS = {
+  gridView: '/api/fin/ServiceBilling/GridView',
+  getById: (id: string) => `/api/fin/ServiceBilling/GetById/${id}`,
+  add: '/api/fin/ServiceBilling/Add',
+  cancel: '/api/fin/ServiceBilling/Cancel',
+} as const;
+
+export const PARTY_ENDPOINTS = {
+  searchFullInfo: '/api/fin/Party/SearchFullInfo',
+  add: '/api/fin/Party/Add',
 } as const;

@@ -76,6 +76,7 @@
     "chargeIssues": "Charge issues",
     "chargePlans": "Charge plans",
     "serviceBillingTypes": "Service billing types",
+    "serviceBillings": "Service billings",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -1164,6 +1165,84 @@
       "network-error": "Couldn't reach the server. Check your connection and try again",
       "unknown": "Something went wrong"
     }
+  },
+  "serviceBillings": {
+    "title": "Service billings",
+    "addButton": "New service billing",
+    "addTitle": "Add service billing",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No service billings found",
+    "loadError": "Couldn't load service billings. Try again.",
+    "retry": "Retry",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "serviceBillingType": "Service billing type",
+      "party": "Party",
+      "building": "Building",
+      "targetType": "Target",
+      "buildingUnit": "Unit",
+      "buildingSpace": "Space",
+      "buildingUnitOrSpace": "Unit / space",
+      "title": "Title",
+      "amount": "Amount",
+      "documentDate": "Document date",
+      "dueDate": "Due date",
+      "fund": "Fund",
+      "costCategory": "Cost category",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "openAmount": "Open amount",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "targetTypes": {
+      "unit": "Unit",
+      "space": "Space"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "cancel": {
+      "title": "Cancel service billing",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "document-date-invalid": "Document date is invalid, or the due date is earlier than the document date",
+      "type-not-found": "Service billing type not found",
+      "type-inactive": "This service billing type is not active",
+      "party-not-found": "Pick a party first",
+      "party-inactive": "This party is not active",
+      "fund-not-found": "Fund not found",
+      "fund-inactive": "This fund is not active",
+      "cost-category-not-found": "Cost category not found",
+      "cost-category-inactive": "This cost category is not active",
+      "cost-category-not-leaf": "Cost category must be a leaf category (no sub-categories)",
+      "cancel-reason-required": "A cancellation reason is required",
+      "already-settled": "This service billing has already been settled by a receipt — cancel that first",
+      "not-found": "Service billing not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this service billing. Try again.",
+      "notFound": "Service billing not found"
+    }
+  },
+  "party": {
+    "fieldLabel": "Party",
+    "modes": {
+      "existing": "Existing party",
+      "person": "Link a person"
+    },
+    "existingPartyReused": "This person already has a party — reusing it.",
+    "partyCreated": "A new party was created for this person."
   },
   "deviceDoors": {
     "title": "Doors",

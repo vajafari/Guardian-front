@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { httpClient } from './httpClient';
 import { SERVICE_BILLING_TYPE_ENDPOINTS } from './config';
 import { extractErrorCodes } from './errorCodes';
-import { ServiceBillingTypeError, type ServiceBillingTypePayload } from '../types/serviceBillingType';
+import { ServiceBillingTypeError, type ServiceBillingType, type ServiceBillingTypePayload } from '../types/serviceBillingType';
 
 const FIN_STATUS_SERVICE_BILLING_TYPE_NOT_FOUND = 38200;
 const FIN_STATUS_SERVICE_BILLING_TYPE_IS_NOT_VALID = 38201;
@@ -42,6 +42,13 @@ function mapServiceBillingTypeError(err: unknown): ServiceBillingTypeError {
     return new ServiceBillingTypeError('not-found');
   }
   return new ServiceBillingTypeError('unknown');
+}
+
+export async function searchServiceBillingTypesByEntity(accountingEntityId: string): Promise<ServiceBillingType[]> {
+  const { data } = await httpClient.post<ServiceBillingType[]>(SERVICE_BILLING_TYPE_ENDPOINTS.search, {
+    filter: { accountingEntityIds: [accountingEntityId], isActive: true },
+  });
+  return data;
 }
 
 export async function saveServiceBillingType(payload: ServiceBillingTypePayload, isEdit: boolean): Promise<void> {

@@ -1,5 +1,25 @@
 # Guardian frontend — remaining work
 
+## fin: ServiceBilling (ad-hoc service charges) — done and verified end-to-end against a live backend
+
+Closes the last big functional gap in `fin`: `ServiceBillingType` (the catalog) has had full CRUD for a while, but nothing could actually issue a charge against it. `ServiceBilling` is that missing piece — a single ad-hoc charge against one `Party` for one `BuildingUnit`/`BuildingSpace`, posted immediately (no Preview step, unlike `ChargeIssue`) through the same generic posting engine. Added `ServiceBillingsPage` (GridView list + "New service billing"), `ServiceBillingFormDialog`, `ServiceBillingDetailPage`, and `ServiceBillingCancelDialog` (same `FinFormCancelModel` shape as `ChargeIssue`'s, but narrower — blocked once a real Receipt has settled it, not just its own auto-applied overpayment credit).
+
+**Net-new dependency: `Party`.** `ServiceBilling.PartyId` must reference an already-existing, active `Party` — unlike `ChargeIssue`, there's no auto-create, and nothing in the frontend touched `Party` before this pass. Built a minimal `PartyPickerField` with two modes: pick an existing `Party` from a dropdown, or "link a person" (search persons, and either reuse that person's existing `Party` if one already exists or quick-create one via `PartyType=Natural`).
+
+**No backend bugs found** — both `ServiceBillingSaveModel→DtoServiceBilling` and `PartySaveModel→DtoParty` AutoMapper maps already existed.
+
+**Verified in the browser (Edge via Playwright), reusing the `QuickSetup` test `AccountingEntity` and its `ServiceBillingType` rows:**
+- Picked a type — confirmed `Title`/`Fund` prefill from the type (this type's `DefaultAmount`/`CostCategoryId` are null, so those stayed blank, correctly).
+- "Link a person" mode with a person who had no `Party` yet — confirmed a brand-new `fin.Party` row was quick-created via SQL (count 2 → 3), note rendered ("A new party was created for this person").
+- Submitted against the plan's `BuildingUnit` — confirmed via SQL: `fin.ServiceBilling` (Status=Posted, correct `Amount`/`PartyId`/`BuildingUnitId`), `fin.Receivable` (active, same amount), `fin.JournalEntry` (new row).
+- Re-opened the form and picked the **same** person again — confirmed the existing `Party` was reused ("this person already has a party — reusing it"), `Party` count stayed at 3 (no duplicate).
+- Picked an existing `Party` directly from the "Existing party" dropdown (a Title-only party, no Person link) — worked correctly.
+- Submitted with `DueDate` before `DocumentDate` — correctly rejected (38211), generic "check the required fields" message rendered; confirmed via SQL no stray row was created.
+- Opened the detail page — all `FullInfo` fields rendered correctly (`PartyDisplayName`, titles, open amount, etc).
+- Cancelled with a reason — confirmed via SQL: `Status` → Cancelled, `CancelReason` stored, reversing `JournalEntry` row appeared, `Receivable` flipped to Cancelled.
+
+**Environment note (not a bug):** the dev DB's one seeded `FiscalYear` only covers 2025-03-21 to 2026-03-20 — today's date in this environment (2026-11-11) falls outside it, so a `DocumentDate` of "today" correctly triggers 37509 (`FinStatusJournalEntryDateIsOutsideFiscalYear`). Not a defect; just picked a `DocumentDate` inside the seeded fiscal year for testing.
+
 ## fin: ChargeCoefficient + ChargeDiscount — done and verified end-to-end against a live backend
 
 Closes the gap flagged in the previous `ChargePlan`/`ChargeComponent` pass: `ChargeCoefficient` (per-unit-type or per-floor multipliers within one `Units`-targeted component — 0 means exemption) and `ChargeDiscount` (a per-unit/space discount coefficient on a whole `ChargePlan`, with a validity window). Both standalone CRUD controllers (no `GetById`, list-only via `Search`), nested under `ChargePlanDetailPage.tsx` rather than getting their own list pages.
