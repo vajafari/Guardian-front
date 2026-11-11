@@ -20,6 +20,7 @@ import {
   HiOutlineIdentification,
   HiOutlineArchive,
   HiOutlineCurrencyDollar,
+  HiOutlineCalculator,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -36,6 +37,7 @@ const MENU_ITEMS = [
   { key: 'positions', icon: HiOutlineIdentification, path: '/positions' },
   { key: 'cabinetRooms', icon: HiOutlineArchive, path: '/cabinet-rooms' },
   { key: 'finSetup', icon: HiOutlineCurrencyDollar, path: '/fin-setup' },
+  { key: 'chargeIssues', icon: HiOutlineCalculator, path: '/fin/charge-issues' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },

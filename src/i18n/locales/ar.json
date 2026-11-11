@@ -73,6 +73,7 @@
     "positions": "المناصب",
     "cabinetRooms": "غرف الخزائن",
     "finSetup": "الإعداد المالي",
+    "chargeIssues": "إصدارات الرسوم",
     "elevators": "المصاعد",
     "contractors": "المقاولون",
     "locations": "المناطق",
@@ -910,6 +911,74 @@
       "chargeComponentCount": "عناصر الرسوم المُنشأة",
       "serviceBillingTypeCount": "أنواع فواتير الخدمات المُنشأة",
       "whatsNext": "الخطوة التالية: منح مجموعات المستخدمين المناسبة الوصول إلى قوائم المالية، وإنشاء حسابات دخول للسكان دفعة واحدة إذا لزم الأمر، ثم بدء إصدار الرسوم الشهرية."
+    }
+  },
+  "chargeIssues": {
+    "title": "إصدارات الرسوم",
+    "addButton": "إصدار جديد",
+    "addTitle": "إصدار الرسوم الشهرية",
+    "save": "حفظ",
+    "saving": "جارٍ الإصدار...",
+    "empty": "لم يتم العثور على إصدارات",
+    "loadError": "تعذر تحميل الإصدارات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "previewButton": "معاينة",
+    "previewing": "جارٍ الحساب...",
+    "issueButton": "إصدار",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "fiscalYear": "السنة المالية",
+      "fiscalPeriod": "الفترة (الشهر)",
+      "documentDate": "تاريخ المستند",
+      "description": "الوصف",
+      "excludeRent": "استبعاد الإيجار",
+      "runLateFee": "حساب غرامة التأخير أيضًا",
+      "documentNumber": "رقم المستند",
+      "periodStart": "بداية الفترة",
+      "dueDate": "تاريخ الاستحقاق",
+      "totalAmount": "المبلغ الإجمالي",
+      "activeTotalAmount": "الإجمالي النشط",
+      "status": "الحالة"
+    },
+    "statuses": {
+      "1": "مسودة",
+      "2": "مرحّل",
+      "3": "ملغى"
+    },
+    "preview": {
+      "title": "معاينة",
+      "receivables": "المستحقات",
+      "receivablesSummary": "{{count}} مستحقة بإجمالي {{total}}",
+      "lateFees": "غرامات التأخير",
+      "lateFeesSummary": "{{count}} غرامة بإجمالي {{total}}",
+      "componentTitle": "العنصر",
+      "effectiveAmount": "المبلغ الأساسي",
+      "issuedTotal": "الإجمالي المُصدر"
+    },
+    "cancel": {
+      "title": "إلغاء إصدار الرسوم",
+      "reason": "سبب الإلغاء",
+      "reversalDate": "تاريخ القيد العكسي",
+      "confirm": "إلغاء الإصدار"
+    },
+    "errors": {
+      "missing-fields": "اختر الكيان المحاسبي والفترة أولاً",
+      "period-not-found": "لم يتم العثور على الفترة المحددة",
+      "nothing-to-issue": "لا يوجد شيء لإصداره لهذه الفترة — تم إصدار كل شيء بالفعل أو لا يوجد مبلغ",
+      "cannot-cancel": "لهذا الإصدار مستحقات مسواة أو عليها غرامة تأخير — ألغِها أولاً",
+      "cancel-reason-required": "سبب الإلغاء مطلوب",
+      "not-found": "لم يتم العثور على الإصدار أو لا تملك صلاحية الوصول إليه",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل هذا الإصدار. حاول مرة أخرى.",
+      "notFound": "لم يتم العثور على الإصدار",
+      "lines": "السطور",
+      "unitOrSpace": "الوحدة / المساحة",
+      "payer": "الدافع",
+      "rent": "الإيجار"
     }
   },
   "deviceDoors": {

@@ -14,6 +14,27 @@ First screen in the brand-new `fin` namespace (full investigation + phased plan 
 
 **Environment note (not a bug in this code):** during this session the dev Vite server was briefly bound to IPv6-loopback only (`[::1]:5173`) instead of IPv4, and the backend (`Guardian.Api.exe`) was intermittently slow/unresponsive for 10–20s stretches a couple of times (recovered on its own both times — possibly a debugger breakpoint pause, never confirmed). Neither affected the actual verification results once the server was reachable.
 
+## fin: ChargeIssue (monthly charge issuance) — done and verified end-to-end against a live backend
+
+The operational heart of `fin`: turns a `ChargePlan` into actual `Receivable`s. Added `ChargeIssuesPage` (GridView list + "New issue"), `ChargeIssueFormDialog` (cascading AccountingEntity→FiscalYear→FiscalPeriod pickers, mandatory Preview-before-Issue step), `ChargeIssueDetailPage` (Components + Lines tables), and `ChargeIssueCancelDialog` (reason + optional reversal date — this `FinFormCancelModel` shape will be reused by every other posted-form `fin` entity going forward).
+
+**One frontend bug found and fixed (my own mistake, not a backend bug):** assumed `DtoChargeIssueLineFullInfo` carried joined `buildingUnitTitle`/`buildingSpaceTitle` directly — it doesn't; those titles only exist on `itemsFullInfo` (`DtoChargeIssueItemFullInfo`), joined via `linesFullInfo[].chargeIssueItemId`. Fixed by looking up the matching item per line instead of expecting the title inline.
+
+**No backend bugs found.**
+
+**Verified in the browser (Edge via Playwright), reusing the `QuickSetup` test `AccountingEntity`:**
+- Created a real test `Contract` (via the existing Contracts UI) with a Principal on the one `BuildingUnit` in that test building, so there was an actual payer to issue a charge to.
+- Preview against a building/period with no eligible contracts correctly showed "0 receivables totaling 0" (confirms the zero-result path renders sanely, not just the happy path) — confirmed via SQL that `fin.ChargeIssue` stayed empty (Preview never writes).
+- After adding the test contract, re-ran Preview — showed "1 receivable(s) totaling 500,000" with the correct component breakdown.
+- Clicked Issue — confirmed via SQL that `fin.ChargeIssue` (1 row, auto-numbered `C-04-0001`, Status=Posted), `fin.ChargeIssueComponent`/`Item`/`Line` (1 each), `fin.Receivable` (1, correct amount, Party auto-created), and `fin.JournalEntry` (1 row) were all created — confirms the generic posting-request/posting-rule engine fires correctly end to end.
+- Opened the detail page — Lines table correctly rendered the real unit title ("2") and payer display name after the bug fix above.
+- Cancelled the issue with a reason — confirmed via SQL that the `ChargeIssue` flipped to Cancelled, the `Receivable` flipped to Cancelled, and a second (reversing) `fin.JournalEntry` row appeared.
+
+### Not yet done
+- `ComponentOverrides` (per-component one-month tweaks) and `LateFeeExcludedReceivableIds` — not exposed in this pass's UI.
+- `LateFeeRun` as its own standalone screen (the `RunLateFee` checkbox on `ChargeIssue` covers the common case of running it alongside the monthly issue, but a separate "run late fees for all overdue, anytime" screen isn't built yet).
+- Left one test `Contract`/`ChargeIssue` (now cancelled) in the dev DB from this run — not cleaned up, ask if you want them removed.
+
 ## fin: ResidentUsers + MenuBundleApply — done and verified end-to-end against a live backend
 
 The two `QuickSetup` follow-ups, added as two more always-visible cards on the same `/fin-setup` page (not gated behind a fresh wizard run — both are standalone, idempotent actions).

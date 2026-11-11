@@ -73,6 +73,7 @@
     "positions": "Positions",
     "cabinetRooms": "Cabinet rooms",
     "finSetup": "Financial setup",
+    "chargeIssues": "Charge issues",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -910,6 +911,74 @@
       "chargeComponentCount": "Charge components created",
       "serviceBillingTypeCount": "Service billing types created",
       "whatsNext": "Next: grant the right user groups access to the finance menus, optionally bulk-create resident logins, then start issuing monthly charges."
+    }
+  },
+  "chargeIssues": {
+    "title": "Charge issues",
+    "addButton": "New issue",
+    "addTitle": "Issue monthly charges",
+    "save": "Save",
+    "saving": "Issuing...",
+    "empty": "No charge issues found",
+    "loadError": "Couldn't load charge issues. Try again.",
+    "retry": "Retry",
+    "previewButton": "Preview",
+    "previewing": "Calculating...",
+    "issueButton": "Issue",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "fiscalYear": "Fiscal year",
+      "fiscalPeriod": "Period (month)",
+      "documentDate": "Document date",
+      "description": "Description",
+      "excludeRent": "Exclude rent",
+      "runLateFee": "Also run late fees",
+      "documentNumber": "Document #",
+      "periodStart": "Period start",
+      "dueDate": "Due date",
+      "totalAmount": "Total amount",
+      "activeTotalAmount": "Active total",
+      "status": "Status"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "preview": {
+      "title": "Preview",
+      "receivables": "Receivables",
+      "receivablesSummary": "{{count}} receivable(s) totaling {{total}}",
+      "lateFees": "Late fees",
+      "lateFeesSummary": "{{count}} late fee(s) totaling {{total}}",
+      "componentTitle": "Component",
+      "effectiveAmount": "Base amount",
+      "issuedTotal": "Issued total"
+    },
+    "cancel": {
+      "title": "Cancel charge issue",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel issue"
+    },
+    "errors": {
+      "missing-fields": "Pick an accounting entity and period first",
+      "period-not-found": "The selected period wasn't found",
+      "nothing-to-issue": "Nothing to issue for this period — everything is already issued or has no amount",
+      "cannot-cancel": "This issue has settled or late-fee receivables — cancel those first",
+      "cancel-reason-required": "A cancellation reason is required",
+      "not-found": "Charge issue not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this charge issue. Try again.",
+      "notFound": "Charge issue not found",
+      "lines": "Lines",
+      "unitOrSpace": "Unit / space",
+      "payer": "Payer",
+      "rent": "Rent"
     }
   },
   "deviceDoors": {

@@ -73,6 +73,7 @@
     "positions": "سمت‌های سازمانی",
     "cabinetRooms": "کمدداری‌ها",
     "finSetup": "راه‌اندازی مالی",
+    "chargeIssues": "صدور شارژ",
     "elevators": "آسانسورها",
     "contractors": "پیمانکاران",
     "locations": "مناطق",
@@ -910,6 +911,74 @@
       "chargeComponentCount": "اجزای شارژ ساخته‌شده",
       "serviceBillingTypeCount": "انواع صورت‌حساب خدمات ساخته‌شده",
       "whatsNext": "قدم بعدی: دسترسی گروه‌های کاربری مناسب به منوهای مالی را بدهید، در صورت نیاز لاگین ساکنین را گروهی بسازید، و بعد صدور شارژ ماهانه را شروع کنید."
+    }
+  },
+  "chargeIssues": {
+    "title": "صدور شارژ",
+    "addButton": "صدور جدید",
+    "addTitle": "صدور شارژ ماهانه",
+    "save": "ذخیره",
+    "saving": "در حال صدور...",
+    "empty": "صدوری یافت نشد",
+    "loadError": "بارگذاری صدورها ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "previewButton": "پیش‌نمایش",
+    "previewing": "در حال محاسبه...",
+    "issueButton": "صدور",
+    "fields": {
+      "accountingEntity": "مجموعه حسابداری",
+      "fiscalYear": "سال مالی",
+      "fiscalPeriod": "دوره (ماه)",
+      "documentDate": "تاریخ سند",
+      "description": "شرح",
+      "excludeRent": "بدون اجاره",
+      "runLateFee": "دیرکرد هم محاسبه شود",
+      "documentNumber": "شماره سند",
+      "periodStart": "شروع دوره",
+      "dueDate": "سررسید",
+      "totalAmount": "جمع مبلغ",
+      "activeTotalAmount": "جمع فعال",
+      "status": "وضعیت"
+    },
+    "statuses": {
+      "1": "پیش‌نویس",
+      "2": "ثبت قطعی",
+      "3": "ابطال شده"
+    },
+    "preview": {
+      "title": "پیش‌نمایش",
+      "receivables": "طلب‌ها",
+      "receivablesSummary": "{{count}} طلب به جمع {{total}}",
+      "lateFees": "دیرکردها",
+      "lateFeesSummary": "{{count}} دیرکرد به جمع {{total}}",
+      "componentTitle": "جزء",
+      "effectiveAmount": "مبلغ مبنا",
+      "issuedTotal": "جمع صادرشده"
+    },
+    "cancel": {
+      "title": "ابطال صدور شارژ",
+      "reason": "دلیل ابطال",
+      "reversalDate": "تاریخ سند معکوس",
+      "confirm": "ابطال صدور"
+    },
+    "errors": {
+      "missing-fields": "اول مجموعه حسابداری و دوره را انتخاب کنید",
+      "period-not-found": "دوره انتخاب‌شده یافت نشد",
+      "nothing-to-issue": "برای این دوره چیزی برای صدور نیست — همه قبلاً صادر شده یا مبلغی ندارند",
+      "cannot-cancel": "این صدور طلب تسویه‌شده یا دارای دیرکرد دارد — ابتدا آن‌ها را ابطال کنید",
+      "cancel-reason-required": "دلیل ابطال الزامی است",
+      "not-found": "صدور پیدا نشد یا دسترسی ندارید",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این صدور ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "صدور پیدا نشد",
+      "lines": "سطرها",
+      "unitOrSpace": "واحد / فضا",
+      "payer": "پرداخت‌کننده",
+      "rent": "اجاره"
     }
   },
   "deviceDoors": {

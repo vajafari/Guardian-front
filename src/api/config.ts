@@ -183,3 +183,17 @@ export const FIN_SETUP_ENDPOINTS = {
   residentUsers: '/api/fin/FinSetup/ResidentUsers',
   menuBundleApply: '/api/fin/FinSetup/MenuBundleApply',
 } as const;
+
+export const FIN_REFERENCE_DATA_ENDPOINTS = {
+  searchAccountingEntities: '/api/fin/AccountingEntity/Search',
+  searchFiscalYears: '/api/fin/FiscalYear/Search',
+  searchFiscalPeriods: '/api/fin/FiscalPeriod/Search',
+} as const;
+
+export const CHARGE_ISSUE_ENDPOINTS = {
+  gridView: '/api/fin/ChargeIssue/GridView',
+  getById: (id: string) => `/api/fin/ChargeIssue/GetById/${id}`,
+  preview: '/api/fin/ChargeIssue/Preview',
+  add: '/api/fin/ChargeIssue/Add',
+  cancel: '/api/fin/ChargeIssue/Cancel',
+} as const;

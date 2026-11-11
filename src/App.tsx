@@ -17,6 +17,8 @@ import { PositionsPage } from './pages/PositionsPage';
 import { CabinetRoomsPage } from './pages/CabinetRoomsPage';
 import { CabinetRoomDetailPage } from './pages/CabinetRoomDetailPage';
 import { FinSetupPage } from './pages/FinSetupPage';
+import { ChargeIssuesPage } from './pages/ChargeIssuesPage';
+import { ChargeIssueDetailPage } from './pages/ChargeIssueDetailPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -68,6 +70,8 @@ function App() {
               <Route path="/cabinet-rooms" element={<CabinetRoomsPage />} />
               <Route path="/cabinet-rooms/:id" element={<CabinetRoomDetailPage />} />
               <Route path="/fin-setup" element={<FinSetupPage />} />
+              <Route path="/fin/charge-issues" element={<ChargeIssuesPage />} />
+              <Route path="/fin/charge-issues/:id" element={<ChargeIssueDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />
