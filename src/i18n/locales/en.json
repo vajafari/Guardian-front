@@ -80,6 +80,8 @@
     "serviceBillings": "Service billings",
     "lateFeeRuns": "Late fee runs",
     "receipts": "Receipts",
+    "cheques": "Cheques",
+    "chequeFates": "Cheque fates",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -1377,7 +1379,8 @@
     "paymentMethods": {
       "1": "Cash",
       "2": "Card",
-      "3": "Transfer"
+      "3": "Transfer",
+      "4": "Received cheque"
     },
     "statuses": {
       "1": "Draft",
@@ -1393,6 +1396,11 @@
       "allocateAmount": "Allocate",
       "allocatedTotal": "Allocated so far: {{total}}"
     },
+    "chequeLines": {
+      "title": "Cheques",
+      "addLine": "Add cheque",
+      "total": "Cheques total: {{total}}"
+    },
     "cancel": {
       "title": "Cancel receipt",
       "reason": "Cancellation reason",
@@ -1403,6 +1411,8 @@
       "missing-fields": "Check the required fields",
       "allocation-invalid": "The allocation isn't valid — check it doesn't exceed the amount or any receivable's open balance",
       "overpayment-target-required": "This payment exceeds the open charges — pick a unit or space for the overpayment credit",
+      "cheques-invalid": "The cheque total must equal the receipt amount",
+      "sayad-not-unique": "One of these Sayad IDs is already used by another cheque",
       "cancel-reason-required": "A cancellation reason is required",
       "credit-in-use": "This receipt's overpayment credit has already been used elsewhere and can't be cancelled",
       "not-found": "Receipt not found or you're not authorized to access it",
@@ -1414,6 +1424,119 @@
       "loadError": "Couldn't load this receipt. Try again.",
       "notFound": "Receipt not found",
       "allocations": "Allocations"
+    }
+  },
+  "cheques": {
+    "title": "Cheques",
+    "addButton": "Add cheque",
+    "addTitle": "Add cheque",
+    "editTitle": "Edit cheque",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No cheques found",
+    "deleteConfirm": "Delete cheque \"{{title}}\"?",
+    "changeParty": "Change",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "chequeDirection": "Direction",
+      "party": "Party",
+      "chequeNumber": "Cheque #",
+      "sayadId": "Sayad ID",
+      "bankName": "Bank name",
+      "cashAccount": "Bank account",
+      "issueDate": "Issue date",
+      "dueDate": "Due date",
+      "amount": "Amount",
+      "status": "Status",
+      "description": "Description"
+    },
+    "directions": {
+      "1": "Received",
+      "2": "Issued"
+    },
+    "chequeStatuses": {
+      "1": "Pending",
+      "2": "Deposited",
+      "3": "Cleared",
+      "4": "Bounced",
+      "5": "Returned",
+      "6": "Endorsed"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "sayad-invalid": "Sayad ID must be exactly 16 digits",
+      "sayad-not-unique": "This Sayad ID is already used by another cheque",
+      "party-not-found": "The selected party wasn't found",
+      "bank-account-required": "A bank account is required for an issued cheque",
+      "cannot-change-status": "This cheque can no longer be edited — its status has already changed",
+      "locked-fields-in-use": "The amount and party can't be changed once a cheque is used in a journal entry",
+      "in-use": "This cheque is already used in a journal entry and can't be deleted",
+      "not-found": "Cheque not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    }
+  },
+  "chequeFates": {
+    "title": "Cheque fates",
+    "addButton": "New cheque fate",
+    "addTitle": "Record cheque fate",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No cheque fates found",
+    "loadError": "Couldn't load cheque fates. Try again.",
+    "retry": "Retry",
+    "selectCheques": "Select cheques",
+    "noEligibleCheques": "No eligible cheques for this combination",
+    "partialClearAmount": "Partial clear amount",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "chequeDirection": "Direction",
+      "fateKind": "Fate",
+      "cashAccount": "Bank account",
+      "documentDate": "Document date",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "totalAmount": "Total amount",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "fateKinds": {
+      "1": "Deposited to bank",
+      "2": "Cleared",
+      "3": "Bounced",
+      "4": "Returned"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "cancel": {
+      "title": "Cancel cheque fate",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel"
+    },
+    "errors": {
+      "missing-fields": "Pick at least one cheque",
+      "fate-kind-invalid": "This fate isn't valid for the selected direction",
+      "cheques-invalid": "One or more selected cheques aren't valid for this fate",
+      "bank-account-required": "A bank account is required for this fate",
+      "cleared-amount-invalid": "The cleared amount must be greater than zero and less than the cheque's amount",
+      "status-not-allowed": "One of the selected cheques isn't in a status that allows this fate",
+      "no-source-document": "This cheque isn't linked to any posted receipt or payment — nothing to clear, bounce, or return yet",
+      "cancel-reason-required": "A cancellation reason is required",
+      "not-latest": "A later fate already exists for one of these cheques — cancel that first",
+      "reopened-debt-settled": "The debt this fate reopened has already been settled again and can't be cancelled",
+      "not-found": "Cheque fate not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this cheque fate. Try again.",
+      "notFound": "Cheque fate not found",
+      "items": "Cheques"
     }
   },
   "deviceDoors": {

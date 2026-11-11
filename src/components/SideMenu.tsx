@@ -27,6 +27,8 @@ import {
   HiOutlineClock,
   HiOutlineCreditCard,
   HiOutlineCash,
+  HiOutlineDocumentText,
+  HiOutlineSwitchHorizontal,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -50,6 +52,8 @@ const MENU_ITEMS = [
   { key: 'serviceBillings', icon: HiOutlineReceiptTax, path: '/fin/service-billings' },
   { key: 'lateFeeRuns', icon: HiOutlineClock, path: '/fin/late-fee-runs' },
   { key: 'receipts', icon: HiOutlineCash, path: '/fin/receipts' },
+  { key: 'cheques', icon: HiOutlineDocumentText, path: '/fin/cheques' },
+  { key: 'chequeFates', icon: HiOutlineSwitchHorizontal, path: '/fin/cheque-fates' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },

@@ -29,6 +29,9 @@ import { LateFeeRunDetailPage } from './pages/LateFeeRunDetailPage';
 import { CashAccountsPage } from './pages/CashAccountsPage';
 import { ReceiptsPage } from './pages/ReceiptsPage';
 import { ReceiptDetailPage } from './pages/ReceiptDetailPage';
+import { ChequesPage } from './pages/ChequesPage';
+import { ChequeFatesPage } from './pages/ChequeFatesPage';
+import { ChequeFateDetailPage } from './pages/ChequeFateDetailPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -92,6 +95,9 @@ function App() {
               <Route path="/fin/cash-accounts" element={<CashAccountsPage />} />
               <Route path="/fin/receipts" element={<ReceiptsPage />} />
               <Route path="/fin/receipts/:id" element={<ReceiptDetailPage />} />
+              <Route path="/fin/cheques" element={<ChequesPage />} />
+              <Route path="/fin/cheque-fates" element={<ChequeFatesPage />} />
+              <Route path="/fin/cheque-fates/:id" element={<ChequeFateDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

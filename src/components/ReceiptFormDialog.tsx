@@ -1,16 +1,34 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { HiOutlineTrash } from 'react-icons/hi';
 import { addReceipt } from '../api/receiptService';
 import { searchAccountingEntities } from '../api/finReferenceDataService';
 import { searchCashAccountsByEntity } from '../api/cashAccountService';
 import { searchOpenReceivablesByParty, type ReceivableSummary } from '../api/receivableService';
-import { ReceiptError, type ReceiptErrorCode, type ReceiptPaymentMethod } from '../types/receipt';
+import { ReceiptError, type ReceiptChequeLinePayload, type ReceiptErrorCode, type ReceiptPaymentMethod } from '../types/receipt';
 import type { CashAccount } from '../types/cashAccount';
 import type { FinAccountingEntity } from '../types/finReferenceData';
 import { PartyPickerField } from './PartyPickerField';
 import { Alert, Button, Dialog, FormContainer, FormItem, Input } from './ui';
 
-const PAYMENT_METHODS: ReceiptPaymentMethod[] = [1, 2, 3];
+const PAYMENT_METHODS: ReceiptPaymentMethod[] = [1, 2, 3, 4];
+
+interface ChequeLineRow extends ReceiptChequeLinePayload {
+  id: string;
+}
+
+function createEmptyChequeLine(): ChequeLineRow {
+  return {
+    id: crypto.randomUUID(),
+    chequeNumber: '',
+    sayadId: null,
+    bankName: null,
+    issueDate: null,
+    dueDate: '',
+    amount: 0,
+    description: null,
+  };
+}
 
 interface ReceiptFormDialogProps {
   isOpen: boolean;
@@ -29,6 +47,7 @@ export function ReceiptFormDialog({ isOpen, onClose, onSaved }: ReceiptFormDialo
   const [description, setDescription] = useState('');
   const [autoAllocate, setAutoAllocate] = useState(true);
   const [allocationAmounts, setAllocationAmounts] = useState<Record<string, string>>({});
+  const [chequeLines, setChequeLines] = useState<ChequeLineRow[]>([createEmptyChequeLine()]);
 
   const [accountingEntities, setAccountingEntities] = useState<FinAccountingEntity[]>([]);
   const [cashAccounts, setCashAccounts] = useState<CashAccount[]>([]);
@@ -47,6 +66,7 @@ export function ReceiptFormDialog({ isOpen, onClose, onSaved }: ReceiptFormDialo
     setDescription('');
     setAutoAllocate(true);
     setAllocationAmounts({});
+    setChequeLines([createEmptyChequeLine()]);
     setCashAccounts([]);
     setOpenReceivables([]);
     setError(null);
@@ -84,6 +104,14 @@ export function ReceiptFormDialog({ isOpen, onClose, onSaved }: ReceiptFormDialo
 
   const allocationTotal = Object.values(allocationAmounts).reduce((sum, value) => sum + (Number(value) || 0), 0);
 
+  const updateChequeLine = (id: string, patch: Partial<ChequeLineRow>) => {
+    setChequeLines((lines) => lines.map((line) => (line.id === id ? { ...line, ...patch } : line)));
+  };
+
+  const addChequeLine = () => setChequeLines((lines) => [...lines, createEmptyChequeLine()]);
+  const removeChequeLine = (id: string) => setChequeLines((lines) => lines.filter((line) => line.id !== id));
+  const chequeTotal = chequeLines.reduce((sum, line) => sum + (line.amount || 0), 0);
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -94,7 +122,7 @@ export function ReceiptFormDialog({ isOpen, onClose, onSaved }: ReceiptFormDialo
       documentDate,
       partyId,
       paymentMethod,
-      cashAccountId,
+      cashAccountId: paymentMethod === 4 ? null : cashAccountId,
       amount: Number(amount),
       description: description.trim() || null,
       autoAllocate,
@@ -105,6 +133,18 @@ export function ReceiptFormDialog({ isOpen, onClose, onSaved }: ReceiptFormDialo
             .map((receivable) => ({ receivableId: receivable.id, amount: Number(allocationAmounts[receivable.id]) })),
       overpaymentBuildingUnitId: null,
       overpaymentBuildingSpaceId: null,
+      cheques:
+        paymentMethod === 4
+          ? chequeLines.map((line) => ({
+              chequeNumber: line.chequeNumber,
+              sayadId: line.sayadId,
+              bankName: line.bankName,
+              issueDate: line.issueDate,
+              dueDate: line.dueDate,
+              amount: line.amount,
+              description: line.description,
+            }))
+          : [],
     };
 
     try {
@@ -150,23 +190,25 @@ export function ReceiptFormDialog({ isOpen, onClose, onSaved }: ReceiptFormDialo
           <PartyPickerField isOpen={isOpen} onResolved={setPartyId} />
 
           <div className="grid grid-cols-2 gap-3">
-            <FormItem label={t('receipts.fields.cashAccount')} htmlFor="receiptCashAccount">
-              <select
-                id="receiptCashAccount"
-                className="input"
-                value={cashAccountId}
-                onChange={(event) => setCashAccountId(event.target.value)}
-                disabled={!accountingEntityId}
-                required
-              >
-                <option value="">—</option>
-                {cashAccounts.map((account) => (
-                  <option key={account.id} value={account.id}>
-                    {account.title}
-                  </option>
-                ))}
-              </select>
-            </FormItem>
+            {paymentMethod !== 4 && (
+              <FormItem label={t('receipts.fields.cashAccount')} htmlFor="receiptCashAccount">
+                <select
+                  id="receiptCashAccount"
+                  className="input"
+                  value={cashAccountId}
+                  onChange={(event) => setCashAccountId(event.target.value)}
+                  disabled={!accountingEntityId}
+                  required
+                >
+                  <option value="">—</option>
+                  {cashAccounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {account.title}
+                    </option>
+                  ))}
+                </select>
+              </FormItem>
+            )}
             <FormItem label={t('receipts.fields.paymentMethod')} htmlFor="receiptPaymentMethod">
               <select
                 id="receiptPaymentMethod"
@@ -183,6 +225,92 @@ export function ReceiptFormDialog({ isOpen, onClose, onSaved }: ReceiptFormDialo
               </select>
             </FormItem>
           </div>
+
+          {paymentMethod === 4 && (
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
+              <h5 className="mb-2">{t('receipts.chequeLines.title')}</h5>
+              <table className="w-full text-sm mb-2">
+                <thead>
+                  <tr className="border-b border-gray-200 dark:border-gray-700 text-start">
+                    <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                      {t('cheques.fields.chequeNumber')}
+                    </th>
+                    <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                      {t('cheques.fields.sayadId')}
+                    </th>
+                    <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                      {t('cheques.fields.bankName')}
+                    </th>
+                    <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                      {t('cheques.fields.dueDate')}
+                    </th>
+                    <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                      {t('cheques.fields.amount')}
+                    </th>
+                    <th className="py-1 px-2 w-8"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {chequeLines.map((line) => (
+                    <tr key={line.id} className="border-b border-gray-100 dark:border-gray-800 last:border-0">
+                      <td className="py-1 px-2">
+                        <Input
+                          value={line.chequeNumber}
+                          onChange={(event) => updateChequeLine(line.id, { chequeNumber: event.target.value })}
+                        />
+                      </td>
+                      <td className="py-1 px-2">
+                        <Input
+                          value={line.sayadId ?? ''}
+                          onChange={(event) => updateChequeLine(line.id, { sayadId: event.target.value || null })}
+                        />
+                      </td>
+                      <td className="py-1 px-2">
+                        <Input
+                          value={line.bankName ?? ''}
+                          onChange={(event) => updateChequeLine(line.id, { bankName: event.target.value || null })}
+                        />
+                      </td>
+                      <td className="py-1 px-2">
+                        <Input
+                          type="date"
+                          value={line.dueDate}
+                          onChange={(event) => updateChequeLine(line.id, { dueDate: event.target.value })}
+                        />
+                      </td>
+                      <td className="py-1 px-2">
+                        <Input
+                          type="number"
+                          min={1}
+                          value={line.amount || ''}
+                          onChange={(event) => updateChequeLine(line.id, { amount: Number(event.target.value) })}
+                        />
+                      </td>
+                      <td className="py-1 px-2">
+                        {chequeLines.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="plain"
+                            size="xs"
+                            icon={<HiOutlineTrash />}
+                            onClick={() => removeChequeLine(line.id)}
+                          />
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="flex items-center justify-between">
+                <Button type="button" size="sm" onClick={addChequeLine}>
+                  {t('receipts.chequeLines.addLine')}
+                </Button>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {t('receipts.chequeLines.total', { total: chequeTotal.toLocaleString() })}
+                </p>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-3">
             <FormItem label={t('receipts.fields.amount')} htmlFor="receiptAmount">

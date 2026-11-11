@@ -1,8 +1,18 @@
 /** FinDocumentStatusEnumeration. */
 export type ReceiptStatus = 1 | 2 | 3;
 
-/** ReceiptPaymentMethodEnumeration — only the CashAccount-based methods are supported in this pass. */
-export type ReceiptPaymentMethod = 1 | 2 | 3; // 1 = Cash, 2 = Card, 3 = Transfer
+/** ReceiptPaymentMethodEnumeration. 1 = Cash, 2 = Card, 3 = Transfer, 4 = ReceivedCheque. */
+export type ReceiptPaymentMethod = 1 | 2 | 3 | 4;
+
+export interface ReceiptChequeLinePayload {
+  chequeNumber: string;
+  sayadId: string | null;
+  bankName: string | null;
+  issueDate: string | null;
+  dueDate: string;
+  amount: number;
+  description: string | null;
+}
 
 export interface ReceiptAllocationFullInfo {
   id: string;
@@ -43,19 +53,22 @@ export interface ReceiptRequestPayload {
   documentDate: string;
   partyId: string;
   paymentMethod: ReceiptPaymentMethod;
-  cashAccountId: string;
+  cashAccountId: string | null;
   amount: number;
   description: string | null;
   allocations: ReceiptAllocationPayload[];
   autoAllocate: boolean;
   overpaymentBuildingUnitId: string | null;
   overpaymentBuildingSpaceId: string | null;
+  cheques: ReceiptChequeLinePayload[];
 }
 
 export type ReceiptErrorCode =
   | 'missing-fields'
   | 'allocation-invalid'
   | 'overpayment-target-required'
+  | 'cheques-invalid'
+  | 'sayad-not-unique'
   | 'cancel-reason-required'
   | 'credit-in-use'
   | 'not-found'

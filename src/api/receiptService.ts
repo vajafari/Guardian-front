@@ -6,9 +6,11 @@ import { ReceiptError, type ReceiptFullInfo, type ReceiptRequestPayload, type Re
 
 const FIN_STATUS_RECEIPT_NOT_FOUND = 37900;
 const FIN_STATUS_RECEIPT_IS_NOT_VALID = 37901;
+const FIN_STATUS_RECEIPT_CHEQUES_ARE_NOT_VALID = 37902;
 const FIN_STATUS_RECEIPT_ALLOCATION_IS_NOT_VALID = 37903;
 const FIN_STATUS_RECEIPT_OVERPAYMENT_ITEM_IS_REQUIRED = 37904;
 const FIN_STATUS_RECEIPT_CREDIT_IS_USED_AND_CAN_NOT_BE_CANCELLED = 37908;
+const FIN_STATUS_CHEQUE_SAYAD_ID_MUST_BE_UNIQUE = 37313;
 const FIN_STATUS_DOCUMENT_DATE_IS_NOT_VALID = 37613;
 const FIN_STATUS_CANCEL_REASON_IS_REQUIRED = 37612;
 
@@ -42,6 +44,12 @@ function mapReceiptError(err: unknown): ReceiptError {
   if (errorCodes.includes(FIN_STATUS_RECEIPT_OVERPAYMENT_ITEM_IS_REQUIRED)) {
     return new ReceiptError('overpayment-target-required');
   }
+  if (errorCodes.includes(FIN_STATUS_CHEQUE_SAYAD_ID_MUST_BE_UNIQUE)) {
+    return new ReceiptError('sayad-not-unique');
+  }
+  if (errorCodes.includes(FIN_STATUS_RECEIPT_CHEQUES_ARE_NOT_VALID)) {
+    return new ReceiptError('cheques-invalid');
+  }
   if (errorCodes.includes(FIN_STATUS_RECEIPT_ALLOCATION_IS_NOT_VALID)) {
     return new ReceiptError('allocation-invalid');
   }
@@ -60,7 +68,14 @@ export async function getReceiptById(id: string): Promise<ReceiptFullInfo | null
 }
 
 function validatePayload(payload: ReceiptRequestPayload) {
-  if (!payload.accountingEntityId || !payload.documentDate || !payload.partyId || !payload.cashAccountId || !payload.amount) {
+  if (!payload.accountingEntityId || !payload.documentDate || !payload.partyId || !payload.amount) {
+    throw new ReceiptError('missing-fields');
+  }
+  if (payload.paymentMethod === 4) {
+    if (payload.cheques.length === 0) {
+      throw new ReceiptError('cheques-invalid');
+    }
+  } else if (!payload.cashAccountId) {
     throw new ReceiptError('missing-fields');
   }
 }
@@ -71,7 +86,6 @@ export async function addReceipt(payload: ReceiptRequestPayload): Promise<Receip
     const { data } = await httpClient.post<ReceiptFullInfo>(RECEIPT_ENDPOINTS.add, {
       ...payload,
       receiptKind: 1,
-      cheques: [],
     });
     return data;
   } catch (err) {

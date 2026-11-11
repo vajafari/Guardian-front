@@ -276,3 +276,19 @@ export const RECEIPT_ENDPOINTS = {
 export const RECEIVABLE_ENDPOINTS = {
   searchFullInfo: '/api/fin/Receivable/SearchFullInfo',
 } as const;
+
+export const CHEQUE_ENDPOINTS = {
+  gridView: '/api/fin/Cheque/GridView',
+  search: '/api/fin/Cheque/Search',
+  searchFullInfo: '/api/fin/Cheque/SearchFullInfo',
+  add: '/api/fin/Cheque/Add',
+  update: '/api/fin/Cheque/Update',
+  delete: (id: string) => `/api/fin/Cheque/Delete/${id}`,
+} as const;
+
+export const CHEQUE_FATE_ENDPOINTS = {
+  gridView: '/api/fin/ChequeFate/GridView',
+  getById: (id: string) => `/api/fin/ChequeFate/GetById/${id}`,
+  add: '/api/fin/ChequeFate/Add',
+  cancel: '/api/fin/ChequeFate/Cancel',
+} as const;

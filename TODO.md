@@ -1,5 +1,28 @@
 # Guardian frontend — remaining work
 
+## fin: Cheque + ChequeFate (+ ReceivedCheque wired into Receipt) — done and verified end-to-end against a live backend
+
+Closes the gap deliberately left open in the `Receipt` pass: `ReceivedCheque` was deferred because a cheque entered that way would sit at `Status=Pending` forever with no UI to ever move it. Built standalone `Cheque` CRUD (both `Received`/`Issued` directions, flat list+dialog page mirroring `CashAccountsPage.tsx`), `ChequeFate` (posted form — Deposited/Cleared/Bounced/Returned — mirroring `LateFeeRun`'s list+detail+cancel shape), and wired `PaymentMethod=ReceivedCheque` into `ReceiptFormDialog` so the whole received-cheque lifecycle (Receipt → Cheque Pending → Deposited → Cleared/Bounced) is now actually exercisable end to end.
+
+**Scoping note, not a bug**: a `Cleared`/`Bounced`/`Returned` fate requires the cheque to trace back to a real posted source document (`Receipt` for Received, `PartyPayment` for Issued — not built yet). So standalone-created `Issued` cheques can only ever sit at `Pending` until `PartyPayment` exists; confirmed this renders the correct "not linked to any posted receipt or payment" message (37769) rather than failing silently.
+
+**No backend bugs found** — all four AutoMapper maps (`ChequeSaveModel→DtoCheque`, `ReceivedChequeSaveModel→DtoCheque`, `ChequeFateSaveModel→DtoChequeFate`, `ChequeFateItemSaveModel→DtoChequeFateItem`) already existed.
+
+**Verified in the browser (Edge via Playwright), reusing the `QuickSetup` test `AccountingEntity`:**
+- Added a standalone `Received` cheque (quick-created a `Party` via "link a person", same `PartyPickerField` reuse) — confirmed via SQL, `Status=Pending`.
+- Added a standalone `Issued` cheque — the bank-account-required rule is enforced client-side (field only shown+required for `Issued`), confirmed success once a `CashAccount` was picked.
+- Added a `Receipt` with `PaymentMethod=ReceivedCheque` (one cheque line, amount matching the receipt) — confirmed via SQL: `fin.Receipt`, a new `fin.Cheque` at `Status=Pending`, and the matching `fin.ReceivableSettlement`.
+- `ChequeFate=Deposited` on that cheque — confirmed via SQL (`Status`→Deposited, `DepositedCashAccountId` set, **no** `JournalEntry` for this kind, as documented).
+- `ChequeFate=Cleared` on the same cheque — confirmed via SQL (`Status`→Cleared, a real `JournalEntry` this time).
+- A second Receipt-sourced cheque, then `ChequeFate=Bounced` on it — confirmed via SQL the original settlement was reversed and the receivable reopened to its full amount (a second, offsetting `ReceivableSettlement` row), new `JournalEntry`.
+- Tried `Cleared` on the standalone `Issued` cheque (no `PartyPayment` exists) — correctly rejected (37769), the documented-limitation message rendered correctly.
+- Opened a `ChequeFate` detail page — fields + cheques table render correctly. Cancelled it — confirmed via SQL (`Status`→Cancelled, and the cheque's own `Status` correctly reverted to what it was *before* that fate, not all the way back to Pending — matches the "per-cheque previous status" design, not a blanket reset).
+
+### Not yet done
+- `ChequeFateItemFullInfo` has no joined `PartyDisplayName` on the item row itself (only `ChequePartyId`) — minor display gap, not worth a client-side join this pass.
+- Didn't exercise partial-clear (`ClearedAmount` < cheque amount) — the field exists in the UI but wasn't driven through a full partial-clear scenario this pass.
+- `PartyPayment` (needed to ever move an `Issued` cheque past `Pending`) is still not built — tracked as the next natural piece.
+
 ## fin: Receipt (Collection — resident pays, settles receivables) — done and verified end-to-end against a live backend
 
 The piece that actually closes the loop: `ChargeIssue`/`ServiceBilling`/`LateFeeRun` all generate open `Receivable`s, but nothing could settle them until now. Built `ReceiptKind = Collection` with Cash/Card/Transfer payment methods only this pass — `ReceivedCheque` is deferred (the backend can create the `Cheque` row inline with no dependency, but it'd sit at `Status=Pending` forever with no `ChequeFate` UI to ever move it yet); `DepositIdentification`/`OtherIncome` kinds deferred too (need `UnidentifiedDeposit`/an `Account` picker, neither built).
