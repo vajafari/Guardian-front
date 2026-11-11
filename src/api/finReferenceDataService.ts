@@ -1,6 +1,6 @@
 import { httpClient } from './httpClient';
 import { FIN_REFERENCE_DATA_ENDPOINTS } from './config';
-import type { FinAccountingEntity, FinFiscalPeriod, FinFiscalYear } from '../types/finReferenceData';
+import type { FinAccountingEntity, FinCostCategory, FinFiscalPeriod, FinFiscalYear, FinFund } from '../types/finReferenceData';
 
 export async function searchAccountingEntities(): Promise<FinAccountingEntity[]> {
   const { data } = await httpClient.post<FinAccountingEntity[]>(FIN_REFERENCE_DATA_ENDPOINTS.searchAccountingEntities, {
@@ -20,5 +20,15 @@ export async function searchFiscalPeriods(fiscalYearId: string): Promise<FinFisc
   const { data } = await httpClient.post<FinFiscalPeriod[]>(FIN_REFERENCE_DATA_ENDPOINTS.searchFiscalPeriods, {
     filter: { fiscalYearIds: [fiscalYearId] },
   });
+  return data;
+}
+
+export async function searchFunds(): Promise<FinFund[]> {
+  const { data } = await httpClient.post<FinFund[]>(FIN_REFERENCE_DATA_ENDPOINTS.searchFunds, { filter: {} });
+  return data;
+}
+
+export async function searchCostCategories(): Promise<FinCostCategory[]> {
+  const { data } = await httpClient.post<FinCostCategory[]>(FIN_REFERENCE_DATA_ENDPOINTS.searchCostCategories, { filter: {} });
   return data;
 }

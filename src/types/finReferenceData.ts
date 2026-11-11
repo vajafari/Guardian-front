@@ -21,3 +21,17 @@ export interface FinFiscalPeriod {
   endDate: string;
   status: FinFiscalPeriodStatus;
 }
+
+export interface FinFund {
+  id: string;
+  code: number;
+  title: string;
+  isActive: boolean;
+}
+
+export interface FinCostCategory {
+  id: string;
+  parentCostCategoryId: string | null;
+  title: string;
+  isActive: boolean;
+}

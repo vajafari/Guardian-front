@@ -14,6 +14,25 @@ First screen in the brand-new `fin` namespace (full investigation + phased plan 
 
 **Environment note (not a bug in this code):** during this session the dev Vite server was briefly bound to IPv6-loopback only (`[::1]:5173`) instead of IPv4, and the backend (`Guardian.Api.exe`) was intermittently slow/unresponsive for 10–20s stretches a couple of times (recovered on its own both times — possibly a debugger breakpoint pause, never confirmed). Neither affected the actual verification results once the server was reachable.
 
+## fin: ChargePlan + ChargeComponent + ServiceBillingType editing — done and verified end-to-end against a live backend
+
+Fills the gap flagged in `FIN_MODULE_PLAN.md`: `QuickSetup` creates these once, but there was no screen to edit them afterward. Added `ChargePlansPage` (list) + `ChargePlanDetailPage` (plan settings + nested Components table, Add/Edit/Delete each via its own endpoint — not an aggregate save), and a standalone `ServiceBillingTypesPage`.
+
+**One frontend bug found and fixed (my own mistake, not a backend bug):** the `ChargeComponent`/`ServiceBillingType` forms' Cost Category picker listed every `CostCategory` row flat, including parent/non-leaf nodes — but the backend requires a **leaf** category (`FinStatusCostCategoryIsNotLeaf`, 37227) for both. Fixed by computing leaf categories client-side (a category with no other category pointing at it via `parentCostCategoryId`) and only offering those in both pickers.
+
+**No backend bugs found.**
+
+**Verified in the browser (Edge via Playwright), reusing the `ChargePlan`/`ChargeComponent` from `QuickSetup`:**
+- Edited the plan's `DueDay` (10 → 15) — confirmed via SQL, and that `LateFeeFundTitle`/`RentIncomeFundTitle` resolve correctly on the detail page.
+- Edited the existing component's `Amount` (500,000 → 600,000) — confirmed via SQL.
+- Added a new component ("Elevator fee", fixed-per-unit split) — failed first with 37227 due to the picker bug above; after the fix, succeeded and confirmed via SQL.
+- Tried deleting the plan — correctly rejected (37803, "has charge issues/components/discounts") since we'd already issued a charge against it in the previous pass; confirmed via SQL the row still exists.
+- On `ServiceBillingTypesPage`: edited one of the 4 `QuickSetup`-created types (title, `DefaultAmount`, toggled `IsActive` off) — confirmed via SQL. Added a new type, then deleted it — confirmed via SQL both ways.
+
+### Not yet done
+- `ChargeCoefficient` (per-unit-type/floor multipliers) and `ChargeDiscount` (per-unit/space discounts) — smaller sub-features under `ChargeComponent`/`ChargePlan`, not built this pass.
+- `ActualCostSpaceId` on `ChargeComponent` (a narrow filter only relevant to the `ActualCost` calculation model) — not exposed in the form.
+
 ## fin: ChargeIssue (monthly charge issuance) — done and verified end-to-end against a live backend
 
 The operational heart of `fin`: turns a `ChargePlan` into actual `Receivable`s. Added `ChargeIssuesPage` (GridView list + "New issue"), `ChargeIssueFormDialog` (cascading AccountingEntity→FiscalYear→FiscalPeriod pickers, mandatory Preview-before-Issue step), `ChargeIssueDetailPage` (Components + Lines tables), and `ChargeIssueCancelDialog` (reason + optional reversal date — this `FinFormCancelModel` shape will be reused by every other posted-form `fin` entity going forward).

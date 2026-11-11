@@ -74,6 +74,8 @@
     "cabinetRooms": "Cabinet rooms",
     "finSetup": "Financial setup",
     "chargeIssues": "Charge issues",
+    "chargePlans": "Charge plans",
+    "serviceBillingTypes": "Service billing types",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -979,6 +981,134 @@
       "unitOrSpace": "Unit / space",
       "payer": "Payer",
       "rent": "Rent"
+    }
+  },
+  "chargePlans": {
+    "title": "Charge plans",
+    "addButton": "Add charge plan",
+    "addTitle": "Add charge plan",
+    "editTitle": "Edit charge plan",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No charge plans found",
+    "loadError": "Couldn't load charge plans. Try again.",
+    "retry": "Retry",
+    "deleteConfirm": "Delete the charge plan for \"{{title}}\"?",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "dueDay": "Due day of month",
+      "graceDays": "Grace days",
+      "lateFeeMode": "Late fee mode",
+      "lateFeeRate": "Late fee rate",
+      "lateFeeCapPercent": "Late fee cap (%)",
+      "lateFeeFund": "Late fee fund",
+      "rentIncomeFund": "Rent income fund",
+      "roundingUnit": "Rounding unit",
+      "fundWarningBalance": "Fund warning balance",
+      "autoCreateResidentUser": "Auto-create resident logins",
+      "residentUserGroup": "Resident user group",
+      "description": "Description"
+    },
+    "lateFeeModes": {
+      "0": "Off",
+      "1": "Percent per month",
+      "2": "Fixed per day"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "already-exists": "This accounting entity already has a charge plan",
+      "has-issues-cannot-delete": "This plan has charge issues, components or discounts — it can't be deleted",
+      "not-found": "Charge plan not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this charge plan. Try again.",
+      "notFound": "Charge plan not found"
+    },
+    "components": {
+      "title": "Charge components",
+      "empty": "No components found",
+      "addButton": "Add component",
+      "addTitle": "Add charge component",
+      "editTitle": "Edit charge component",
+      "deleteConfirm": "Delete the component \"{{title}}\"?",
+      "allBuildings": "All buildings",
+      "fields": {
+        "title": "Title",
+        "targetKind": "Target",
+        "spaceType": "Space type",
+        "building": "Building",
+        "modelKind": "Calculation model",
+        "amount": "Amount",
+        "splitMethod": "Split method",
+        "payerKind": "Payer",
+        "costCategory": "Cost category",
+        "fund": "Fund",
+        "validFrom": "Valid from",
+        "validTo": "Valid to",
+        "sortOrder": "Sort order",
+        "isActive": "Active",
+        "description": "Description"
+      },
+      "targetKinds": {
+        "1": "Units",
+        "2": "Spaces"
+      },
+      "modelKinds": {
+        "1": "Budget (fixed amount)",
+        "2": "Last month's actual cost"
+      },
+      "splitMethods": {
+        "1": "Equal",
+        "2": "By unit area",
+        "3": "By resident count",
+        "4": "Fixed per unit",
+        "5": "By space area",
+        "6": "Fixed per space"
+      },
+      "payerKinds": {
+        "1": "Resident",
+        "2": "Owner"
+      },
+      "errors": {
+        "missing-fields": "Check the required fields",
+        "building-mismatch": "This building doesn't belong to the plan's accounting entity",
+        "cost-category-not-leaf": "Cost category must be a leaf category (no sub-categories)",
+        "is-used-cannot-delete": "This component has been used in a charge issue and can't be deleted",
+        "not-found": "Component not found or you're not authorized to access it",
+        "network-error": "Couldn't reach the server. Check your connection and try again",
+        "unknown": "Something went wrong"
+      }
+    }
+  },
+  "serviceBillingTypes": {
+    "title": "Service billing types",
+    "addButton": "Add type",
+    "addTitle": "Add service billing type",
+    "editTitle": "Edit service billing type",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No service billing types found",
+    "loadError": "Couldn't load service billing types. Try again.",
+    "deleteConfirm": "Delete \"{{title}}\"?",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "title": "Title",
+      "defaultAmount": "Default amount",
+      "fund": "Fund",
+      "costCategory": "Cost category",
+      "isActive": "Active",
+      "description": "Description"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "title-must-be-unique": "This title is already used by another type in this accounting entity",
+      "cost-category-not-leaf": "Cost category must be a leaf category (no sub-categories)",
+      "not-found": "Service billing type not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
     }
   },
   "deviceDoors": {

@@ -188,6 +188,30 @@ export const FIN_REFERENCE_DATA_ENDPOINTS = {
   searchAccountingEntities: '/api/fin/AccountingEntity/Search',
   searchFiscalYears: '/api/fin/FiscalYear/Search',
   searchFiscalPeriods: '/api/fin/FiscalPeriod/Search',
+  searchFunds: '/api/fin/Fund/Search',
+  searchCostCategories: '/api/fin/CostCategory/Search',
+} as const;
+
+export const CHARGE_PLAN_ENDPOINTS = {
+  gridView: '/api/fin/ChargePlan/GridView',
+  getById: (id: string) => `/api/fin/ChargePlan/GetById/${id}`,
+  add: '/api/fin/ChargePlan/Add',
+  update: '/api/fin/ChargePlan/Update',
+  delete: (id: string) => `/api/fin/ChargePlan/Delete/${id}`,
+} as const;
+
+export const CHARGE_COMPONENT_ENDPOINTS = {
+  search: '/api/fin/ChargeComponent/Search',
+  add: '/api/fin/ChargeComponent/Add',
+  update: '/api/fin/ChargeComponent/Update',
+  delete: (id: string) => `/api/fin/ChargeComponent/Delete/${id}`,
+} as const;
+
+export const SERVICE_BILLING_TYPE_ENDPOINTS = {
+  gridView: '/api/fin/ServiceBillingType/GridView',
+  add: '/api/fin/ServiceBillingType/Add',
+  update: '/api/fin/ServiceBillingType/Update',
+  delete: (id: string) => `/api/fin/ServiceBillingType/Delete/${id}`,
 } as const;
 
 export const CHARGE_ISSUE_ENDPOINTS = {

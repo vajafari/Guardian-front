@@ -19,6 +19,9 @@ import { CabinetRoomDetailPage } from './pages/CabinetRoomDetailPage';
 import { FinSetupPage } from './pages/FinSetupPage';
 import { ChargeIssuesPage } from './pages/ChargeIssuesPage';
 import { ChargeIssueDetailPage } from './pages/ChargeIssueDetailPage';
+import { ChargePlansPage } from './pages/ChargePlansPage';
+import { ChargePlanDetailPage } from './pages/ChargePlanDetailPage';
+import { ServiceBillingTypesPage } from './pages/ServiceBillingTypesPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -72,6 +75,9 @@ function App() {
               <Route path="/fin-setup" element={<FinSetupPage />} />
               <Route path="/fin/charge-issues" element={<ChargeIssuesPage />} />
               <Route path="/fin/charge-issues/:id" element={<ChargeIssueDetailPage />} />
+              <Route path="/fin/charge-plans" element={<ChargePlansPage />} />
+              <Route path="/fin/charge-plans/:id" element={<ChargePlanDetailPage />} />
+              <Route path="/fin/service-billing-types" element={<ServiceBillingTypesPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />
