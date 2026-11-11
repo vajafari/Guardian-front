@@ -19,6 +19,7 @@ import {
   HiOutlineAcademicCap,
   HiOutlineIdentification,
   HiOutlineArchive,
+  HiOutlineCurrencyDollar,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -34,6 +35,7 @@ const MENU_ITEMS = [
   { key: 'fieldOfStudies', icon: HiOutlineAcademicCap, path: '/field-of-studies' },
   { key: 'positions', icon: HiOutlineIdentification, path: '/positions' },
   { key: 'cabinetRooms', icon: HiOutlineArchive, path: '/cabinet-rooms' },
+  { key: 'finSetup', icon: HiOutlineCurrencyDollar, path: '/fin-setup' },
   { key: 'elevators', icon: HiOutlineSwitchVertical, path: '/elevators' },
   { key: 'contractors', icon: HiOutlineBriefcase, path: '/contractors' },
   { key: 'locations', icon: HiOutlineLocationMarker, path: '/locations' },

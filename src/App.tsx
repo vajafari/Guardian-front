@@ -16,6 +16,7 @@ import { FieldOfStudiesPage } from './pages/FieldOfStudiesPage';
 import { PositionsPage } from './pages/PositionsPage';
 import { CabinetRoomsPage } from './pages/CabinetRoomsPage';
 import { CabinetRoomDetailPage } from './pages/CabinetRoomDetailPage';
+import { FinSetupPage } from './pages/FinSetupPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -66,6 +67,7 @@ function App() {
               <Route path="/positions" element={<PositionsPage />} />
               <Route path="/cabinet-rooms" element={<CabinetRoomsPage />} />
               <Route path="/cabinet-rooms/:id" element={<CabinetRoomDetailPage />} />
+              <Route path="/fin-setup" element={<FinSetupPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

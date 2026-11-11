@@ -177,3 +177,7 @@ export const USER_ENDPOINTS = {
   save: (forceLogoutOnUserChange: 0 | 1) => `/api/core/Account/Save/${forceLogoutOnUserChange}`,
   delete: (id: string) => `/api/core/Account/Delete/${id}`,
 } as const;
+
+export const FIN_SETUP_ENDPOINTS = {
+  quickSetup: '/api/fin/FinSetup/QuickSetup',
+} as const;

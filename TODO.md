@@ -1,5 +1,23 @@
 # Guardian frontend — remaining work
 
+## fin module (financial/accounting) — started, QuickSetup wizard done and verified
+
+First screen in the brand-new `fin` namespace (full investigation + phased plan in `FIN_MODULE_PLAN.md` at the repo root). `FinSetup.QuickSetup` bootstraps an `AccountingEntity` + `FiscalYear` (+12 `FiscalPeriod` rows) + bank `CashAccount` + `ChargePlan` + default `ChargeComponent`(s) + 4 default `ServiceBillingType` rows in one transactional call — the correct starting point since all system-seeded reference data it depends on (chart of accounts, posting-rule templates, system funds, default cost category) already existed in the dev DB.
+
+**No backend bugs found** — confirmed by deep research across all ~38 `fin` controllers (3 parallel research passes): every `SaveModel→Dto` AutoMapper map exists, every `UpdateAsync` looks up by `Ids = [entity.Id]` correctly. This module is noticeably more carefully written than Core was before our fixes.
+
+**Verified in the browser (Edge via Playwright):**
+- Ran the wizard with a real Location-linked `Building`, realistic charge-plan values (DueDay 10, GraceDays 5, LateFeeMode=PercentPerMonth 2%, monthly charge 500,000, no reserve) — success panel rendered the returned IDs; confirmed via SQL that `fin.AccountingEntity`, `fin.AccountingEntityBuilding`, `fin.FiscalYear` (+ exactly 12 `fin.FiscalPeriod` rows), `fin.CashAccount`, `fin.ChargePlan`, one `fin.ChargeComponent`, and 4 `fin.ServiceBillingType` rows were all created and linked correctly.
+- Re-ran against the same building — correct mapped message ("already belongs to another accounting entity", 38101) rendered; confirmed via SQL the row count stayed at 1 (no duplicate created).
+- Submitted with no buildings selected — client-side validation caught it before any network call, generic 38100-style message shown.
+- Left the two test `AccountingEntity` rows (one succeeded, one attempt rejected) in the dev DB from this run — not cleaned up, ask if you want them removed.
+
+**Environment note (not a bug in this code):** during this session the dev Vite server was briefly bound to IPv6-loopback only (`[::1]:5173`) instead of IPv4, and the backend (`Guardian.Api.exe`) was intermittently slow/unresponsive for 10–20s stretches a couple of times (recovered on its own both times — possibly a debugger breakpoint pause, never confirmed). Neither affected the actual verification results once the server was reachable.
+
+### Not yet done
+- `ResidentUsers` (bulk-create resident logins) and `MenuBundleApply` (grant a UserGroup a finance menu-permission bundle) — the two natural follow-ups to `QuickSetup`, deliberately deferred to keep this pass scoped to the wizard itself.
+- Everything else in `fin` — see `FIN_MODULE_PLAN.md` for the full phased plan (charges/billing cycle, cash/bank/cheques, expenses, reporting).
+
 ## CabinetRoom + Cabinet + CabinetPerson — done and verified end-to-end against a live backend
 
 Same aggregate shape as Elevator: `Cabinet` rows are managed entirely as a nested collection inside `CabinetRoom`'s save (`CabinetRoomController.Save/{editMode}`), exactly like `ElevatorFloor` under `Elevator` — `CabinetController` itself is read-only and isn't called by the frontend. Initially misdiagnosed as a backend gap (because `CabinetController` has no Add/Update/Delete) before reading `CabinetRoomComponent` closely — it's fully buildable with zero new backend surface.

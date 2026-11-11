@@ -72,6 +72,7 @@
     "fieldOfStudies": "Fields of study",
     "positions": "Positions",
     "cabinetRooms": "Cabinet rooms",
+    "finSetup": "Financial setup",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -832,6 +833,55 @@
       "back": "Back",
       "loadError": "Couldn't load this cabinet room. Try again.",
       "notFound": "Cabinet room not found"
+    }
+  },
+  "finSetup": {
+    "title": "Financial setup",
+    "save": "Run setup",
+    "saving": "Setting up...",
+    "fields": {
+      "title": "Accounting entity title",
+      "buildings": "Buildings",
+      "fiscalYearTitle": "Fiscal year title",
+      "fiscalYearStartDate": "Start date",
+      "fiscalYearEndDate": "End date",
+      "bankAccountTitle": "Bank account title",
+      "bankName": "Bank name",
+      "accountNumber": "Account number",
+      "sheba": "IBAN (Sheba)",
+      "dueDay": "Due day of month",
+      "graceDays": "Grace days",
+      "lateFeeMode": "Late fee mode",
+      "lateFeeRate": "Late fee rate",
+      "monthlyChargeAmount": "Monthly charge amount",
+      "monthlyReserveAmount": "Monthly reserve amount"
+    },
+    "sections": {
+      "fiscalYear": "Fiscal year",
+      "bankAccount": "Bank account",
+      "chargePlan": "Charge plan"
+    },
+    "lateFeeModes": {
+      "0": "Off",
+      "1": "Percent per month",
+      "2": "Fixed per day"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields — title, buildings, fiscal year, bank account title and a valid monthly charge amount are all required",
+      "building-already-has-accounting-entity": "One of the selected buildings already belongs to another accounting entity",
+      "partially-created": "Setup failed partway through and couldn't be fully rolled back — contact the backend team before retrying, the accounting entity may need manual cleanup",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "success": {
+      "title": "Financial setup completed successfully",
+      "accountingEntityId": "Accounting entity",
+      "fiscalYearId": "Fiscal year",
+      "cashAccountId": "Bank account",
+      "chargePlanId": "Charge plan",
+      "chargeComponentCount": "Charge components created",
+      "serviceBillingTypeCount": "Service billing types created",
+      "whatsNext": "Next: grant the right user groups access to the finance menus, optionally bulk-create resident logins, then start issuing monthly charges."
     }
   },
   "deviceDoors": {
