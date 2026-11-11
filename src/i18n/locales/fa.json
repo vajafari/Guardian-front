@@ -1081,6 +1081,60 @@
         "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
         "unknown": "خطایی رخ داد"
       }
+    },
+    "coefficients": {
+      "title": "ضرایب جزء «{{component}}»",
+      "manageButton": "ضرایب",
+      "addButton": "افزودن",
+      "updateButton": "به‌روزرسانی",
+      "fields": {
+        "kind": "نوع",
+        "key": "نوع واحد / طبقه",
+        "unitType": "نوع واحد",
+        "floorActualNumber": "شماره طبقه",
+        "coefficient": "ضریب",
+        "description": "توضیحات"
+      },
+      "kinds": {
+        "1": "نوع واحد",
+        "2": "طبقه"
+      },
+      "errors": {
+        "missing-fields": "فیلدهای الزامی را بررسی کنید — نوع واحد یا طبقه الزامی است و باید برای این جزء یکتا باشد",
+        "not-found": "ضریب پیدا نشد یا دسترسی ندارید",
+        "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+        "unknown": "خطایی رخ داد"
+      }
+    },
+    "discounts": {
+      "title": "تخفیف‌ها",
+      "empty": "تخفیفی یافت نشد",
+      "addButton": "افزودن تخفیف",
+      "addTitle": "افزودن تخفیف",
+      "editTitle": "ویرایش تخفیف",
+      "deleteConfirm": "این تخفیف حذف شود؟",
+      "fields": {
+        "building": "ساختمان",
+        "targetType": "هدف",
+        "buildingUnit": "واحد",
+        "buildingSpace": "فضا",
+        "item": "واحد / فضا",
+        "coefficient": "ضریب (۰٫۸ یعنی ۲۰٪ تخفیف)",
+        "validFrom": "شروع اعتبار",
+        "validTo": "پایان اعتبار",
+        "reason": "دلیل"
+      },
+      "targetTypes": {
+        "unit": "واحد",
+        "space": "فضا"
+      },
+      "errors": {
+        "missing-fields": "فیلدهای الزامی را بررسی کنید",
+        "overlaps-another-discount": "این واحد/فضا از قبل یک تخفیف با بازهٔ هم‌پوشان دارد",
+        "not-found": "تخفیف پیدا نشد یا دسترسی ندارید",
+        "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+        "unknown": "خطایی رخ داد"
+      }
     }
   },
   "serviceBillingTypes": {

@@ -190,6 +190,7 @@ export const FIN_REFERENCE_DATA_ENDPOINTS = {
   searchFiscalPeriods: '/api/fin/FiscalPeriod/Search',
   searchFunds: '/api/fin/Fund/Search',
   searchCostCategories: '/api/fin/CostCategory/Search',
+  searchAccountingEntityBuildings: '/api/fin/AccountingEntityBuilding/SearchFullInfo',
 } as const;
 
 export const CHARGE_PLAN_ENDPOINTS = {
@@ -205,6 +206,20 @@ export const CHARGE_COMPONENT_ENDPOINTS = {
   add: '/api/fin/ChargeComponent/Add',
   update: '/api/fin/ChargeComponent/Update',
   delete: (id: string) => `/api/fin/ChargeComponent/Delete/${id}`,
+} as const;
+
+export const CHARGE_COEFFICIENT_ENDPOINTS = {
+  search: '/api/fin/ChargeCoefficient/Search',
+  add: '/api/fin/ChargeCoefficient/Add',
+  update: '/api/fin/ChargeCoefficient/Update',
+  delete: (id: string) => `/api/fin/ChargeCoefficient/Delete/${id}`,
+} as const;
+
+export const CHARGE_DISCOUNT_ENDPOINTS = {
+  search: '/api/fin/ChargeDiscount/Search',
+  add: '/api/fin/ChargeDiscount/Add',
+  update: '/api/fin/ChargeDiscount/Update',
+  delete: (id: string) => `/api/fin/ChargeDiscount/Delete/${id}`,
 } as const;
 
 export const SERVICE_BILLING_TYPE_ENDPOINTS = {

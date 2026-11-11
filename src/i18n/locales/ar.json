@@ -1081,6 +1081,60 @@
         "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
         "unknown": "حدث خطأ ما"
       }
+    },
+    "coefficients": {
+      "title": "معاملات العنصر \"{{component}}\"",
+      "manageButton": "المعاملات",
+      "addButton": "إضافة",
+      "updateButton": "تحديث",
+      "fields": {
+        "kind": "النوع",
+        "key": "نوع الوحدة / الطابق",
+        "unitType": "نوع الوحدة",
+        "floorActualNumber": "رقم الطابق",
+        "coefficient": "المعامل",
+        "description": "الوصف"
+      },
+      "kinds": {
+        "1": "نوع الوحدة",
+        "2": "الطابق"
+      },
+      "errors": {
+        "missing-fields": "تحقق من الحقول المطلوبة — نوع الوحدة أو الطابق مطلوب ويجب أن يكون فريدًا لهذا العنصر",
+        "not-found": "لم يتم العثور على المعامل أو لا تملك صلاحية الوصول إليه",
+        "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+        "unknown": "حدث خطأ ما"
+      }
+    },
+    "discounts": {
+      "title": "الخصومات",
+      "empty": "لم يتم العثور على خصومات",
+      "addButton": "إضافة خصم",
+      "addTitle": "إضافة خصم",
+      "editTitle": "تعديل الخصم",
+      "deleteConfirm": "حذف هذا الخصم؟",
+      "fields": {
+        "building": "المبنى",
+        "targetType": "الهدف",
+        "buildingUnit": "الوحدة",
+        "buildingSpace": "المساحة",
+        "item": "الوحدة / المساحة",
+        "coefficient": "المعامل (0.8 = خصم 20%)",
+        "validFrom": "صالح من",
+        "validTo": "صالح إلى",
+        "reason": "السبب"
+      },
+      "targetTypes": {
+        "unit": "وحدة",
+        "space": "مساحة"
+      },
+      "errors": {
+        "missing-fields": "تحقق من الحقول المطلوبة",
+        "overlaps-another-discount": "هذه الوحدة/المساحة لديها بالفعل خصم بفترة زمنية متداخلة",
+        "not-found": "لم يتم العثور على الخصم أو لا تملك صلاحية الوصول إليه",
+        "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+        "unknown": "حدث خطأ ما"
+      }
     }
   },
   "serviceBillingTypes": {

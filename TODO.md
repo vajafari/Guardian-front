@@ -1,5 +1,18 @@
 # Guardian frontend — remaining work
 
+## fin: ChargeCoefficient + ChargeDiscount — done and verified end-to-end against a live backend
+
+Closes the gap flagged in the previous `ChargePlan`/`ChargeComponent` pass: `ChargeCoefficient` (per-unit-type or per-floor multipliers within one `Units`-targeted component — 0 means exemption) and `ChargeDiscount` (a per-unit/space discount coefficient on a whole `ChargePlan`, with a validity window). Both standalone CRUD controllers (no `GetById`, list-only via `Search`), nested under `ChargePlanDetailPage.tsx` rather than getting their own list pages.
+
+**No backend bugs found** — both `SaveModel→Dto` AutoMapper maps already existed.
+
+**Verified in the browser (Edge via Playwright), reusing the `ChargePlan`/`ChargeComponent` from the earlier passes:**
+- Opened "Coefficients" on the Units-targeted "Elevator fee" component; added a UnitType coefficient (Commercial, 0 = exemption) and a Floor coefficient (Floor 3, 1.2) — both confirmed via SQL (`fin.ChargeCoefficient`) with the exact `CoefficientKind`/`UnitType`/`FloorActualNumber`/`Coefficient` values.
+- Tried adding a duplicate UnitType coefficient on the same component — correctly rejected (37821), generic "invalid" message rendered; confirmed via SQL the row count stayed at 2 (no duplicate created).
+- Added a `ChargeDiscount` on the plan's one `BuildingUnit` (0.8, with a reason) — confirmed via SQL (`fin.ChargeDiscount`), and that the detail page's Discounts table resolves and shows the unit's real title ("2") via a client-side id→title map (no `FullInfo` variant exists server-side for this one).
+- Tried adding a second discount on the same unit with an overlapping date range — correctly rejected (37827), "This unit/space already has a discount with an overlapping date range" rendered correctly.
+- Deleted the discount and one of the two coefficients — both confirmed via SQL (`DiscountCount` → 0, `CoefficientCount` → 1, with the remaining row matching the un-deleted one).
+
 ## fin module (financial/accounting) — started, QuickSetup wizard done and verified
 
 First screen in the brand-new `fin` namespace (full investigation + phased plan in `FIN_MODULE_PLAN.md` at the repo root). `FinSetup.QuickSetup` bootstraps an `AccountingEntity` + `FiscalYear` (+12 `FiscalPeriod` rows) + bank `CashAccount` + `ChargePlan` + default `ChargeComponent`(s) + 4 default `ServiceBillingType` rows in one transactional call — the correct starting point since all system-seeded reference data it depends on (chart of accounts, posting-rule templates, system funds, default cost category) already existed in the dev DB.
@@ -30,7 +43,7 @@ Fills the gap flagged in `FIN_MODULE_PLAN.md`: `QuickSetup` creates these once, 
 - On `ServiceBillingTypesPage`: edited one of the 4 `QuickSetup`-created types (title, `DefaultAmount`, toggled `IsActive` off) — confirmed via SQL. Added a new type, then deleted it — confirmed via SQL both ways.
 
 ### Not yet done
-- `ChargeCoefficient` (per-unit-type/floor multipliers) and `ChargeDiscount` (per-unit/space discounts) — smaller sub-features under `ChargeComponent`/`ChargePlan`, not built this pass.
+- `ChargeCoefficient`/`ChargeDiscount` — now done, see the section above.
 - `ActualCostSpaceId` on `ChargeComponent` (a narrow filter only relevant to the `ActualCost` calculation model) — not exposed in the form.
 
 ## fin: ChargeIssue (monthly charge issuance) — done and verified end-to-end against a live backend

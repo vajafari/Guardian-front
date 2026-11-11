@@ -1081,6 +1081,60 @@
         "network-error": "Couldn't reach the server. Check your connection and try again",
         "unknown": "Something went wrong"
       }
+    },
+    "coefficients": {
+      "title": "Coefficients for \"{{component}}\"",
+      "manageButton": "Coefficients",
+      "addButton": "Add",
+      "updateButton": "Update",
+      "fields": {
+        "kind": "Kind",
+        "key": "Unit type / floor",
+        "unitType": "Unit type",
+        "floorActualNumber": "Floor #",
+        "coefficient": "Coefficient",
+        "description": "Description"
+      },
+      "kinds": {
+        "1": "Unit type",
+        "2": "Floor"
+      },
+      "errors": {
+        "missing-fields": "Check the required fields — a unit type or floor is required, and it must be unique for this component",
+        "not-found": "Coefficient not found or you're not authorized to access it",
+        "network-error": "Couldn't reach the server. Check your connection and try again",
+        "unknown": "Something went wrong"
+      }
+    },
+    "discounts": {
+      "title": "Discounts",
+      "empty": "No discounts found",
+      "addButton": "Add discount",
+      "addTitle": "Add discount",
+      "editTitle": "Edit discount",
+      "deleteConfirm": "Delete this discount?",
+      "fields": {
+        "building": "Building",
+        "targetType": "Target",
+        "buildingUnit": "Unit",
+        "buildingSpace": "Space",
+        "item": "Unit / space",
+        "coefficient": "Coefficient (0.8 = 20% off)",
+        "validFrom": "Valid from",
+        "validTo": "Valid to",
+        "reason": "Reason"
+      },
+      "targetTypes": {
+        "unit": "Unit",
+        "space": "Space"
+      },
+      "errors": {
+        "missing-fields": "Check the required fields",
+        "overlaps-another-discount": "This unit/space already has a discount with an overlapping date range",
+        "not-found": "Discount not found or you're not authorized to access it",
+        "network-error": "Couldn't reach the server. Check your connection and try again",
+        "unknown": "Something went wrong"
+      }
     }
   },
   "serviceBillingTypes": {

@@ -35,3 +35,8 @@ export interface FinCostCategory {
   title: string;
   isActive: boolean;
 }
+
+export interface FinAccountingEntityBuilding {
+  buildingId: string;
+  buildingTitle: string;
+}
