@@ -87,6 +87,7 @@
     "serviceBillings": "صدور خدمات",
     "lateFeeRuns": "اجراهای دیرکرد",
     "receipts": "رسیدهای دریافت",
+  "buildingDeposits": "ودیعه ساختمان",
     "cheques": "چک‌ها",
     "chequeFates": "سرنوشت چک",
     "partyPayments": "پرداخت‌ها",
@@ -1782,6 +1783,109 @@
       "back": "بازگشت",
       "loadError": "بارگذاری این انتقال ناموفق بود. دوباره تلاش کنید.",
       "notFound": "انتقال پیدا نشد"
+    }
+  },
+  "buildingDeposits": {
+    "title": "ودیعه ساختمان",
+    "addButton": "ودیعه جدید",
+    "addTitle": "افزودن ودیعه",
+    "editTitle": "ویرایش ودیعه",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "ودیعه‌ای یافت نشد",
+    "loadError": "بارگذاری ودیعه‌ها ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "changeParty": "تغییر",
+    "changeTarget": "تغییر",
+    "noTarget": "ندارد",
+    "deleteConfirm": "ودیعه «{{title}}» حذف شود؟",
+    "fields": {
+      "accountingEntity": "مجموعه حسابداری",
+      "party": "ودیعه‌گذار",
+      "target": "هدف",
+      "targetType": "نوع هدف",
+      "building": "ساختمان",
+      "buildingUnit": "واحد",
+      "buildingSpace": "فضا",
+      "depositKind": "نوع ودیعه",
+      "title": "عنوان",
+      "description": "توضیحات",
+      "heldAmount": "مانده ودیعه"
+    },
+    "targetTypes": {
+      "unit": "واحد",
+      "space": "فضا"
+    },
+    "depositKinds": {
+      "1": "بازسازی",
+      "2": "اسباب‌کشی",
+      "3": "مستاجر فضا",
+      "9": "سایر"
+    },
+    "errors": {
+      "missing-fields": "فیلدهای الزامی را بررسی کنید",
+      "not-found": "ودیعه پیدا نشد یا دسترسی ندارید",
+      "has-movements-can-not-delete": "این ودیعه حرکت دارد و قابل حذف نیست",
+      "can-not-change-after-movements": "این ودیعه حرکت دارد و قابل ویرایش نیست",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "edit": "ویرایش",
+      "loadError": "بارگذاری این ودیعه ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "ودیعه پیدا نشد"
+    },
+    "movements": {
+      "title": "حرکات",
+      "addButton": "افزودن حرکت",
+      "addTitle": "افزودن حرکت",
+      "save": "ذخیره",
+      "saving": "در حال ذخیره...",
+      "empty": "هنوز حرکتی ثبت نشده",
+      "fields": {
+        "documentNumber": "شماره سند",
+        "documentDate": "تاریخ سند",
+        "movementKind": "نوع حرکت",
+        "amount": "مبلغ",
+        "cashAccount": "حساب نقد و بانک",
+        "fund": "صندوق",
+        "description": "توضیحات",
+        "status": "وضعیت"
+      },
+      "movementKinds": {
+        "1": "دریافت",
+        "2": "بازگشت",
+        "3": "ضبط",
+        "4": "تسویه با شارژ"
+      },
+      "statuses": {
+        "1": "پیش‌نویس",
+        "2": "ثبت قطعی",
+        "3": "ابطال شده"
+      },
+      "settlements": {
+        "title": "تسویه با مطالبات باز",
+        "noOpenReceivables": "مطالبه بازی برای این ودیعه‌گذار وجود ندارد",
+        "receivableTitle": "شارژ",
+        "openAmount": "مانده باز",
+        "allocateAmount": "تخصیص",
+        "allocatedTotal": "تخصیص‌یافته تا الان: {{total}}"
+      },
+      "cancel": {
+        "title": "ابطال حرکت",
+        "reason": "دلیل ابطال",
+        "reversalDate": "تاریخ سند معکوس",
+        "confirm": "ابطال حرکت"
+      },
+      "errors": {
+        "missing-fields": "فیلدهای الزامی را بررسی کنید",
+        "not-found": "حرکت پیدا نشد یا دسترسی ندارید",
+        "can-not-cancel": "مانده این ودیعه برای ابطال این حرکت کافی نیست",
+        "cancel-reason-required": "دلیل ابطال الزامی است",
+        "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+        "unknown": "خطایی رخ داد"
+      }
     }
   },
   "deviceDoors": {

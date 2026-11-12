@@ -1,5 +1,27 @@
 # Guardian frontend — remaining work
 
+## fin: BuildingDeposit + BuildingDepositMovement — done and verified end-to-end (found and fixed a real frontend bug)
+
+Phase 3's last independent piece. Backend fully researched first (a fork pass over `BuildingDepositController.cs`, both SaveModels, `ReceiptComponent.cs`'s posting/validation methods, `AutoMapperProfile.cs`) — **no backend bugs found**, both AutoMapper maps present.
+
+**Data model, confirmed from source**: `BuildingDeposit` is a plain master-data header (full CRUD, no journal entry) — one row per deposit held for a unit/space from a depositor `Party`. `BuildingDepositMovement` is the posted-form child — every cash/accounting event against it, the only thing routed through the posting engine. `HeldAmount` is a computed running balance, not a stored column. Both live under one controller (`BuildingDepositController.cs`, backed by `ReceiptComponent`), with header actions (`GetById/Search/SearchFullInfo/GridView/Add/Update/Delete`) plus movement actions (`MovementAdd/MovementCancel`) — no separate movement controller.
+
+**Key finding**: a *new* deposit's cash comes in directly via `BuildingDepositMovement.Add` with `MovementKind=Received` and its own `CashAccountId` — fully independent of `Receipt`. The only intersection is `MovementKind=Settled`, which reuses `Receipt`'s exact open-receivables allocation engine (`ReceivableBuildAllocationsAsync`) to apply the held deposit against the depositor's own charge debt, so the frontend reuses `searchOpenReceivablesByParty` scoped to the deposit's own party.
+
+**Built**: `BuildingDepositsPage.tsx` (flat CRUD grid, mirrors `ChargePlansPage.tsx`'s Add/Edit/Delete-via-dialog shape) + `BuildingDepositDetailPage.tsx` (header info + a Movements table, mirrors `ChargePlanDetailPage.tsx`'s header-with-children shape) + `BuildingDepositFormDialog.tsx` (Add/Edit in one dialog, Party and Building/Unit/Space target both shown read-only with a "Change" button on edit, same pattern `ChequesPage.tsx` already uses for its own immutable-looking fields) + `BuildingDepositMovementFormDialog.tsx` (kind-conditional fields — CashAccount for Received/Returned, Fund for Forfeited, an open-receivables allocation table for Settled — structurally identical to `ChequeFateFormDialog.tsx`'s direction/fateKind pattern) + matching cancel dialog.
+
+**Real frontend bug found and fixed**: the Edit dialog's "Accounting entity" field was a `<select disabled>` whose `<option>` list loads asynchronously from `searchAccountingEntities()`. Because the select was already disabled on first render (before the entity list arrived), Chromium/Edge locked in an empty "—" display and never visually updated once the matching `<option>` was added — even though the underlying React state (and the resulting payload) was always correct. Caught by actually looking at a screenshot of the Edit dialog, not just checking the network response. Fixed by rendering a plain disabled text `Input` (showing `accountingEntityTitle`) instead of a disabled async-populated `<select>` in edit mode — avoids the browser quirk entirely rather than working around it.
+
+**Verified end-to-end (Edge via Playwright + SQL)**:
+- Created a deposit for a resident `Party` targeting a real `BuildingUnit`.
+- `Received` movement (500,000) → journal debits the cash account.
+- `Forfeited` movement (100,000) → journal posts against the Fund-tagged line.
+- A `Returned` attempt exceeding the remaining held amount → correctly rejected (37942).
+- `Settled` movement (45,000) against an open `Receivable` → confirmed via SQL a real `fin.ReceivableSettlement` row (kind 4, deposit-settlement).
+- `HeldAmount` tracked correctly throughout: 500,000 → 400,000 → 355,000, confirmed both via SQL and visually on the detail page (also checked rendering in Persian/RTL).
+- Attempted to cancel the `Received` movement after later movements had already drawn down the balance → correctly rejected (37945, "the deposit no longer holds enough").
+- Attempted to Edit and Delete the header once it had movements → both correctly rejected (37946/37944) — this is also what surfaced the Edit-dialog display bug above.
+
 ## fin: CashTransfer + FundTransfer — done and verified end-to-end
 
 Two small, fully independent Phase 4 entities (per `FIN_MODULE_PLAN.md`), only dependent on Phase 1. Backend fully researched first (a fork pass over `CashTransferController.cs`/`FundTransferController.cs`, their SaveModels/Dtos, `TreasuryComponent`'s Add/Cancel methods, `AutoMapperProfile.cs`) — **no backend bugs found**, both AutoMapper maps present. Both are plain posted-form entities with zero draft concept, same shape as every other posted-form module this session.

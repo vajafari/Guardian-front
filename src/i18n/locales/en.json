@@ -87,6 +87,7 @@
     "serviceBillings": "Service billings",
     "lateFeeRuns": "Late fee runs",
     "receipts": "Receipts",
+  "buildingDeposits": "Building deposits",
     "cheques": "Cheques",
     "chequeFates": "Cheque fates",
     "partyPayments": "Party payments",
@@ -1782,6 +1783,109 @@
       "back": "Back",
       "loadError": "Couldn't load this transfer. Try again.",
       "notFound": "Transfer not found"
+    }
+  },
+  "buildingDeposits": {
+    "title": "Building deposits",
+    "addButton": "New deposit",
+    "addTitle": "Add a deposit",
+    "editTitle": "Edit deposit",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No deposits found",
+    "loadError": "Couldn't load deposits. Try again.",
+    "retry": "Retry",
+    "changeParty": "Change",
+    "changeTarget": "Change",
+    "noTarget": "None",
+    "deleteConfirm": "Delete deposit \"{{title}}\"?",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "party": "Depositor",
+      "target": "Target",
+      "targetType": "Target type",
+      "building": "Building",
+      "buildingUnit": "Unit",
+      "buildingSpace": "Space",
+      "depositKind": "Deposit kind",
+      "title": "Title",
+      "description": "Description",
+      "heldAmount": "Held amount"
+    },
+    "targetTypes": {
+      "unit": "Unit",
+      "space": "Space"
+    },
+    "depositKinds": {
+      "1": "Renovation",
+      "2": "Moving",
+      "3": "Space tenant",
+      "9": "Other"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "not-found": "Deposit not found or you're not authorized to access it",
+      "has-movements-can-not-delete": "This deposit already has movements and can't be deleted",
+      "can-not-change-after-movements": "This deposit already has movements and can't be edited",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "edit": "Edit",
+      "loadError": "Couldn't load this deposit. Try again.",
+      "notFound": "Deposit not found"
+    },
+    "movements": {
+      "title": "Movements",
+      "addButton": "Add movement",
+      "addTitle": "Add a movement",
+      "save": "Save",
+      "saving": "Saving...",
+      "empty": "No movements yet",
+      "fields": {
+        "documentNumber": "Document #",
+        "documentDate": "Document date",
+        "movementKind": "Movement kind",
+        "amount": "Amount",
+        "cashAccount": "Cash account",
+        "fund": "Fund",
+        "description": "Description",
+        "status": "Status"
+      },
+      "movementKinds": {
+        "1": "Received",
+        "2": "Returned",
+        "3": "Forfeited",
+        "4": "Settled against a charge"
+      },
+      "statuses": {
+        "1": "Draft",
+        "2": "Posted",
+        "3": "Cancelled"
+      },
+      "settlements": {
+        "title": "Settle against open charges",
+        "noOpenReceivables": "No open receivables for this depositor",
+        "receivableTitle": "Charge",
+        "openAmount": "Open amount",
+        "allocateAmount": "Allocate",
+        "allocatedTotal": "Allocated so far: {{total}}"
+      },
+      "cancel": {
+        "title": "Cancel movement",
+        "reason": "Cancellation reason",
+        "reversalDate": "Reversal date",
+        "confirm": "Cancel movement"
+      },
+      "errors": {
+        "missing-fields": "Check the required fields",
+        "not-found": "Movement not found or you're not authorized to access it",
+        "can-not-cancel": "This deposit no longer holds enough to cancel this movement",
+        "cancel-reason-required": "A cancellation reason is required",
+        "network-error": "Couldn't reach the server. Check your connection and try again",
+        "unknown": "Something went wrong"
+      }
     }
   },
   "deviceDoors": {

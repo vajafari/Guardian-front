@@ -87,6 +87,7 @@
     "serviceBillings": "فواتير الخدمات",
     "lateFeeRuns": "عمليات الغرامة",
     "receipts": "إيصالات القبض",
+  "buildingDeposits": "ودائع المبنى",
     "cheques": "الشيكات",
     "chequeFates": "مصير الشيك",
     "partyPayments": "دفعات الأطراف",
@@ -1782,6 +1783,109 @@
       "back": "رجوع",
       "loadError": "تعذر تحميل هذا التحويل. حاول مرة أخرى.",
       "notFound": "التحويل غير موجود"
+    }
+  },
+  "buildingDeposits": {
+    "title": "ودائع المبنى",
+    "addButton": "وديعة جديدة",
+    "addTitle": "إضافة وديعة",
+    "editTitle": "تعديل الوديعة",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على ودائع",
+    "loadError": "تعذر تحميل الودائع. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "changeParty": "تغيير",
+    "changeTarget": "تغيير",
+    "noTarget": "لا يوجد",
+    "deleteConfirm": "حذف الوديعة \"{{title}}\"؟",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "party": "المودِع",
+      "target": "الهدف",
+      "targetType": "نوع الهدف",
+      "building": "المبنى",
+      "buildingUnit": "الوحدة",
+      "buildingSpace": "الفضاء",
+      "depositKind": "نوع الوديعة",
+      "title": "العنوان",
+      "description": "الوصف",
+      "heldAmount": "المبلغ المحتجز"
+    },
+    "targetTypes": {
+      "unit": "الوحدة",
+      "space": "الفضاء"
+    },
+    "depositKinds": {
+      "1": "تجديد",
+      "2": "انتقال",
+      "3": "مستأجر فضاء",
+      "9": "أخرى"
+    },
+    "errors": {
+      "missing-fields": "تحقق من الحقول المطلوبة",
+      "not-found": "الوديعة غير موجودة أو لا تملك صلاحية الوصول إليها",
+      "has-movements-can-not-delete": "لهذه الوديعة حركات ولا يمكن حذفها",
+      "can-not-change-after-movements": "لهذه الوديعة حركات ولا يمكن تعديلها",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "edit": "تعديل",
+      "loadError": "تعذر تحميل هذه الوديعة. حاول مرة أخرى.",
+      "notFound": "الوديعة غير موجودة"
+    },
+    "movements": {
+      "title": "الحركات",
+      "addButton": "إضافة حركة",
+      "addTitle": "إضافة حركة",
+      "save": "حفظ",
+      "saving": "جارٍ الحفظ...",
+      "empty": "لا توجد حركات بعد",
+      "fields": {
+        "documentNumber": "رقم المستند",
+        "documentDate": "تاريخ المستند",
+        "movementKind": "نوع الحركة",
+        "amount": "المبلغ",
+        "cashAccount": "حساب النقد والبنك",
+        "fund": "الصندوق",
+        "description": "الوصف",
+        "status": "الحالة"
+      },
+      "movementKinds": {
+        "1": "استلام",
+        "2": "إرجاع",
+        "3": "مصادرة",
+        "4": "تسوية مقابل رسم"
+      },
+      "statuses": {
+        "1": "مسودة",
+        "2": "مرحّل",
+        "3": "ملغى"
+      },
+      "settlements": {
+        "title": "التسوية مقابل الرسوم المفتوحة",
+        "noOpenReceivables": "لا توجد مستحقات مفتوحة لهذا المودِع",
+        "receivableTitle": "الرسم",
+        "openAmount": "المبلغ المستحق",
+        "allocateAmount": "تخصيص",
+        "allocatedTotal": "المخصص حتى الآن: {{total}}"
+      },
+      "cancel": {
+        "title": "إلغاء الحركة",
+        "reason": "سبب الإلغاء",
+        "reversalDate": "تاريخ القيد العكسي",
+        "confirm": "إلغاء الحركة"
+      },
+      "errors": {
+        "missing-fields": "تحقق من الحقول المطلوبة",
+        "not-found": "الحركة غير موجودة أو لا تملك صلاحية الوصول إليها",
+        "can-not-cancel": "رصيد هذه الوديعة غير كافٍ لإلغاء هذه الحركة",
+        "cancel-reason-required": "سبب الإلغاء مطلوب",
+        "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+        "unknown": "حدث خطأ ما"
+      }
     }
   },
   "deviceDoors": {

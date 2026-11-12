@@ -33,6 +33,7 @@ import {
   HiOutlineShoppingCart,
   HiOutlineRefresh,
   HiOutlineTrendingUp,
+  HiOutlineShieldCheck,
 } from 'react-icons/hi';
 import { Menu, MenuItem } from './ui';
 
@@ -86,6 +87,7 @@ const MENU_GROUPS: Array<{ key: string; icon: typeof HiOutlineViewGrid; items: M
       { key: 'cashTransfers', icon: HiOutlineRefresh, path: '/fin/cash-transfers' },
       { key: 'fundTransfers', icon: HiOutlineTrendingUp, path: '/fin/fund-transfers' },
       { key: 'receipts', icon: HiOutlineCash, path: '/fin/receipts' },
+      { key: 'buildingDeposits', icon: HiOutlineShieldCheck, path: '/fin/building-deposits' },
       { key: 'cheques', icon: HiOutlineDocumentText, path: '/fin/cheques' },
       { key: 'chequeFates', icon: HiOutlineSwitchHorizontal, path: '/fin/cheque-fates' },
       { key: 'partyPayments', icon: HiOutlineScale, path: '/fin/party-payments' },

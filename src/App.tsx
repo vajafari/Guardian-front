@@ -40,6 +40,8 @@ import { CashTransfersPage } from './pages/CashTransfersPage';
 import { CashTransferDetailPage } from './pages/CashTransferDetailPage';
 import { FundTransfersPage } from './pages/FundTransfersPage';
 import { FundTransferDetailPage } from './pages/FundTransferDetailPage';
+import { BuildingDepositsPage } from './pages/BuildingDepositsPage';
+import { BuildingDepositDetailPage } from './pages/BuildingDepositDetailPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -114,6 +116,8 @@ function App() {
               <Route path="/fin/cash-transfers/:id" element={<CashTransferDetailPage />} />
               <Route path="/fin/fund-transfers" element={<FundTransfersPage />} />
               <Route path="/fin/fund-transfers/:id" element={<FundTransferDetailPage />} />
+              <Route path="/fin/building-deposits" element={<BuildingDepositsPage />} />
+              <Route path="/fin/building-deposits/:id" element={<BuildingDepositDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

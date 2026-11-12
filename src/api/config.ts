@@ -322,3 +322,13 @@ export const FUND_TRANSFER_ENDPOINTS = {
   add: '/api/fin/FundTransfer/Add',
   cancel: '/api/fin/FundTransfer/Cancel',
 } as const;
+
+export const BUILDING_DEPOSIT_ENDPOINTS = {
+  gridView: '/api/fin/BuildingDeposit/GridView',
+  getById: (id: string) => `/api/fin/BuildingDeposit/GetById/${id}`,
+  add: '/api/fin/BuildingDeposit/Add',
+  update: '/api/fin/BuildingDeposit/Update',
+  delete: (id: string) => `/api/fin/BuildingDeposit/${id}`,
+  movementAdd: '/api/fin/BuildingDeposit/MovementAdd',
+  movementCancel: '/api/fin/BuildingDeposit/MovementCancel',
+} as const;
