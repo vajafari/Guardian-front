@@ -308,3 +308,17 @@ export const EXPENSE_INVOICE_ENDPOINTS = {
   add: '/api/fin/ExpenseInvoice/Add',
   cancel: '/api/fin/ExpenseInvoice/Cancel',
 } as const;
+
+export const CASH_TRANSFER_ENDPOINTS = {
+  gridView: '/api/fin/CashTransfer/GridView',
+  getById: (id: string) => `/api/fin/CashTransfer/GetById/${id}`,
+  add: '/api/fin/CashTransfer/Add',
+  cancel: '/api/fin/CashTransfer/Cancel',
+} as const;
+
+export const FUND_TRANSFER_ENDPOINTS = {
+  gridView: '/api/fin/FundTransfer/GridView',
+  getById: (id: string) => `/api/fin/FundTransfer/GetById/${id}`,
+  add: '/api/fin/FundTransfer/Add',
+  cancel: '/api/fin/FundTransfer/Cancel',
+} as const;

@@ -82,6 +82,8 @@
     "chargePlans": "برنامه‌های شارژ",
     "serviceBillingTypes": "انواع صورت‌حساب",
     "cashAccounts": "نقد و بانک",
+  "cashTransfers": "انتقال نقدی",
+  "fundTransfers": "انتقال صندوق",
     "serviceBillings": "صدور خدمات",
     "lateFeeRuns": "اجراهای دیرکرد",
     "receipts": "رسیدهای دریافت",
@@ -1692,6 +1694,94 @@
       "settlements": "تسویه‌ها",
       "settlementPayment": "شماره پرداخت",
       "settlementDate": "تاریخ"
+    }
+  },
+  "cashTransfers": {
+    "title": "انتقال نقدی",
+    "addButton": "انتقال جدید",
+    "addTitle": "انتقال نقدی",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "انتقالی یافت نشد",
+    "loadError": "بارگذاری انتقال‌ها ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "fields": {
+      "accountingEntity": "مجموعه حسابداری",
+      "source": "از حساب",
+      "destination": "به حساب",
+      "amount": "مبلغ",
+      "documentDate": "تاریخ سند",
+      "description": "توضیحات",
+      "documentNumber": "شماره سند",
+      "status": "وضعیت",
+      "cancelReason": "دلیل ابطال"
+    },
+    "statuses": {
+      "1": "پیش‌نویس",
+      "2": "ثبت قطعی",
+      "3": "ابطال شده"
+    },
+    "cancel": {
+      "title": "ابطال انتقال",
+      "reason": "دلیل ابطال",
+      "reversalDate": "تاریخ سند معکوس",
+      "confirm": "ابطال انتقال"
+    },
+    "errors": {
+      "missing-fields": "فیلدهای الزامی را بررسی کنید — حساب مبدا و مقصد باید متفاوت باشند",
+      "cancel-reason-required": "دلیل ابطال الزامی است",
+      "not-found": "انتقال پیدا نشد یا دسترسی ندارید",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این انتقال ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "انتقال پیدا نشد"
+    }
+  },
+  "fundTransfers": {
+    "title": "انتقال صندوق",
+    "addButton": "انتقال جدید",
+    "addTitle": "انتقال بین صندوق‌ها",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "انتقالی یافت نشد",
+    "loadError": "بارگذاری انتقال‌ها ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "fields": {
+      "accountingEntity": "مجموعه حسابداری",
+      "source": "از صندوق",
+      "target": "به صندوق",
+      "amount": "مبلغ",
+      "documentDate": "تاریخ سند",
+      "description": "توضیحات",
+      "documentNumber": "شماره سند",
+      "status": "وضعیت",
+      "cancelReason": "دلیل ابطال"
+    },
+    "statuses": {
+      "1": "پیش‌نویس",
+      "2": "ثبت قطعی",
+      "3": "ابطال شده"
+    },
+    "cancel": {
+      "title": "ابطال انتقال",
+      "reason": "دلیل ابطال",
+      "reversalDate": "تاریخ سند معکوس",
+      "confirm": "ابطال انتقال"
+    },
+    "errors": {
+      "missing-fields": "فیلدهای الزامی را بررسی کنید — صندوق مبدا و مقصد باید متفاوت باشند و توضیحات الزامی است",
+      "cancel-reason-required": "دلیل ابطال الزامی است",
+      "not-found": "انتقال پیدا نشد یا دسترسی ندارید",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این انتقال ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "انتقال پیدا نشد"
     }
   },
   "deviceDoors": {

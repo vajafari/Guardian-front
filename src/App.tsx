@@ -36,6 +36,10 @@ import { PartyPaymentsPage } from './pages/PartyPaymentsPage';
 import { PartyPaymentDetailPage } from './pages/PartyPaymentDetailPage';
 import { ExpenseInvoicesPage } from './pages/ExpenseInvoicesPage';
 import { ExpenseInvoiceDetailPage } from './pages/ExpenseInvoiceDetailPage';
+import { CashTransfersPage } from './pages/CashTransfersPage';
+import { CashTransferDetailPage } from './pages/CashTransferDetailPage';
+import { FundTransfersPage } from './pages/FundTransfersPage';
+import { FundTransferDetailPage } from './pages/FundTransferDetailPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
 import { ElevatorsPage } from './pages/ElevatorsPage';
 import { ElevatorDetailPage } from './pages/ElevatorDetailPage';
@@ -106,6 +110,10 @@ function App() {
               <Route path="/fin/party-payments/:id" element={<PartyPaymentDetailPage />} />
               <Route path="/fin/expense-invoices" element={<ExpenseInvoicesPage />} />
               <Route path="/fin/expense-invoices/:id" element={<ExpenseInvoiceDetailPage />} />
+              <Route path="/fin/cash-transfers" element={<CashTransfersPage />} />
+              <Route path="/fin/cash-transfers/:id" element={<CashTransferDetailPage />} />
+              <Route path="/fin/fund-transfers" element={<FundTransfersPage />} />
+              <Route path="/fin/fund-transfers/:id" element={<FundTransferDetailPage />} />
               <Route path="/elevators" element={<ElevatorsPage />} />
               <Route path="/elevators/:id" element={<ElevatorDetailPage />} />
               <Route path="/person-groups" element={<PersonGroupsPage />} />

@@ -82,6 +82,8 @@
     "chargePlans": "Charge plans",
     "serviceBillingTypes": "Billing types",
     "cashAccounts": "Cash & bank",
+  "cashTransfers": "Cash transfers",
+  "fundTransfers": "Fund transfers",
     "serviceBillings": "Service billings",
     "lateFeeRuns": "Late fee runs",
     "receipts": "Receipts",
@@ -1692,6 +1694,94 @@
       "settlements": "Settlements",
       "settlementPayment": "Payment #",
       "settlementDate": "Date"
+    }
+  },
+  "cashTransfers": {
+    "title": "Cash transfers",
+    "addButton": "New transfer",
+    "addTitle": "Transfer cash",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No transfers found",
+    "loadError": "Couldn't load transfers. Try again.",
+    "retry": "Retry",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "source": "From",
+      "destination": "To",
+      "amount": "Amount",
+      "documentDate": "Document date",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "cancel": {
+      "title": "Cancel transfer",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel transfer"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields — the source and destination must be different",
+      "cancel-reason-required": "A cancellation reason is required",
+      "not-found": "Transfer not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this transfer. Try again.",
+      "notFound": "Transfer not found"
+    }
+  },
+  "fundTransfers": {
+    "title": "Fund transfers",
+    "addButton": "New transfer",
+    "addTitle": "Transfer fund",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No transfers found",
+    "loadError": "Couldn't load transfers. Try again.",
+    "retry": "Retry",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "source": "From fund",
+      "target": "To fund",
+      "amount": "Amount",
+      "documentDate": "Document date",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "cancel": {
+      "title": "Cancel transfer",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel transfer"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields — the source and target fund must be different, and a description is required",
+      "cancel-reason-required": "A cancellation reason is required",
+      "not-found": "Transfer not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this transfer. Try again.",
+      "notFound": "Transfer not found"
     }
   },
   "deviceDoors": {

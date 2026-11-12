@@ -82,6 +82,8 @@
     "chargePlans": "برامج الرسوم",
     "serviceBillingTypes": "أنواع الفواتير",
     "cashAccounts": "النقد والبنك",
+  "cashTransfers": "تحويلات نقدية",
+  "fundTransfers": "تحويلات الصناديق",
     "serviceBillings": "فواتير الخدمات",
     "lateFeeRuns": "عمليات الغرامة",
     "receipts": "إيصالات القبض",
@@ -1692,6 +1694,94 @@
       "settlements": "التسويات",
       "settlementPayment": "رقم الدفعة",
       "settlementDate": "التاريخ"
+    }
+  },
+  "cashTransfers": {
+    "title": "تحويلات نقدية",
+    "addButton": "تحويل جديد",
+    "addTitle": "تحويل نقدي",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على تحويلات",
+    "loadError": "تعذر تحميل التحويلات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "source": "من حساب",
+      "destination": "إلى حساب",
+      "amount": "المبلغ",
+      "documentDate": "تاريخ المستند",
+      "description": "الوصف",
+      "documentNumber": "رقم المستند",
+      "status": "الحالة",
+      "cancelReason": "سبب الإلغاء"
+    },
+    "statuses": {
+      "1": "مسودة",
+      "2": "مرحّل",
+      "3": "ملغى"
+    },
+    "cancel": {
+      "title": "إلغاء التحويل",
+      "reason": "سبب الإلغاء",
+      "reversalDate": "تاريخ القيد العكسي",
+      "confirm": "إلغاء التحويل"
+    },
+    "errors": {
+      "missing-fields": "تحقق من الحقول المطلوبة — يجب أن يكون حساب المصدر والوجهة مختلفين",
+      "cancel-reason-required": "سبب الإلغاء مطلوب",
+      "not-found": "التحويل غير موجود أو لا تملك صلاحية الوصول إليه",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل هذا التحويل. حاول مرة أخرى.",
+      "notFound": "التحويل غير موجود"
+    }
+  },
+  "fundTransfers": {
+    "title": "تحويلات الصناديق",
+    "addButton": "تحويل جديد",
+    "addTitle": "تحويل بين الصناديق",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على تحويلات",
+    "loadError": "تعذر تحميل التحويلات. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "source": "من صندوق",
+      "target": "إلى صندوق",
+      "amount": "المبلغ",
+      "documentDate": "تاريخ المستند",
+      "description": "الوصف",
+      "documentNumber": "رقم المستند",
+      "status": "الحالة",
+      "cancelReason": "سبب الإلغاء"
+    },
+    "statuses": {
+      "1": "مسودة",
+      "2": "مرحّل",
+      "3": "ملغى"
+    },
+    "cancel": {
+      "title": "إلغاء التحويل",
+      "reason": "سبب الإلغاء",
+      "reversalDate": "تاريخ القيد العكسي",
+      "confirm": "إلغاء التحويل"
+    },
+    "errors": {
+      "missing-fields": "تحقق من الحقول المطلوبة — يجب أن يكون صندوق المصدر والهدف مختلفين، والوصف مطلوب",
+      "cancel-reason-required": "سبب الإلغاء مطلوب",
+      "not-found": "التحويل غير موجود أو لا تملك صلاحية الوصول إليه",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل هذا التحويل. حاول مرة أخرى.",
+      "notFound": "التحويل غير موجود"
     }
   },
   "deviceDoors": {

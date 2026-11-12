@@ -1,5 +1,23 @@
 # Guardian frontend — remaining work
 
+## fin: CashTransfer + FundTransfer — done and verified end-to-end
+
+Two small, fully independent Phase 4 entities (per `FIN_MODULE_PLAN.md`), only dependent on Phase 1. Backend fully researched first (a fork pass over `CashTransferController.cs`/`FundTransferController.cs`, their SaveModels/Dtos, `TreasuryComponent`'s Add/Cancel methods, `AutoMapperProfile.cs`) — **no backend bugs found**, both AutoMapper maps present. Both are plain posted-form entities with zero draft concept, same shape as every other posted-form module this session.
+
+**The two are completely parallel, unrelated entities, not a shared "Transfer" abstraction**:
+- **`CashTransfer`** physically moves money between two `CashAccount`s of the same entity (e.g. bank → petty cash). Reuses the existing `searchCashAccountsByEntity` for both source/destination selects; the destination select excludes whatever is picked as source so the "can't equal" backend rule is impossible to trigger by accident.
+- **`FundTransfer`** relabels budget between two `Fund` tags with **zero physical cash movement** (confirmed: no `CashAccountId` anywhere in its SaveModel) — e.g. Operating fund → Reserve fund. Because there's no physical trace, **`Description` is mandatory** here, unlike every other module's optional description (the backend's own doc comment says so explicitly, and the frontend enforces it client-side too). `Fund` rows are global/unscoped, so the existing read-only `searchFunds()` list needed no changes.
+
+Built as a matched pair, following the exact shell already used for `PartyPayment`/`ExpenseInvoice` (flat form, no line items, no Preview, `Add` posts directly, `Cancel` reverses via a reversing `JournalEntry`). New files: `src/types/{cashTransfer,fundTransfer}.ts`, `src/api/{cashTransfer,fundTransfer}Service.ts`, `src/components/{CashTransfer,FundTransfer}{FormDialog,CancelDialog}.tsx`, `src/pages/{CashTransfers,FundTransfers}Page.tsx` + detail pages. Routed at `/fin/cash-transfers(/:id)` and `/fin/fund-transfers(/:id)`, both new sidebar leaves placed next to `cashAccounts` (same `FinTreasuryManagement` menu-permission group).
+
+**Verified end-to-end (Edge via Playwright + SQL)**:
+- Created a second `CashAccount` (a "Cash box"-type account) so there were two real distinct accounts to move money between.
+- `CashTransfer` of 250,000 between the bank account and the new cash box → confirmed via SQL: `fin.CashTransfer.Status=2`, journal debits the destination and credits the source for the full amount.
+- `FundTransfer` of 100,000 between the two system Funds (Operating/Reserve) → confirmed via SQL: `fin.FundTransfer.Status=2`, and — interestingly — the two journal lines land on the **same** underlying account, differing only by `FundId` (debit tagged with the target Fund, credit tagged with the source Fund), concretely confirming this is a pure Fund-tag reallocation with no real cash account touched anywhere.
+- Submitting `FundTransfer` with a blank Description was correctly blocked client-side before any request went out (confirmed no network call fired).
+- Cancelled both → confirmed via SQL (`Status→3`, `CancelReason` stored, a real reversing `JournalEntry` linked via `ReversalJournalEntryId`).
+- Both list pages and the sidebar verified rendering correctly in Persian (RTL) via screenshot — labels, RTL column order, and the "ابطال شده" (Cancelled) status all correct.
+
 ## fin: ExpenseInvoice + wired PartyPayment settlements — done and verified end-to-end
 
 New module recording what the building owes a vendor/contractor (`ExpenseInvoice`), plus closing the loop that `PartyPayment` deliberately left open: its `Settlements`/`AutoSettle` were always sent empty/false because nothing existed to settle against. Backend fully researched first (a fork pass plus direct reads of `ExpenseInvoiceController.cs`, `ExpenseInvoiceSaveModel.cs`, `ExpenseInvoiceItemSaveModel.cs`, `DtoExpenseInvoice(FullInfo).cs`, `ExpenseComponent.cs`'s settlement logic) — **no backend bugs found**, all AutoMapper maps already present.
