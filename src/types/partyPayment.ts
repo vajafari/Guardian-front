@@ -1,3 +1,5 @@
+import type { PaymentSettlementFullInfo } from './paymentSettlement';
+
 /** FinDocumentStatusEnumeration. */
 export type PartyPaymentStatus = 1 | 2 | 3;
 
@@ -34,6 +36,7 @@ export interface PartyPaymentFullInfo {
   unsettledAmount: number;
   cancelReason: string | null;
   chequesFullInfo: PartyPaymentChequeFullInfo[];
+  settlementsFullInfo: PaymentSettlementFullInfo[];
 }
 
 export interface PartyPaymentIssuedChequePayload {
@@ -47,6 +50,11 @@ export interface PartyPaymentIssuedChequePayload {
   description: string | null;
 }
 
+export interface PartyPaymentSettlementPayload {
+  expenseInvoiceId: string;
+  amount: number;
+}
+
 export interface PartyPaymentRequestPayload {
   accountingEntityId: string;
   documentDate: string;
@@ -58,6 +66,7 @@ export interface PartyPaymentRequestPayload {
   description: string | null;
   issuedCheques: PartyPaymentIssuedChequePayload[];
   endorsedChequeIds: string[];
+  settlements: PartyPaymentSettlementPayload[];
 }
 
 export type PartyPaymentErrorCode =
@@ -65,6 +74,7 @@ export type PartyPaymentErrorCode =
   | 'settled-account-invalid'
   | 'endorsed-cheque-invalid'
   | 'sayad-not-unique'
+  | 'settlement-invalid'
   | 'cancel-reason-required'
   | 'moved-cheques-can-not-cancel'
   | 'credit-in-use'

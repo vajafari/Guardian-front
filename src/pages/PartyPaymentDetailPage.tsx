@@ -132,6 +132,38 @@ export function PartyPaymentDetailPage() {
             </>
           )}
 
+          {partyPayment.settlementsFullInfo.length > 0 && (
+            <>
+              <h4 className="mb-3">{t('partyPayments.detail.settlements')}</h4>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-200 dark:border-gray-700 text-start">
+                      <th className="py-2 px-3 text-start font-semibold text-gray-500 dark:text-gray-400">
+                        {t('partyPayments.settlements.invoiceNumber')}
+                      </th>
+                      <th className="py-2 px-3 text-start font-semibold text-gray-500 dark:text-gray-400">
+                        {t('partyPayments.settlements.invoiceDate')}
+                      </th>
+                      <th className="py-2 px-3 text-start font-semibold text-gray-500 dark:text-gray-400">
+                        {t('partyPayments.fields.amount')}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {partyPayment.settlementsFullInfo.map((settlement) => (
+                      <tr key={settlement.id} className="border-b border-gray-100 dark:border-gray-800 last:border-0">
+                        <td className="py-2 px-3">{settlement.expenseInvoiceNumber ?? '—'}</td>
+                        <td className="py-2 px-3">{settlement.expenseInvoiceDate ?? '—'}</td>
+                        <td className="py-2 px-3">{settlement.amount.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
           <PartyPaymentCancelDialog
             isOpen={isCancelOpen}
             partyPaymentId={partyPayment.id}

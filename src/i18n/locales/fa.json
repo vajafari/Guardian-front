@@ -88,6 +88,7 @@
     "cheques": "چک‌ها",
     "chequeFates": "سرنوشت چک",
     "partyPayments": "پرداخت‌ها",
+  "expenseInvoices": "فاکتورهای هزینه",
     "elevators": "آسانسورها",
     "contractors": "پیمانکاران",
     "locations": "مناطق",
@@ -1590,6 +1591,15 @@
       "originalParty": "دریافتی از",
       "noneAvailable": "این طرف حساب چک دریافتی در جریانی برای خرج کردن ندارد"
     },
+    "settlements": {
+      "title": "تسویه فاکتورهای باز",
+      "noOpenInvoices": "این طرف حساب فاکتور بازی برای تسویه ندارد",
+      "invoiceNumber": "شماره فاکتور",
+      "invoiceDate": "تاریخ فاکتور",
+      "openAmount": "مانده باز",
+      "settleAmount": "تسویه",
+      "settledTotal": "تسویه‌شده تا الان: {{total}}"
+    },
     "cancel": {
       "title": "ابطال پرداخت",
       "reason": "دلیل ابطال",
@@ -1601,6 +1611,7 @@
       "settled-account-invalid": "این سرفصل بدهی معتبر نیست",
       "endorsed-cheque-invalid": "حداقل یک چک دریافتی در جریان مطابق مبلغ پرداخت انتخاب کنید",
       "sayad-not-unique": "یکی از این شناسه‌های صیادی قبلاً برای چک دیگری استفاده شده است",
+      "settlement-invalid": "یکی از این تسویه‌های فاکتور معتبر نیست",
       "cancel-reason-required": "دلیل ابطال الزامی است",
       "moved-cheques-can-not-cancel": "یکی از چک‌های این پرداخت قبلاً جلوتر رفته و قابل ابطال نیست",
       "credit-in-use": "اعتبار تسویه‌نشده این پرداخت قبلاً جای دیگری استفاده شده و قابل ابطال نیست",
@@ -1612,7 +1623,75 @@
       "back": "بازگشت",
       "loadError": "بارگذاری این پرداخت ناموفق بود. دوباره تلاش کنید.",
       "notFound": "پرداخت پیدا نشد",
-      "cheques": "چک‌ها"
+      "cheques": "چک‌ها",
+      "settlements": "فاکتورهای تسویه شده"
+    }
+  },
+  "expenseInvoices": {
+    "title": "فاکتورهای هزینه",
+    "addButton": "فاکتور جدید",
+    "addTitle": "ثبت فاکتور هزینه",
+    "save": "ذخیره",
+    "saving": "در حال ذخیره...",
+    "empty": "فاکتوری یافت نشد",
+    "loadError": "بارگذاری فاکتورها ناموفق بود. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "fields": {
+      "accountingEntity": "مجموعه حسابداری",
+      "party": "فروشنده/پیمانکار",
+      "partyInvoiceNumber": "شماره فاکتور فروشنده",
+      "building": "ساختمان",
+      "totalAmount": "جمع فاکتور",
+      "paidAmount": "پرداخت همزمان",
+      "paymentCashAccount": "محل پرداخت",
+      "documentDate": "تاریخ فاکتور",
+      "description": "توضیحات",
+      "documentNumber": "شماره سند",
+      "settledAmount": "تسویه‌شده",
+      "openAmount": "مانده باز",
+      "status": "وضعیت",
+      "cancelReason": "دلیل ابطال"
+    },
+    "statuses": {
+      "1": "پیش‌نویس",
+      "2": "ثبت قطعی",
+      "3": "ابطال شده"
+    },
+    "items": {
+      "title": "اقلام فاکتور",
+      "description": "شرح",
+      "costCategory": "دسته هزینه",
+      "fund": "صندوق",
+      "buildingSpace": "فضای ساختمان",
+      "amount": "مبلغ",
+      "addLine": "افزودن قلم",
+      "total": "جمع: {{total}}"
+    },
+    "cancel": {
+      "title": "ابطال فاکتور",
+      "reason": "دلیل ابطال",
+      "reversalDate": "تاریخ سند معکوس",
+      "confirm": "ابطال فاکتور"
+    },
+    "errors": {
+      "missing-fields": "فیلدهای الزامی را بررسی کنید",
+      "paid-amount-invalid": "مبلغ پرداخت همزمان معتبر نیست",
+      "payment-cash-account-required": "برای پرداخت همزمان، محل پرداخت الزامی است",
+      "party-invoice-number-duplicate": "این فروشنده قبلاً فاکتوری با این شماره دارد",
+      "has-settlements-can-not-cancel": "این فاکتور تسویه فعال دارد و قابل ابطال نیست",
+      "cancel-reason-required": "دلیل ابطال الزامی است",
+      "not-found": "فاکتور پیدا نشد یا دسترسی ندارید",
+      "network-error": "ارتباط با سرور برقرار نشد. اتصال خود را بررسی و دوباره تلاش کنید",
+      "unknown": "خطایی رخ داد"
+    },
+    "detail": {
+      "back": "بازگشت",
+      "loadError": "بارگذاری این فاکتور ناموفق بود. دوباره تلاش کنید.",
+      "notFound": "فاکتور پیدا نشد",
+      "items": "اقلام فاکتور",
+      "settlements": "تسویه‌ها",
+      "settlementPayment": "شماره پرداخت",
+      "settlementDate": "تاریخ"
     }
   },
   "deviceDoors": {

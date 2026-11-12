@@ -9,6 +9,7 @@ const FIN_STATUS_PARTY_PAYMENT_AMOUNT_IS_NOT_VALID = 37721;
 const FIN_STATUS_PARTY_PAYMENT_SETTLED_ACCOUNT_IS_NOT_VALID = 37722;
 const FIN_STATUS_PARTY_PAYMENT_METHOD_IS_NOT_VALID = 37723;
 const FIN_STATUS_PARTY_PAYMENT_CHEQUES_ARE_NOT_VALID = 37724;
+const FIN_STATUS_PARTY_PAYMENT_SETTLEMENT_IS_NOT_VALID = 37725;
 const FIN_STATUS_PARTY_PAYMENT_ENDORSED_CHEQUE_IS_NOT_VALID = 37726;
 const FIN_STATUS_PARTY_PAYMENT_HAS_MOVED_CHEQUES_AND_CAN_NOT_BE_CANCELLED = 37727;
 const FIN_STATUS_PARTY_PAYMENT_CREDIT_IS_USED_AND_CAN_NOT_BE_CANCELLED = 37729;
@@ -52,6 +53,9 @@ function mapPartyPaymentError(err: unknown): PartyPaymentError {
   if (errorCodes.includes(FIN_STATUS_PARTY_PAYMENT_ENDORSED_CHEQUE_IS_NOT_VALID)) {
     return new PartyPaymentError('endorsed-cheque-invalid');
   }
+  if (errorCodes.includes(FIN_STATUS_PARTY_PAYMENT_SETTLEMENT_IS_NOT_VALID)) {
+    return new PartyPaymentError('settlement-invalid');
+  }
   if (errorCodes.includes(FIN_STATUS_PARTY_PAYMENT_SETTLED_ACCOUNT_IS_NOT_VALID)) {
     return new PartyPaymentError('settled-account-invalid');
   }
@@ -94,7 +98,6 @@ export async function addPartyPayment(payload: PartyPaymentRequestPayload): Prom
   try {
     const { data } = await httpClient.post<PartyPaymentFullInfo>(PARTY_PAYMENT_ENDPOINTS.add, {
       ...payload,
-      settlements: [],
       autoSettle: false,
     });
     return data;

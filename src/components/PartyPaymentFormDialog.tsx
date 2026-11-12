@@ -5,6 +5,8 @@ import { addPartyPayment } from '../api/partyPaymentService';
 import { searchAccountingEntities, getPayableToPartiesAccountId } from '../api/finReferenceDataService';
 import { searchCashAccountsByEntity } from '../api/cashAccountService';
 import { searchChequesByEntity } from '../api/chequeService';
+import { searchOpenExpenseInvoicesByParty } from '../api/expenseInvoiceService';
+import type { OpenExpenseInvoiceSummary } from '../types/expenseInvoice';
 import {
   PartyPaymentError,
   type PartyPaymentErrorCode,
@@ -59,6 +61,8 @@ export function PartyPaymentFormDialog({ isOpen, onClose, onSaved }: PartyPaymen
   const [cashAccounts, setCashAccounts] = useState<CashAccount[]>([]);
   const [pendingReceivedCheques, setPendingReceivedCheques] = useState<ChequeFullInfo[]>([]);
   const [settledAccountId, setSettledAccountId] = useState('');
+  const [openInvoices, setOpenInvoices] = useState<OpenExpenseInvoiceSummary[]>([]);
+  const [settlementAmounts, setSettlementAmounts] = useState<Record<string, string>>({});
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<PartyPaymentErrorCode | null>(null);
@@ -75,6 +79,8 @@ export function PartyPaymentFormDialog({ isOpen, onClose, onSaved }: PartyPaymen
     setSelectedEndorsedChequeIds([]);
     setCashAccounts([]);
     setPendingReceivedCheques([]);
+    setOpenInvoices([]);
+    setSettlementAmounts({});
     setError(null);
   };
 
@@ -108,6 +114,21 @@ export function PartyPaymentFormDialog({ isOpen, onClose, onSaved }: PartyPaymen
 
   // Endorsing hands over a cheque received from ANY party to pay this one — the backend only scopes by
   // AccountingEntity + ChequeDirection=Received + Status=Pending, not by the cheque's original payer.
+
+  useEffect(() => {
+    setOpenInvoices([]);
+    setSettlementAmounts({});
+    if (accountingEntityId && partyId) {
+      searchOpenExpenseInvoicesByParty(accountingEntityId, partyId).then(setOpenInvoices);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountingEntityId, partyId]);
+
+  const handleSettlementAmountChange = (invoiceId: string, value: string) => {
+    setSettlementAmounts((current) => ({ ...current, [invoiceId]: value }));
+  };
+
+  const settlementTotal = Object.values(settlementAmounts).reduce((sum, value) => sum + (Number(value) || 0), 0);
 
   const updateIssuedChequeLine = (id: string, patch: Partial<IssuedChequeRow>) => {
     setIssuedCheques((lines) => lines.map((line) => (line.id === id ? { ...line, ...patch } : line)));
@@ -151,6 +172,9 @@ export function PartyPaymentFormDialog({ isOpen, onClose, onSaved }: PartyPaymen
             }))
           : [],
       endorsedChequeIds: paymentMethod === 3 ? selectedEndorsedChequeIds : [],
+      settlements: openInvoices
+        .filter((invoice) => Number(settlementAmounts[invoice.id]) > 0)
+        .map((invoice) => ({ expenseInvoiceId: invoice.id, amount: Number(settlementAmounts[invoice.id]) })),
     };
 
     try {
@@ -358,6 +382,57 @@ export function PartyPaymentFormDialog({ isOpen, onClose, onSaved }: PartyPaymen
                     ))}
                   </tbody>
                 </table>
+              )}
+            </div>
+          )}
+
+          {partyId && (
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-4">
+              <h5 className="mb-2">{t('partyPayments.settlements.title')}</h5>
+              {openInvoices.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t('partyPayments.settlements.noOpenInvoices')}</p>
+              ) : (
+                <>
+                  <table className="w-full text-sm mb-2">
+                    <thead>
+                      <tr className="border-b border-gray-200 dark:border-gray-700 text-start">
+                        <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                          {t('partyPayments.settlements.invoiceNumber')}
+                        </th>
+                        <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                          {t('partyPayments.settlements.invoiceDate')}
+                        </th>
+                        <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                          {t('partyPayments.settlements.openAmount')}
+                        </th>
+                        <th className="py-1 px-2 text-start font-semibold text-gray-500 dark:text-gray-400">
+                          {t('partyPayments.settlements.settleAmount')}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {openInvoices.map((invoice) => (
+                        <tr key={invoice.id} className="border-b border-gray-100 dark:border-gray-800 last:border-0">
+                          <td className="py-1 px-2">{invoice.documentNumber}</td>
+                          <td className="py-1 px-2">{invoice.documentDate}</td>
+                          <td className="py-1 px-2">{invoice.openAmount.toLocaleString()}</td>
+                          <td className="py-1 px-2">
+                            <Input
+                              type="number"
+                              min={0}
+                              max={invoice.openAmount}
+                              value={settlementAmounts[invoice.id] ?? ''}
+                              onChange={(event) => handleSettlementAmountChange(invoice.id, event.target.value)}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {t('partyPayments.settlements.settledTotal', { total: settlementTotal.toLocaleString() })}
+                  </p>
+                </>
               )}
             </div>
           )}

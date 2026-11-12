@@ -88,6 +88,7 @@
     "cheques": "Cheques",
     "chequeFates": "Cheque fates",
     "partyPayments": "Party payments",
+  "expenseInvoices": "Expense invoices",
     "elevators": "Elevators",
     "contractors": "Contractors",
     "locations": "Locations",
@@ -1590,6 +1591,15 @@
       "originalParty": "Originally from",
       "noneAvailable": "This party has no pending received cheques to spend"
     },
+    "settlements": {
+      "title": "Settle open invoices",
+      "noOpenInvoices": "This party has no open invoices to settle",
+      "invoiceNumber": "Invoice #",
+      "invoiceDate": "Invoice date",
+      "openAmount": "Open amount",
+      "settleAmount": "Settle",
+      "settledTotal": "Settled so far: {{total}}"
+    },
     "cancel": {
       "title": "Cancel payment",
       "reason": "Cancellation reason",
@@ -1601,6 +1611,7 @@
       "settled-account-invalid": "This settled account isn't valid",
       "endorsed-cheque-invalid": "Pick at least one pending received cheque to spend, matching the payment amount",
       "sayad-not-unique": "One of these Sayad IDs is already used by another cheque",
+      "settlement-invalid": "One of these invoice settlements isn't valid",
       "cancel-reason-required": "A cancellation reason is required",
       "moved-cheques-can-not-cancel": "One of this payment's cheques has already moved on and can't be cancelled",
       "credit-in-use": "This payment's unsettled credit has already been used elsewhere and can't be cancelled",
@@ -1612,7 +1623,75 @@
       "back": "Back",
       "loadError": "Couldn't load this payment. Try again.",
       "notFound": "Payment not found",
-      "cheques": "Cheques"
+      "cheques": "Cheques",
+      "settlements": "Settled invoices"
+    }
+  },
+  "expenseInvoices": {
+    "title": "Expense invoices",
+    "addButton": "New invoice",
+    "addTitle": "Record an expense invoice",
+    "save": "Save",
+    "saving": "Saving...",
+    "empty": "No invoices found",
+    "loadError": "Couldn't load invoices. Try again.",
+    "retry": "Retry",
+    "fields": {
+      "accountingEntity": "Accounting entity",
+      "party": "Vendor",
+      "partyInvoiceNumber": "Vendor's invoice #",
+      "building": "Building",
+      "totalAmount": "Total amount",
+      "paidAmount": "Paid now",
+      "paymentCashAccount": "Paid from",
+      "documentDate": "Document date",
+      "description": "Description",
+      "documentNumber": "Document #",
+      "settledAmount": "Settled",
+      "openAmount": "Open amount",
+      "status": "Status",
+      "cancelReason": "Cancellation reason"
+    },
+    "statuses": {
+      "1": "Draft",
+      "2": "Posted",
+      "3": "Cancelled"
+    },
+    "items": {
+      "title": "Line items",
+      "description": "Description",
+      "costCategory": "Cost category",
+      "fund": "Fund",
+      "buildingSpace": "Building space",
+      "amount": "Amount",
+      "addLine": "Add line",
+      "total": "Total: {{total}}"
+    },
+    "cancel": {
+      "title": "Cancel invoice",
+      "reason": "Cancellation reason",
+      "reversalDate": "Reversal date",
+      "confirm": "Cancel invoice"
+    },
+    "errors": {
+      "missing-fields": "Check the required fields",
+      "paid-amount-invalid": "The paid amount isn't valid",
+      "payment-cash-account-required": "A cash account is required when paying part of the invoice now",
+      "party-invoice-number-duplicate": "This vendor already has an invoice with this number",
+      "has-settlements-can-not-cancel": "This invoice has an active settlement against it and can't be cancelled",
+      "cancel-reason-required": "A cancellation reason is required",
+      "not-found": "Invoice not found or you're not authorized to access it",
+      "network-error": "Couldn't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong"
+    },
+    "detail": {
+      "back": "Back",
+      "loadError": "Couldn't load this invoice. Try again.",
+      "notFound": "Invoice not found",
+      "items": "Line items",
+      "settlements": "Settlements",
+      "settlementPayment": "Payment #",
+      "settlementDate": "Date"
     }
   },
   "deviceDoors": {

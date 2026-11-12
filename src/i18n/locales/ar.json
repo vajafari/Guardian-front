@@ -88,6 +88,7 @@
     "cheques": "الشيكات",
     "chequeFates": "مصير الشيك",
     "partyPayments": "دفعات الأطراف",
+  "expenseInvoices": "فواتير المصروفات",
     "elevators": "المصاعد",
     "contractors": "المقاولون",
     "locations": "المناطق",
@@ -1590,6 +1591,15 @@
       "originalParty": "مستلم أصلاً من",
       "noneAvailable": "لا توجد شيكات مقبوضة في الانتظار لهذا الطرف لإنفاقها"
     },
+    "settlements": {
+      "title": "تسوية الفواتير المفتوحة",
+      "noOpenInvoices": "لا توجد فواتير مفتوحة لهذا الطرف للتسوية",
+      "invoiceNumber": "رقم الفاتورة",
+      "invoiceDate": "تاريخ الفاتورة",
+      "openAmount": "المبلغ المستحق",
+      "settleAmount": "تسوية",
+      "settledTotal": "المسوّى حتى الآن: {{total}}"
+    },
     "cancel": {
       "title": "إلغاء الدفعة",
       "reason": "سبب الإلغاء",
@@ -1601,6 +1611,7 @@
       "settled-account-invalid": "حساب التسوية هذا غير صالح",
       "endorsed-cheque-invalid": "اختر شيكًا مقبوضًا واحدًا على الأقل في الانتظار بما يطابق مبلغ الدفعة",
       "sayad-not-unique": "أحد أرقام سياد هذه مستخدم بالفعل لشيك آخر",
+      "settlement-invalid": "إحدى تسويات الفواتير هذه غير صالحة",
       "cancel-reason-required": "سبب الإلغاء مطلوب",
       "moved-cheques-can-not-cancel": "أحد شيكات هذه الدفعة تقدّم بالفعل ولا يمكن إلغاؤه",
       "credit-in-use": "تم استخدام رصيد هذه الدفعة غير المسوّى في مكان آخر ولا يمكن إلغاؤه",
@@ -1612,7 +1623,75 @@
       "back": "رجوع",
       "loadError": "تعذر تحميل هذه الدفعة. حاول مرة أخرى.",
       "notFound": "الدفعة غير موجودة",
-      "cheques": "الشيكات"
+      "cheques": "الشيكات",
+      "settlements": "الفواتير المسوّاة"
+    }
+  },
+  "expenseInvoices": {
+    "title": "فواتير المصروفات",
+    "addButton": "فاتورة جديدة",
+    "addTitle": "تسجيل فاتورة مصروفات",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "empty": "لم يتم العثور على فواتير",
+    "loadError": "تعذر تحميل الفواتير. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "fields": {
+      "accountingEntity": "الكيان المحاسبي",
+      "party": "المورّد",
+      "partyInvoiceNumber": "رقم فاتورة المورّد",
+      "building": "المبنى",
+      "totalAmount": "إجمالي الفاتورة",
+      "paidAmount": "المدفوع الآن",
+      "paymentCashAccount": "جهة الدفع",
+      "documentDate": "تاريخ المستند",
+      "description": "الوصف",
+      "documentNumber": "رقم المستند",
+      "settledAmount": "المسوّى",
+      "openAmount": "المبلغ المستحق",
+      "status": "الحالة",
+      "cancelReason": "سبب الإلغاء"
+    },
+    "statuses": {
+      "1": "مسودة",
+      "2": "مرحّل",
+      "3": "ملغى"
+    },
+    "items": {
+      "title": "بنود الفاتورة",
+      "description": "الوصف",
+      "costCategory": "فئة التكلفة",
+      "fund": "الصندوق",
+      "buildingSpace": "فضاء المبنى",
+      "amount": "المبلغ",
+      "addLine": "إضافة بند",
+      "total": "الإجمالي: {{total}}"
+    },
+    "cancel": {
+      "title": "إلغاء الفاتورة",
+      "reason": "سبب الإلغاء",
+      "reversalDate": "تاريخ القيد العكسي",
+      "confirm": "إلغاء الفاتورة"
+    },
+    "errors": {
+      "missing-fields": "تحقق من الحقول المطلوبة",
+      "paid-amount-invalid": "المبلغ المدفوع الآن غير صالح",
+      "payment-cash-account-required": "جهة الدفع مطلوبة عند دفع جزء من الفاتورة الآن",
+      "party-invoice-number-duplicate": "هذا المورّد لديه فاتورة بهذا الرقم بالفعل",
+      "has-settlements-can-not-cancel": "لهذه الفاتورة تسوية نشطة ولا يمكن إلغاؤها",
+      "cancel-reason-required": "سبب الإلغاء مطلوب",
+      "not-found": "الفاتورة غير موجودة أو لا تملك صلاحية الوصول إليها",
+      "network-error": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى",
+      "unknown": "حدث خطأ ما"
+    },
+    "detail": {
+      "back": "رجوع",
+      "loadError": "تعذر تحميل هذه الفاتورة. حاول مرة أخرى.",
+      "notFound": "الفاتورة غير موجودة",
+      "items": "بنود الفاتورة",
+      "settlements": "التسويات",
+      "settlementPayment": "رقم الدفعة",
+      "settlementDate": "التاريخ"
     }
   },
   "deviceDoors": {

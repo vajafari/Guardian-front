@@ -300,3 +300,11 @@ export const PARTY_PAYMENT_ENDPOINTS = {
   add: '/api/fin/PartyPayment/Add',
   cancel: '/api/fin/PartyPayment/Cancel',
 } as const;
+
+export const EXPENSE_INVOICE_ENDPOINTS = {
+  gridView: '/api/fin/ExpenseInvoice/GridView',
+  getById: (id: string) => `/api/fin/ExpenseInvoice/GetById/${id}`,
+  searchFullInfo: '/api/fin/ExpenseInvoice/SearchFullInfo',
+  add: '/api/fin/ExpenseInvoice/Add',
+  cancel: '/api/fin/ExpenseInvoice/Cancel',
+} as const;
